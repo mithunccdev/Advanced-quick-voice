@@ -1,0 +1,28 @@
+{
+  "compliance": [
+    {
+      "url": "https://d35j3mps666d98.cloudfront.net/Compliances/HIPAA_amvw6p.png",
+      "alt": "HIPAA Compliance"
+    },
+    {
+      "url": "https://d35j3mps666d98.cloudfront.net/Compliances/SOC_2_alpjhu.png",
+      "alt": "SOC 2 Compliance"
+    },
+    {
+      "url": "https://d35j3mps666d98.cloudfront.net/Compliances/ISO_27001_y0be8h.png",
+      "alt": "ISO 27001 Compliance"
+    },
+    {
+      "url": "https://d35j3mps666d98.cloudfront.net/Compliances/GDPR_wrgauy.png",
+      "alt": "GDPR Compliance"
+    },
+    {
+        "url" :"https://d35j3mps666d98.cloudfront.net/Compliances/PCI_DSS_qqug8d.png",
+        "alt": "PCI DSS Compliance"
+    },
+    {
+        "url" : "https://d35j3mps666d98.cloudfront.net/Compliances/CCPA_ghxwdg.png",
+        "alt": "CCPA Compliance"
+    }
+  ]
+}

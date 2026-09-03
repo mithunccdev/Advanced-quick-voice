@@ -1,0 +1,64 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/remainder/remainder-collection_1.jpg",
+    "alt": "Quickvoice AI-powered reminders and collections dashboard showing automated follow-ups and customer engagement metrics"
+  } ,
+  "remaindercollection": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767124067332-final-reminder-collection-demo.mp3",
+  "transcript": [
+    {
+      "time": -2,
+      "speaker": "Agent",
+      "text": "Hello! This is a friendly reminder call from PrimeNest Realty... I’m your AI assistant, calling regarding your monthly rent payment."
+    },
+    {
+      "time": 8,
+      "speaker": "Customer",
+      "text": "Hi, yes, what is it about?"
+    },
+    {
+      "time": 9.8,
+      "speaker": "Agent",
+      "text": "Thank you for confirming. Our records show that your rent payment for this month is due tomorrow. I’m calling to remind you and assist if you need any help with the payment."
+    },
+    {
+      "time": 19.8,
+      "speaker": "Customer",
+      "text": "Oh okay, I haven’t paid it yet."
+    },
+    {
+      "time": 23.9,
+      "speaker": "Agent",
+      "text": "No worries at all. The total amount due is twenty five thousand rupees. You can make the payment via U P I, bank transfer, or card. Would you like me to send you the payment link now?"
+    },
+    {
+      "time": 35.4,
+      "speaker": "Customer",
+      "text": "Yes, please send the link."
+    },
+    {
+      "time": 37.9,
+      "speaker": "Agent",
+      "text": "Done. I’ve sent the payment link to your WhatsApp and email. Would you like to complete the payment now, or should I set a reminder later today?"
+    },
+    {
+      "time": 45.9,
+      "speaker": "Customer",
+      "text": "I’ll do it in the evening."
+    },
+    {
+      "time": 47.9,
+      "speaker": "Agent",
+      "text": "Perfect. I’ll schedule a gentle reminder for this evening at seven p.m. Before I go, do you have any questions regarding your rent or account?"
+    },
+    {
+      "time": 56.8,
+      "speaker": "Customer",
+      "text": "No, that’s fine."
+    },
+    {
+      "time": 58,
+      "speaker": "Agent",
+      "text": "Great. Thank you for your time, and I appreciate your prompt response... Have a good day."
+    }
+  ]
+}

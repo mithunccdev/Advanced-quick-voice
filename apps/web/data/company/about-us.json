@@ -1,0 +1,58 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/company/about-us/about-us-3.jpg",
+    "alt": "QuickVoice AI-powered business operations automation dashboard showing real-time analytics and operational efficiency"
+  },
+  "useCases1": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/company/about-us/about-us-1.jpg",
+    "alt": "QuickVoice company story and mission to automate business operations"
+  },
+  "useCases2": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/company/about-us/about-us-2.jpg",
+    "alt": "AI-powered business operations automation showing voice agents transforming workflows and improving efficiency"
+  },
+
+  
+  "leadershipTeam": {
+    "Zach_Barden": {
+      "url": "https://d35j3mps666d98.cloudfront.net/our_Team/Zach_Barden_x5jvsj.webp",
+      "alt": "Zach Barden"
+    },
+    "Joe_Weber": {
+      "url": "https://d35j3mps666d98.cloudfront.net/our_Team/Joe_Weber_j20kal.webp",
+      "alt": "Joe Weber"
+    },
+    "Martin_Nowak": {
+      "url": "https://d35j3mps666d98.cloudfront.net/our_Team/Martin_Nowak_g2wrjj.webp",
+      "alt": "Martin Nowak"
+    },
+    "David_Laith_Rawaf": {
+      "url": "https://d35j3mps666d98.cloudfront.net/our_Team/Dr._David_Laith_Rawaf_ck72ru.webp",
+      "alt": "David Laith Rawaf"
+    },
+    "Axel_Perez": {
+      "url": "https://d35j3mps666d98.cloudfront.net/our_Team/Axel_Perez_kbwlzv.webp",
+      "alt": "Axel Perez"
+    },
+    "Dana_Sellers": {
+      "url": "https://d35j3mps666d98.cloudfront.net/our_Team/Dana_Sellers_qomhhd.webp",
+      "alt": "Dana Sellers"
+    },
+    "Rahul_Agarwal": {
+      "url": "https://d35j3mps666d98.cloudfront.net/our_Team/Rahul_Agrawal_tddzs4.webp",
+      "alt": "Rahul Agarwal"
+    },
+    "Rick_Kreifeldt": {
+      "url": "https://d35j3mps666d98.cloudfront.net/our_Team/Rick_Kreifeldt_rgfl6p.webp",
+      "alt": "Rick Kreifeldt"
+    },
+    "Marcia_Leighton": {
+      "url": "https://d35j3mps666d98.cloudfront.net/our_Team/Marcia_Leighton_ymcxix.webp",
+      "alt": "Marcia Leighton"
+    },
+    "Haraprasad_Bharati": {
+      "url": "https://d35j3mps666d98.cloudfront.net/our_Team/Haraprasad_Bharati_lriruq.webp",
+      "alt": "Haraprasad Bharati"
+    }
+  }
+}

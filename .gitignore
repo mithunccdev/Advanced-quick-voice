@@ -1,0 +1,52 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Dependencies
+node_modules
+*.codex
+.venv
+.pnp
+.pnp.js
+.npm
+
+# Local env files
+.env
+.env.dev
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.claude/settings.local.json
+
+# Testing
+coverage
+.audit_runs/
+.fix_runs/
+.testing_guide_runs/
+.ui_ux_audit_runs/
+.ui_ux_fix_runs/
+.viral_launch_runs/
+.video_tutorial_runs/
+
+# Turbo
+.turbo
+.worktrees/
+
+# Vercel
+.vercel
+
+# Build Outputs
+.next/
+out/
+build
+dist
+
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+.DS_Store
+*.pem
+__pycache__/

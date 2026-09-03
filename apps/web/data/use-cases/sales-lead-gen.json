@@ -1,0 +1,126 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/sales/sales-lead-gen_hero-section_eifxv0.jpg",
+    "alt": "Sales Analytics Dashboard showing lead generation metrics and AI sales performance"
+  },
+  "sales": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/sales/Advanced_AI_Sales_Capabilities_fqnuko.jpg",
+    "alt": "Advanced AI Sales Capabilities dashboard and analytics"
+  },
+  "postPurchase": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/sales/Engage_Post-Purchase_kabohz.jpg",
+    "alt": "Post-purchase engagement and customer retention strategies"
+  },
+  "saleslead": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767124461693-final-sales-demo.mp3",
+  "transcript": [
+    {
+      "time": -1,
+      "speaker": "Agent",
+      "text": "Hello! Thanks for reaching out to PrimeNest Realty. I’m your AI sales assistant, available 24/7 to help you find the right property. How can I assist you today?"
+    },
+    {
+      "time": 8.5,
+      "speaker": "Customer",
+      "text": "Hi, I was browsing your website and wanted to know more about available flats in this area."
+    },
+    {
+      "time": 13,
+      "speaker": "Agent",
+      "text": "Great! I’d be happy to help with that. To guide you better, may I ask — are you looking to buy for self-use or investment?"
+    },
+    {
+      "time": 20,
+      "speaker": "Customer",
+      "text": "Mostly for investment."
+    },
+    {
+      "time": 23.5,
+      "speaker": "Agent",
+      "text": "Perfect. And are you interested in a specific configuration, like a 1 BHK, 2 BHK, or 3 BHK?"
+    },
+    {
+      "time": 29.8,
+      "speaker": "Customer",
+      "text": "A 2 BHK would be ideal."
+    },
+    {
+      "time": 32.5,
+      "speaker": "Agent",
+      "text": "That’s a popular choice for investors. Currently, we have multiple 2 BHK options available in this locality, priced between ₹82 and ₹90 lakhs, with strong rental demand. May I ask — are you looking for ready-to-move or under-construction properties?"
+    },
+    {
+      "time": 50,
+      "speaker": "Customer",
+      "text": "Preferably ready-to-move."
+    },
+    {
+      "time": 53.8,
+      "speaker": "Agent",
+      "text": "Understood. Based on that, I have a few high-performing options that match your requirement. Typically, a ready-to-move 2 BHK here earns around ₹32,000 to ₹36,000 per month in rent, with steady appreciation. Would you like to see rental yield details, schedule a virtual property tour, or speak with a property consultant?"
+    },
+    {
+      "time": 76,
+      "speaker": "Customer",
+      "text": "I’d like a virtual tour first."
+    },
+    {
+      "time": 78.5,
+      "speaker": "Agent",
+      "text": "Great choice. I can schedule a virtual tour for you right away. Does tomorrow at 5:00 PM work for you?"
+    },
+    {
+      "time": 84,
+      "speaker": "Customer",
+      "text": "Yes, that works."
+    },
+    {
+      "time": 87.9,
+      "speaker": "Agent",
+      "text": "Perfect. Your virtual tour is scheduled for tomorrow at 5:00 PM. You’ll receive the meeting link along with property details via WhatsApp and email."
+    },
+    {
+      "time": 95.1,
+      "speaker": "Agent",
+      "text": "Before we wrap up, may I ask — are you planning to purchase within the next 3 months, or are you still exploring options?"
+    },
+    {
+      "time": 102,
+      "speaker": "Customer",
+      "text": "Probably within the next 2 to 3 months."
+    },
+    {
+      "time": 105.9,
+      "speaker": "Agent",
+      "text": "That’s great to hear. Based on your timeline, I recommend connecting with one of our senior property consultants who can guide you on pricing trends, negotiation, and financing options. Would you like me to arrange a callback?"
+    },
+    {
+      "time": 118.8,
+      "speaker": "Customer",
+      "text": "Yes, that would be helpful."
+    },
+    {
+      "time": 120.9,
+      "speaker": "Agent",
+      "text": "Done. I’ve scheduled a callback for you. Our consultant will reach out within 24 hours, and they’ll already have the context of our conversation."
+    },
+    {
+      "time": 130,
+      "speaker": "Agent",
+      "text": "Is there anything else I can help you with today?"
+    },
+    {
+      "time": 134,
+      "speaker": "Customer",
+      "text": "No, that’s all. Thanks for the help."
+    },
+    {
+      "time": 136.9,
+      "speaker": "Agent",
+      "text": "You’re very welcome. I look forward to assisting you throughout your property journey. Have a great day!"
+    }
+  ]
+
+
+
+
+}

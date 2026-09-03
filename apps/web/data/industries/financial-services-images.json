@@ -1,0 +1,110 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/financial-services/Image_qhy0rc.jpg",
+    "alt": "Financial Services AI Dashboard showing conversational banking analytics, customer interactions, and AI-powered banking solutions"
+  },
+  "useCases": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/financial-services/Arrange_the_use_cases_in_5_small_cards_occupying_only_left_half_of_the_section_and_add_an_image_placeholder_on_the_right_and_add_a_new_image_wcncua.svg",
+    "alt": "Financial Services Use Cases - Customer support, sales, scheduling, operations, and recruiting solutions"
+  },
+  "finance": {
+    "fileUrl": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767123454541-final-financial-services-demo.mp3",
+    "transcript": [
+      {
+        "time": 0.6,
+        "speaker": "Agent",
+        "text": "Hello! Thank you for calling SecureBank Services. I’m your AI banking assistant, here to help you with account inquiries, transactions, and appointments — securely and anytime. How can I assist you today?"
+      },
+      {
+        "time": 11,
+        "speaker": "Customer",
+        "text": "Hi, I want to check the status of a recent transaction."
+      },
+      {
+        "time": 15,
+        "speaker": "Agent",
+        "text": "I can help with that. For security purposes, I’ll only share non sensitive information. Could you please tell me the last four digits of your account number?"
+      },
+      {
+        "time": 24,
+        "speaker": "Customer",
+        "text": "It’s four eight two one."
+      },
+      {
+        "time": 26.4,
+        "speaker": "Agent",
+        "text": "Thank you. Please give me a moment while I check the details."
+      },
+      {
+        "time": 30,
+        "speaker": "Agent",
+        "text": "Alright, I see the transaction. Your payment of twelve thousand five hundred rupees, made yesterday, is successfully completed and credited to the recipient."
+      },
+      {
+        "time": 40,
+        "speaker": "Agent",
+        "text": "Would you like me to send you a confirmation message?"
+      },
+      {
+        "time": 43,
+        "speaker": "Customer",
+        "text": "Yes, please."
+      },
+      {
+        "time": 45,
+        "speaker": "Agent",
+        "text": "Done. I’ve sent the confirmation to your registered email and mobile number."
+      },
+      {
+        "time": 49,
+        "speaker": "Agent",
+        "text": "Is there anything else I can help you with today — such as loan information, credit card details, or booking an appointment with a relationship manager?"
+      },
+      {
+        "time": 56,
+        "speaker": "Customer",
+        "text": "I’d like to talk to someone about a home loan."
+      },
+      {
+        "time": 59,
+        "speaker": "Agent",
+        "text": "Sure. Are you looking for a new home loan, or a balance transfer?"
+      },
+      {
+        "time": 63,
+        "speaker": "Customer",
+        "text": "A new home loan."
+      },
+      {
+        "time": 66,
+        "speaker": "Agent",
+        "text": "Got it. I see availability with our loan advisors tomorrow at eleven a.m. and three p.m. Which time works best for you?"
+      },
+      {
+        "time": 72,
+        "speaker": "Customer",
+        "text": "Three p.m."
+      },
+      {
+        "time": 74,
+        "speaker": "Agent",
+        "text": "Perfect. I’ve scheduled your appointment for tomorrow at three p.m."
+      },
+      {
+        "time": 77,
+        "speaker": "Agent",
+        "text": "You’ll receive a confirmation along with a checklist of documents to keep ready. Is there anything else I can assist you with today?"
+      },
+      {
+        "time": 85,
+        "speaker": "Customer",
+        "text": "No, that’s all. Thank you."
+      },
+      {
+        "time": 88,
+        "speaker": "Agent",
+        "text": "You’re very welcome. Thank you for choosing SecureBank. Have a great day."
+      }
+    ]
+  }
+}

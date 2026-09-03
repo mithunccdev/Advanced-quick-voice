@@ -1,0 +1,10 @@
+export { CustomerSupportBenefitsSection } from './customer-support-benefits-section';
+export { CustomerSupportCtaSection } from './customer-support-cta-section';
+export { CustomerSupportDemoSection } from './customer-support-demo-section';
+export { CustomerSupportFaqSection } from './customer-support-faq-section';
+export { CustomerSupportHeroSection } from './customer-support-hero-section';
+export { CustomerSupportIndustriesSection } from './customer-support-industries-section';
+export { CustomerSupportIntegrationsSection } from './customer-support-integrations-section';
+export { CustomerSupportSuccessSection } from './customer-support-success-section';
+export { CustomerSupportTestimonialsSection } from './customer-support-testimonials-section';
+export { CustomerSupportUseCasesSection } from './customer-support-use-cases-section';

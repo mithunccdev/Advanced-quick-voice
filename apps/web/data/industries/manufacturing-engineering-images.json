@@ -1,0 +1,106 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/manufacturing/HeroSection_Manufacturing_Engineering_wxeeae.jpg",
+    "alt": "Manufacturing AI Dashboard showing production metrics, quality control, and AI-powered manufacturing operations"
+  },
+  "howQuickVoiceCanHelp": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/manufacturing/How_quickvoice_can_help_yqzqcq.jpg",
+    "alt": "How QuickVoice can help manufacturing operations with AI automation - Automated maintenance alerts, order status updates, and inventory management"
+  },
+  "realTimeIntelligence": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/manufacturing/Real-Time_Manufacturing_Intelligence_guwejf.jpg",
+    "alt": "Real-Time Manufacturing Intelligence - Advanced analytics and insights for manufacturing operations"
+  },
+  "manufacturing": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767123642250-final-manufacturing-demo.mp3",
+  "transcript": [
+    {
+      "time": 0,
+      "speaker": "Agent",
+      "text": "Hello! Thank you for calling NovaTech Manufacturing Support. I’m your AI operations assistant, here to help with order updates, maintenance alerts, and inventory coordination — twenty four seven. How can I assist you today?"
+    },
+    {
+      "time": 11.5,
+      "speaker": "Customer",
+      "text": "Hi, I’m calling to check the status of our equipment order. It’s been delayed."
+    },
+    {
+      "time": 15.8,
+      "speaker": "Agent",
+      "text": "I understand how important timely delivery is. Could you please share your purchase order number?"
+    },
+    {
+      "time": 20.8,
+      "speaker": "Customer",
+      "text": "Yes, it’s P O 7 8 4 2 1."
+    },
+    {
+      "time": 26.8,
+      "speaker": "Agent",
+      "text": "Thank you. Please give me a moment while I pull up the details... Your order was delayed due to a supplier component shortage, but it has now been dispatched today."
+    },
+    {
+      "time": 36,
+      "speaker": "Agent",
+      "text": "The updated expected delivery is Friday by four p.m. Would you like me to enable automated shipment updates?"
+    },
+    {
+      "time": 43.5,
+      "speaker": "Customer",
+      "text": "Yes, please do."
+    },
+    {
+      "time": 44,
+      "speaker": "Agent",
+      "text": "Done. You’ll receive real time updates until delivery."
+    },
+    {
+      "time": 48,
+      "speaker": "Agent",
+      "text": "I also see that your CNC Line three machine is due for preventive maintenance next week. Would you like me to schedule a service reminder, or notify your maintenance team automatically?"
+    },
+    {
+      "time": 58.9,
+      "speaker": "Customer",
+      "text": "Notify the maintenance team."
+    },
+    {
+      "time": 61.5,
+      "speaker": "Agent",
+      "text": "Perfect. I’ve scheduled automated alerts for your maintenance supervisor, including a service checklist and downtime window."
+    },
+    {
+      "time": 68.9,
+      "speaker": "Agent",
+      "text": "Your bearing stock levels are also running low. Would you like me to initiate a reorder request, or alert procurement?"
+    },
+    {
+      "time": 76,
+      "speaker": "Customer",
+      "text": "Alert procurement for now."
+    },
+    {
+      "time": 78.5,
+      "speaker": "Agent",
+      "text": "Consider it done. Your procurement team will receive a detailed alert shortly."
+    },
+    {
+      "time": 83,
+      "speaker": "Agent",
+      "text": "If any issue escalates, I can instantly route it to a human specialist with full context. Is there anything else I can assist you with today?"
+    },
+    {
+      "time": 92.7,
+      "speaker": "Customer",
+      "text": "No, that covers everything. Thanks."
+    },
+    {
+      "time": 96,
+      "speaker": "Agent",
+      "text": "You’re welcome. Thank you for choosing NovaTech Manufacturing. Wishing you smooth operations and a productive day."
+    }
+  ]
+}
+
+
+
+

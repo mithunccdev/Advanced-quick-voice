@@ -1,0 +1,106 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/hr-recruiting/heroSection_Image_HR_Recruting_frw5by.jpg",
+    "alt": "HR AI dashboard showing recruitment automation, candidate screening, and interview scheduling analytics"
+  },
+  "screenCandidates": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/hr-recruiting/Screen_Candidates_Instantly_evqsuv.jpg",
+    "alt": "Screen Candidates Instantly - Mobile-first application process with conversational screening and AI-powered resume matching"
+  },
+  "scheduleInterviews": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/hr-recruiting/Schedule_Interviews_Automatically_zmyxhb.jpg",
+    "alt": "Schedule Interviews Automatically - Outlook and Gmail integration with automated reminders and multi-person coordination"
+  },
+  "candidateExperience": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/hr-recruiting/Provide_a_Magical_Candidate_Experience_egnuze.jpg",
+    "alt": "Provide a Magical Candidate Experience - Personalized candidate interactions with 24/7 availability and real-time updates"
+  },
+  "integration": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/hr-recruiting/Effortless_Integration_nsench.jpg",
+    "alt": "HR integration dashboard showing seamless connectivity with existing tools and ATS systems"
+  },
+  "hr": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767123582092-final-hr-recruiting-demo.mp3",
+  "transcript": [
+    {
+      "time": 0,
+      "speaker": "Agent",
+      "text": "Hello! Thank you for applying to TechCorp Solutions... I’m Olivia, your AI recruiting assistant. I’m here to help with screening, interview scheduling, and application updates — anytime. Shall we get started?"
+    },
+    {
+      "time": 12.8,
+      "speaker": "Candidate",
+      "text": "Yes, sure."
+    },
+    {
+      "time": 14,
+      "speaker": "Agent",
+      "text": "Great. Are you applying for the Software Engineer role?"
+    },
+    {
+      "time": 17.8,
+      "speaker": "Candidate",
+      "text": "Yes, that’s correct."
+    },
+    {
+      "time": 19.7,
+      "speaker": "Agent",
+      "text": "Perfect. How many years of professional experience do you have in software development?"
+    },
+    {
+      "time": 24.9,
+      "speaker": "Candidate",
+      "text": "Around two years."
+    },
+    {
+      "time": 27,
+      "speaker": "Agent",
+      "text": "Thank you. Which technologies are you most comfortable with?"
+    },
+    {
+      "time": 31,
+      "speaker": "Candidate",
+      "text": "JavaScript, React, and Node.js."
+    },
+    {
+      "time": 34,
+      "speaker": "Agent",
+      "text": "Got it. Based on your profile, you meet the initial requirements. The next step is a technical interview."
+    },
+    {
+      "time": 41.5,
+      "speaker": "Agent",
+      "text": "I see availability tomorrow at three p.m., or the day after tomorrow at eleven a.m. Which works best?"
+    },
+    {
+      "time": 47.9,
+      "speaker": "Candidate",
+      "text": "Tomorrow at three p.m."
+    },
+    {
+      "time": 50.8,
+      "speaker": "Agent",
+      "text": "Perfect. Your interview is scheduled for tomorrow at three p.m."
+    },
+    {
+      "time": 55,
+      "speaker": "Agent",
+      "text": "You’ll receive a calendar invite, video meeting link, and interview details shortly. Would you like updates on your application status, or information about company culture and benefits?"
+    },
+    {
+      "time":65.8 ,
+      "speaker": "Candidate",
+      "text": "Company culture and benefits would be nice."
+    },
+    {
+      "time": 69.8,
+      "speaker": "Agent",
+      "text": "Absolutely. I’ll share that information with you right away. If you need to reschedule or have any questions, you can reach me anytime."
+    },
+    {
+      "time": 78,
+      "speaker": "Agent",
+      "text": "Best of luck, and thank you for your interest in TechCorp Solutions."
+    }
+  ]
+
+}

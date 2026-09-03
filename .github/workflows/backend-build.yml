@@ -1,0 +1,540 @@
+name: Backend Build and Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/server/**"
+      - "apps/ai/**"
+      - "packages/typescript-config/**"
+      - "scripts/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".npmrc"
+      - ".github/workflows/ci.yml"
+      - ".github/workflows/backend-build.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: quickvoice-backend-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  SERVER_ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+  AI_ECR_REPOSITORY: ${{ vars.AI_ECR_REPOSITORY }}
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  COOLIFY_API_URL: ${{ vars.COOLIFY_API_URL }}
+  COOLIFY_QUICKVOICE_SERVER_RESOURCE_UUID: ${{ vars.COOLIFY_QUICKVOICE_SERVER_RESOURCE_UUID }}
+  COOLIFY_QUICKVOICE_AI_RESOURCE_UUID: ${{ vars.COOLIFY_QUICKVOICE_AI_RESOURCE_UUID }}
+
+jobs:
+  changes:
+    name: Detect Backend Changes
+    runs-on: self-hosted
+    permissions:
+      contents: read
+    outputs:
+      server: ${{ steps.detect.outputs.server }}
+      ai: ${{ steps.detect.outputs.ai }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect backend changes
+        id: detect
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          server_changed=false
+          ai_changed=false
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            server_changed=true
+            ai_changed=true
+            changed_files="workflow_dispatch"
+          else
+            before="${{ github.event.before }}"
+            if [ -z "$before" ] || [[ "$before" =~ ^0+$ ]]; then
+              changed_files="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA")"
+            else
+              changed_files="$(git diff --name-only "$before" "$GITHUB_SHA")"
+            fi
+
+            if echo "$changed_files" | grep -Eq '^(apps/server/|packages/typescript-config/|scripts/|package\.json$|pnpm-lock\.yaml$|pnpm-workspace\.yaml$|\.npmrc$|\.github/workflows/ci\.yml$|\.github/workflows/backend-build\.yml$)'; then
+              server_changed=true
+            fi
+
+            if echo "$changed_files" | grep -Eq '^(apps/ai/|scripts/|\.github/workflows/ci\.yml$|\.github/workflows/backend-build\.yml$)'; then
+              ai_changed=true
+            fi
+          fi
+
+          {
+            echo "server=${server_changed}"
+            echo "ai=${ai_changed}"
+          } >> "$GITHUB_OUTPUT"
+
+          {
+            echo "## Backend changes"
+            echo "- Server changed: ${server_changed}"
+            echo "- AI changed: ${ai_changed}"
+            echo ""
+            echo "Changed files:"
+            echo '```'
+            echo "$changed_files"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  validate-config:
+    name: Validate Deployment Config
+    runs-on: self-hosted
+    needs: changes
+    if: needs.changes.outputs.server == 'true' || needs.changes.outputs.ai == 'true'
+    steps:
+      - name: Validate deployment configuration
+        env:
+          REQUIRED_AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN }}
+          REQUIRED_AWS_REGION: ${{ env.AWS_REGION }}
+          REQUIRED_SERVER_ECR_REPOSITORY: ${{ env.SERVER_ECR_REPOSITORY }}
+          REQUIRED_AI_ECR_REPOSITORY: ${{ env.AI_ECR_REPOSITORY }}
+          REQUIRED_COOLIFY_API_URL: ${{ env.COOLIFY_API_URL }}
+          REQUIRED_COOLIFY_QUICKVOICE_SERVER_RESOURCE_UUID: ${{ env.COOLIFY_QUICKVOICE_SERVER_RESOURCE_UUID }}
+          REQUIRED_COOLIFY_QUICKVOICE_AI_RESOURCE_UUID: ${{ env.COOLIFY_QUICKVOICE_AI_RESOURCE_UUID }}
+          REQUIRED_COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}
+        run: |
+          missing=0
+          if [ -z "$REQUIRED_AWS_ROLE_ARN" ]; then
+            echo "[fail] Missing GitHub repository variable: AWS_ROLE_ARN"
+            missing=1
+          fi
+          if [ -z "$REQUIRED_AWS_REGION" ]; then
+            echo "[fail] Missing GitHub repository variable: AWS_REGION"
+            missing=1
+          fi
+          if [ -z "$REQUIRED_SERVER_ECR_REPOSITORY" ]; then
+            echo "[fail] Missing GitHub repository variable: ECR_REPOSITORY"
+            missing=1
+          fi
+          if [ -z "$REQUIRED_AI_ECR_REPOSITORY" ]; then
+            echo "[fail] Missing GitHub repository variable: AI_ECR_REPOSITORY"
+            missing=1
+          fi
+          if [ -z "$REQUIRED_COOLIFY_API_URL" ]; then
+            echo "[fail] Missing GitHub repository variable: COOLIFY_API_URL"
+            missing=1
+          fi
+          if [ -z "$REQUIRED_COOLIFY_QUICKVOICE_SERVER_RESOURCE_UUID" ]; then
+            echo "[fail] Missing GitHub repository variable: COOLIFY_QUICKVOICE_SERVER_RESOURCE_UUID"
+            missing=1
+          fi
+          if [ -z "$REQUIRED_COOLIFY_QUICKVOICE_AI_RESOURCE_UUID" ]; then
+            echo "[fail] Missing GitHub repository variable: COOLIFY_QUICKVOICE_AI_RESOURCE_UUID"
+            missing=1
+          fi
+          if [ -z "$REQUIRED_COOLIFY_API_TOKEN" ]; then
+            echo "[fail] Missing GitHub repository secret: COOLIFY_API_TOKEN"
+            missing=1
+          fi
+
+          if [ "$missing" -ne 0 ]; then
+            {
+              echo "## Deployment configuration"
+              echo "[fail] Missing required GitHub repository variables."
+              echo ""
+              echo "Set these GitHub repository variables before running this workflow:"
+              echo "- AWS_ROLE_ARN"
+              echo "- AWS_REGION"
+              echo "- ECR_REPOSITORY"
+              echo "- AI_ECR_REPOSITORY"
+              echo "- COOLIFY_API_URL"
+              echo "- COOLIFY_QUICKVOICE_SERVER_RESOURCE_UUID"
+              echo "- COOLIFY_QUICKVOICE_AI_RESOURCE_UUID"
+              echo "- COOLIFY_API_TOKEN secret"
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+          {
+            echo "## Deployment configuration"
+            echo "[ok] Required GitHub repository variables are configured."
+            echo "- AWS region: ${REQUIRED_AWS_REGION}"
+            echo "- Server ECR repository: ${REQUIRED_SERVER_ECR_REPOSITORY}"
+            echo "- AI ECR repository: ${REQUIRED_AI_ECR_REPOSITORY}"
+            echo "- Coolify server app UUID: ${REQUIRED_COOLIFY_QUICKVOICE_SERVER_RESOURCE_UUID}"
+            echo "- Coolify AI app UUID: ${REQUIRED_COOLIFY_QUICKVOICE_AI_RESOURCE_UUID}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  build-server:
+    name: Build and Push Server Image
+    runs-on: self-hosted
+    needs: [changes, validate-config]
+    if: needs.changes.outputs.server == 'true'
+    permissions:
+      id-token: write
+      contents: read
+    outputs:
+      image_uri: ${{ steps.image.outputs.image_uri }}
+      image_tag: ${{ steps.image.outputs.image_tag }}
+      digest: ${{ steps.server-build.outputs.digest }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push server Docker image
+        id: server-build
+        shell: bash
+        env:
+          IMAGE_TAG: ${{ steps.login-ecr.outputs.registry }}/${{ env.SERVER_ECR_REPOSITORY }}:sha-${{ github.sha }}
+          LATEST_TAG: ${{ steps.login-ecr.outputs.registry }}/${{ env.SERVER_ECR_REPOSITORY }}:latest
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            if docker build \
+              --file apps/server/Dockerfile \
+              --tag "${IMAGE_TAG}" \
+              --tag "${LATEST_TAG}" \
+              . && docker push "${IMAGE_TAG}" && docker push "${LATEST_TAG}"; then
+              digest="$(aws ecr describe-images \
+                --repository-name "${SERVER_ECR_REPOSITORY}" \
+                --image-ids imageTag="sha-${GITHUB_SHA}" \
+                --query 'imageDetails[0].imageDigest' \
+                --output text)"
+              if [ -z "${digest}" ] || [ "${digest}" = "None" ]; then
+                echo "[fail] Could not resolve pushed server image digest."
+                exit 1
+              fi
+              echo "digest=${digest}" >> "${GITHUB_OUTPUT}"
+              exit 0
+            fi
+            echo "Docker server build/push failed on attempt ${attempt}; retrying after transient registry/network failure..."
+            sleep $((attempt * 20))
+          done
+          exit 1
+
+      - name: Export server image metadata
+        id: image
+        env:
+          IMAGE_TAG: ${{ steps.login-ecr.outputs.registry }}/${{ env.SERVER_ECR_REPOSITORY }}:sha-${{ github.sha }}
+          IMAGE_DIGEST: ${{ steps.server-build.outputs.digest }}
+        run: |
+          set -euo pipefail
+          echo "image_tag=${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
+          echo "image_uri=${IMAGE_TAG%@*}@${IMAGE_DIGEST}" >> "$GITHUB_OUTPUT"
+
+      - name: Smoke test pushed server image manifest
+        env:
+          SERVER_IMAGE_URI: ${{ steps.image.outputs.image_uri }}
+        run: docker buildx imagetools inspect "$SERVER_IMAGE_URI"
+
+  build-ai:
+    name: Build and Push AI Image
+    runs-on: self-hosted
+    needs: [changes, validate-config]
+    if: needs.changes.outputs.ai == 'true'
+    permissions:
+      id-token: write
+      contents: read
+    outputs:
+      image_uri: ${{ steps.image.outputs.image_uri }}
+      image_tag: ${{ steps.image.outputs.image_tag }}
+      digest: ${{ steps.ai-build.outputs.digest }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push AI Docker image
+        id: ai-build
+        shell: bash
+        env:
+          IMAGE_TAG: ${{ steps.login-ecr.outputs.registry }}/${{ env.AI_ECR_REPOSITORY }}:sha-${{ github.sha }}
+          LATEST_TAG: ${{ steps.login-ecr.outputs.registry }}/${{ env.AI_ECR_REPOSITORY }}:latest
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            if docker build \
+              --file apps/ai/Dockerfile \
+              --tag "${IMAGE_TAG}" \
+              --tag "${LATEST_TAG}" \
+              apps/ai && docker push "${IMAGE_TAG}" && docker push "${LATEST_TAG}"; then
+              digest="$(aws ecr describe-images \
+                --repository-name "${AI_ECR_REPOSITORY}" \
+                --image-ids imageTag="sha-${GITHUB_SHA}" \
+                --query 'imageDetails[0].imageDigest' \
+                --output text)"
+              if [ -z "${digest}" ] || [ "${digest}" = "None" ]; then
+                echo "[fail] Could not resolve pushed AI image digest."
+                exit 1
+              fi
+              echo "digest=${digest}" >> "${GITHUB_OUTPUT}"
+              exit 0
+            fi
+            echo "Docker AI build/push failed on attempt ${attempt}; retrying after transient registry/network failure..."
+            sleep $((attempt * 20))
+          done
+          exit 1
+
+      - name: Export AI image metadata
+        id: image
+        env:
+          IMAGE_TAG: ${{ steps.login-ecr.outputs.registry }}/${{ env.AI_ECR_REPOSITORY }}:sha-${{ github.sha }}
+          IMAGE_DIGEST: ${{ steps.ai-build.outputs.digest }}
+        run: |
+          set -euo pipefail
+          echo "image_tag=${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
+          echo "image_uri=${IMAGE_TAG%@*}@${IMAGE_DIGEST}" >> "$GITHUB_OUTPUT"
+
+      - name: Smoke test pushed AI image manifest
+        env:
+          AI_IMAGE_URI: ${{ steps.image.outputs.image_uri }}
+        run: docker buildx imagetools inspect "$AI_IMAGE_URI"
+
+  deploy:
+    name: Deploy Backend Images to Coolify
+    runs-on: self-hosted
+    needs: [changes, validate-config, build-server, build-ai]
+    if: |
+      always()
+      && (needs.changes.outputs.server == 'true' || needs.changes.outputs.ai == 'true')
+      && (needs.validate-config.result == 'success')
+      && (needs.build-server.result == 'success' || needs.build-server.result == 'skipped')
+      && (needs.build-ai.result == 'success' || needs.build-ai.result == 'skipped')
+    environment:
+      name: production-backend
+    steps:
+      - name: Trigger Coolify deployment(s)
+        id: deploy
+        env:
+          SERVER_CHANGED: ${{ needs.changes.outputs.server }}
+          AI_CHANGED: ${{ needs.changes.outputs.ai }}
+          SERVER_IMAGE_URI: ${{ needs.build-server.outputs.image_uri }}
+          SERVER_IMAGE_TAG: ${{ needs.build-server.outputs.image_tag }}
+          AI_IMAGE_URI: ${{ needs.build-ai.outputs.image_uri }}
+          AI_IMAGE_TAG: ${{ needs.build-ai.outputs.image_tag }}
+          COOLIFY_API_URL: ${{ env.COOLIFY_API_URL }}
+          COOLIFY_SERVER_RESOURCE_UUID: ${{ env.COOLIFY_QUICKVOICE_SERVER_RESOURCE_UUID }}
+          COOLIFY_AI_RESOURCE_UUID: ${{ env.COOLIFY_QUICKVOICE_AI_RESOURCE_UUID }}
+          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          deploy_coolify() {
+            local label="$1"
+            local resource_uuid="$2"
+            local image_uri="$3"
+            local image_tag="$4"
+            local image_name="${image_tag%:*}"
+            local tag="${image_tag##*:}"
+
+            if [ -z "$resource_uuid" ]; then
+              echo "[fail] Missing Coolify resource UUID for ${label}."
+              exit 1
+            fi
+            if [ -z "$image_uri" ]; then
+              echo "[fail] Missing ${label} image digest."
+              exit 1
+            fi
+
+            curl --fail --show-error --silent \
+              --request PATCH "${COOLIFY_API_URL}/applications/${resource_uuid}" \
+              --header "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
+              --header "Content-Type: application/json" \
+              --data "$(printf '{"docker_registry_image_name":"%s","docker_registry_image_tag":"%s"}' "$image_name" "$tag")"
+
+            curl --fail --show-error --silent \
+              --request POST "${COOLIFY_API_URL}/deploy?uuid=${resource_uuid}&force=false" \
+              --header "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
+              --header "Content-Type: application/json"
+
+            {
+              echo "- ${label} Coolify app UUID: ${resource_uuid}"
+              echo "- ${label} image: ${image_uri}"
+              echo "- ${label} image tag: ${image_tag}"
+              echo "- ${label} Coolify image tag: ${tag}"
+            } >> "$GITHUB_STEP_SUMMARY"
+          }
+
+          {
+            echo "## Coolify deployment"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$SERVER_CHANGED" = "true" ]; then
+            deploy_coolify "Server" "$COOLIFY_SERVER_RESOURCE_UUID" "$SERVER_IMAGE_URI" "$SERVER_IMAGE_TAG"
+          fi
+          if [ "$AI_CHANGED" = "true" ]; then
+            deploy_coolify "AI" "$COOLIFY_AI_RESOURCE_UUID" "$AI_IMAGE_URI" "$AI_IMAGE_TAG"
+          fi
+
+  scan-server:
+    name: Scan Server Image
+    runs-on: self-hosted
+    needs: [changes, build-server]
+    if: needs.changes.outputs.server == 'true' && needs.build-server.result == 'success'
+    steps:
+      - name: Scan server image for vulnerabilities
+        id: trivy
+        continue-on-error: true
+        uses: aquasecurity/trivy-action@v0.35.0
+        with:
+          image-ref: ${{ needs.build-server.outputs.image_uri }}
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          timeout: 20m0s
+          exit-code: "1"
+
+      - name: Report server scan warning
+        if: steps.trivy.outcome == 'failure'
+        run: |
+          echo "::warning::Server image vulnerability scan reported findings or could not complete."
+          {
+            echo "## Server image scan"
+            echo "[warn] Advisory scan reported findings or could not complete."
+            echo "- Image: ${{ needs.build-server.outputs.image_uri }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  scan-ai:
+    name: Scan AI Image
+    runs-on: self-hosted
+    needs: [changes, build-ai]
+    if: needs.changes.outputs.ai == 'true' && needs.build-ai.result == 'success'
+    steps:
+      - name: Scan AI image for vulnerabilities
+        id: trivy
+        continue-on-error: true
+        uses: aquasecurity/trivy-action@v0.35.0
+        with:
+          image-ref: ${{ needs.build-ai.outputs.image_uri }}
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          timeout: 20m0s
+          exit-code: "1"
+
+      - name: Report AI scan warning
+        if: steps.trivy.outcome == 'failure'
+        run: |
+          echo "::warning::AI image vulnerability scan reported findings or could not complete."
+          {
+            echo "## AI image scan"
+            echo "[warn] Advisory scan reported findings or could not complete."
+            echo "- Image: ${{ needs.build-ai.outputs.image_uri }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  sign-server:
+    name: Sign Server Image
+    runs-on: self-hosted
+    needs: [changes, build-server]
+    if: needs.changes.outputs.server == 'true' && needs.build-server.result == 'success'
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Install cosign
+        id: cosign-install
+        continue-on-error: true
+        uses: sigstore/cosign-installer@v3
+
+      - name: Sign server image
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+          SERVER_IMAGE_URI: ${{ needs.build-server.outputs.image_uri }}
+        run: |
+          if ! command -v cosign >/dev/null 2>&1; then
+            echo "::warning::Cosign is unavailable; skipping server image signing."
+            exit 0
+          fi
+
+          if ! cosign sign --yes "$SERVER_IMAGE_URI"; then
+            echo "::warning::Server image signing failed; deployment is already decoupled from advisory signing."
+            {
+              echo "## Server image signing"
+              echo "[warn] Signing failed or could not complete."
+              echo "- Image: ${SERVER_IMAGE_URI}"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  sign-ai:
+    name: Sign AI Image
+    runs-on: self-hosted
+    needs: [changes, build-ai]
+    if: needs.changes.outputs.ai == 'true' && needs.build-ai.result == 'success'
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Install cosign
+        id: cosign-install
+        continue-on-error: true
+        uses: sigstore/cosign-installer@v3
+
+      - name: Sign AI image
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+          AI_IMAGE_URI: ${{ needs.build-ai.outputs.image_uri }}
+        run: |
+          if ! command -v cosign >/dev/null 2>&1; then
+            echo "::warning::Cosign is unavailable; skipping AI image signing."
+            exit 0
+          fi
+
+          if ! cosign sign --yes "$AI_IMAGE_URI"; then
+            echo "::warning::AI image signing failed; deployment is already decoupled from advisory signing."
+            {
+              echo "## AI image signing"
+              echo "[warn] Signing failed or could not complete."
+              echo "- Image: ${AI_IMAGE_URI}"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  rollback-metadata:
+    name: Rollback Metadata
+    runs-on: self-hosted
+    needs: [changes, build-server, build-ai, deploy]
+    if: |
+      always()
+      && needs.deploy.result == 'success'
+      && (needs.changes.outputs.server == 'true' || needs.changes.outputs.ai == 'true')
+    steps:
+      - name: Write rollback metadata
+        env:
+          SERVER_CHANGED: ${{ needs.changes.outputs.server }}
+          AI_CHANGED: ${{ needs.changes.outputs.ai }}
+          SERVER_IMAGE_TAG: ${{ needs.build-server.outputs.image_tag }}
+          AI_IMAGE_TAG: ${{ needs.build-ai.outputs.image_tag }}
+          SERVER_IMAGE_DIGEST: ${{ needs.build-server.outputs.digest }}
+          AI_IMAGE_DIGEST: ${{ needs.build-ai.outputs.digest }}
+        run: |
+          {
+            echo "## Rollback metadata"
+            echo "- Source commit: ${GITHUB_SHA}"
+            if [ "$SERVER_CHANGED" = "true" ]; then
+              echo "- Server image tag: ${SERVER_IMAGE_TAG}"
+              echo "- Server image digest: ${SERVER_IMAGE_DIGEST}"
+            fi
+            if [ "$AI_CHANGED" = "true" ]; then
+              echo "- AI image tag: ${AI_IMAGE_TAG}"
+              echo "- AI image digest: ${AI_IMAGE_DIGEST}"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

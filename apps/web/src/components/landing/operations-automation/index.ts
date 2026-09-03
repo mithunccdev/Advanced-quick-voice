@@ -1,0 +1,10 @@
+export { OperationsAutomationHeroSection } from "./operations-automation-hero-section";
+export { OperationsAutomationImpactSection } from "./operations-automation-impact-section";
+export { OperationsAutomationWorkflowSection } from "./operations-automation-workflow-section";
+export { OperationsAutomationBenefitsSection } from "./operations-automation-benefits-section";
+export { OperationsAutomationExperienceSection } from "./operations-automation-experience-section";
+export { OperationsAutomationTrustedSection } from "./operations-automation-trusted-section";
+export { OperationsAutomationWhySection } from "./operations-automation-why-section";
+export { OperationsAutomationIndustriesSection } from "./operations-automation-industries-section";
+export { OperationsAutomationFaqSection } from "./operations-automation-faq-section";
+export { OperationsAutomationCtaSection } from "./operations-automation-cta-section";

@@ -1,0 +1,117 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/e-commerce/Ecommerce_AI_dashboard_zqpcc2.jpg",
+    "alt": "E-commerce AI Dashboard showing customer analytics and conversational AI metrics"
+  },
+  "customerSupport": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/e-commerce/ecommerce-customer-support-final_lujvdz.svg",
+    "alt": "AI Customer Support Dashboard - 24/7 Multilingual Support with Smart Escalation"
+  },
+  "boostSales": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/e-commerce/boost-sales-lead-generation_uwnxtb.jpg",
+    "alt": "Boost Sales & Lead Generation with Conversational AI - Guided selling and cart recovery"
+  },
+  "recruitingScreening": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/e-commerce/revolutionize-recruiting-screening_woee2g.jpg",
+    "alt": "Revolutionize Recruiting with AI-Powered Screening - Automated candidate screening and scheduling"
+  },
+  "operations": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/e-commerce/ecommerce-operations_tkq7n1.svg",
+    "alt": "Optimize Operations with Conversational AI - Delivery coordination, inventory management, and VoC collection"
+  },
+  "ecommerce": {
+    "fileUrl": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767124148313-final-retail-ecommerce-demo.mp3",
+    "transcript": [
+      {
+        "time": 0.5,
+        "speaker": "Agent",
+        "text": "Hello! Welcome to ShopEase. I’m your AI shopping assistant, here to help you find products, track orders, and answer questions anytime. How can I help you today?"
+      },
+      {
+        "time": 10,
+        "speaker": "Customer",
+        "text": "Hi, I’m looking for a good pair of running shoes."
+      },
+      {
+        "time": 13,
+        "speaker": "Agent",
+        "text": "Sure! I can help with that. Are you looking for daily training shoes, or long distance running shoes?"
+      },
+      {
+        "time": 18,
+        "speaker": "Customer",
+        "text": "Mostly for daily training."
+      },
+      {
+        "time": 21,
+        "speaker": "Agent",
+        "text": "Great. Do you have a preferred budget or brand, or should I suggest our best sellers?"
+      },
+      {
+        "time": 27,
+        "speaker": "Customer",
+        "text": "You can suggest best sellers."
+      },
+      {
+        "time": 31,
+        "speaker": "Agent",
+        "text": "Perfect. Based on customer reviews, I recommend the FlexRun Pro running shoes. They’re lightweight, breathable, and great for daily runs."
+      },
+      {
+        "time": 38,
+        "speaker": "Agent",
+        "text": "They’re priced at four thousand nine hundred ninety nine rupees, and available in your size. Would you like to check color options, or add them to your cart?"
+      },
+      {
+        "time": 47,
+        "speaker": "Customer",
+        "text": "Add them to my cart."
+      },
+      {
+        "time": 50,
+        "speaker": "Agent",
+        "text": "Done. The FlexRun Pro shoes are now added to your cart."
+      },
+      {
+        "time": 54,
+        "speaker": "Agent",
+        "text": "Many runners also buy ankle socks or fitness trackers. Would you like me to show you some options?"
+      },
+      {
+        "time": 59,
+        "speaker": "Customer",
+        "text": "No, that’s okay."
+      },
+      {
+        "time": 62,
+        "speaker": "Agent",
+        "text": "No problem at all. Would you like help with checkout, or should I send you a reminder later?"
+      },
+      {
+        "time": 67,
+        "speaker": "Customer",
+        "text": "I’ll checkout later."
+      },
+      {
+        "time": 70,
+        "speaker": "Agent",
+        "text": "Alright. I’ll send you a gentle reminder, and if available, a limited time discount."
+      },
+      {
+        "time": 75,
+        "speaker": "Agent",
+        "text": "Before I go, is there anything else I can assist you with — like order tracking, returns, or store policies?"
+      },
+      {
+        "time": 82,
+        "speaker": "Customer",
+        "text": "No, that’s all."
+      },
+      {
+        "time": 84,
+        "speaker": "Agent",
+        "text": "You’re very welcome. Thanks for shopping with ShopEase. Have a great day."
+      }
+    ]
+  }
+}

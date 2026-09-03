@@ -1,0 +1,116 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/education/Education_Hero_Section_gx2qbg.jpg",
+    "alt": "Education AI Dashboard showing student engagement, scheduling, and educational support solutions"
+  },
+  "education": {
+    "fileUrl": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767123363296-final-education-demo.mp3",
+    "transcript": [
+      {
+        "time": 0.6,
+        "speaker": "Agent",
+        "text": "Hello! Welcome to EduSphere Learning. I’m your AI education assistant, here to help students, parents, and teachers with course information, admissions, and academic support — anytime. How can I help you today?"
+      },
+      {
+        "time": 12.5,
+        "speaker": "Customer",
+        "text": "Hi, I want to know about courses related to data science."
+      },
+      {
+        "time": 16,
+        "speaker": "Agent",
+        "text": "Great choice. Are you a student, a working professional, or a parent inquiring for someone else?"
+      },
+      {
+        "time": 22,
+        "speaker": "Customer",
+        "text": "I’m a final year student."
+      },
+      {
+        "time": 25,
+        "speaker": "Agent",
+        "text": "Perfect. We offer a six month data science certification, and a one year advanced data science program."
+      },
+      {
+        "time": 31,
+        "speaker": "Agent",
+        "text": "Would you like details on curriculum, fees, or career outcomes?"
+      },
+      {
+        "time": 36,
+        "speaker": "Customer",
+        "text": "I’d like to know about fees and placement support."
+      },
+      {
+        "time": 39.3,
+        "speaker": "Agent",
+        "text": "Sure. The six month certification costs sixty five thousand rupees."
+      },
+      {
+        "time": 42.2,
+        "speaker": "Agent",
+        "text": "The advanced program costs one lakh twenty thousand rupees. Both include live mentor sessions, hands on projects, and placement assistance."
+      },
+      {
+        "time": 52,
+        "speaker": "Agent",
+        "text": "Would you like to speak with an academic counselor?"
+      },
+      {
+        "time": 54.5,
+        "speaker": "Customer",
+        "text": "Yes, that would be helpful."
+      },
+      {
+        "time": 56,
+        "speaker": "Agent",
+        "text": "Great. I see availability today at six p.m., or tomorrow at eleven a.m. Which works better?"
+      },
+      {
+        "time": 63,
+        "speaker": "Customer",
+        "text": "Tomorrow at eleven a.m."
+      },
+      {
+        "time": 65,
+        "speaker": "Agent",
+        "text": "Perfect. Your counseling session is scheduled for tomorrow at eleven a.m."
+      },
+      {
+        "time": 70,
+        "speaker": "Agent",
+        "text": "You’ll receive a confirmation message and course brochure shortly."
+      },
+      {
+        "time": 74,
+        "speaker": "Agent",
+        "text": "Would you also like updates on scholarships or admission deadlines?"
+      },
+      {
+        "time": 77,
+        "speaker": "Customer",
+        "text": "Yes, scholarship details would be great."
+      },
+      {
+        "time": 80,
+        "speaker": "Agent",
+        "text": "Absolutely. I’ll share scholarship information with you."
+      },
+      {
+        "time": 83,
+        "speaker": "Agent",
+        "text": "Is there anything else I can help you with today?"
+      },
+      {
+        "time": 86,
+        "speaker": "Customer",
+        "text": "No, that’s all. Thank you."
+      },
+      {
+        "time": 88,
+        "speaker": "Agent",
+        "text": "You’re very welcome. Thank you for choosing EduSphere Learning. We look forward to supporting your learning journey. Have a great day."
+      }
+    ]
+  }
+}

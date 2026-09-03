@@ -1,0 +1,130 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/real-estate/heroSection_Image_RealEstate_uykq2c.jpg",
+    "alt": "Real Estate AI Dashboard showing property listings, customer interactions, and conversational AI solutions"
+  },
+  "features": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/real-estate/featuresSection_Image_RealEstate_uxx77f.jpg",
+    "alt": "Real Estate Features - Property inquiries, scheduling, and customer engagement solutions"
+  },
+  "realEstate": {
+    "fileUrl": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767124009478-final-real-estate-demo.mp3",
+    "transcript": [
+      {
+        "time": 0.6,
+        "speaker": "Agent",
+        "text": "Hello! Thank you for calling PrimeNest Realty. I’m your AI real estate assistant, here to help with property details, schedule tours, and answer your questions anytime. How can I assist you today?"
+      },
+      {
+        "time": 12,
+        "speaker": "Customer",
+        "text": "Hi, I’m interested in a property I saw listed online."
+      },
+      {
+        "time": 17,
+        "speaker": "Agent",
+        "text": "Great! Are you looking to buy, or rent a property?"
+      },
+      {
+        "time": 20,
+        "speaker": "Customer",
+        "text": "I’m looking to buy."
+      },
+      {
+        "time": 24,
+        "speaker": "Agent",
+        "text": "Perfect. Do you have a preferred location or property type?"
+      },
+      {
+        "time": 28.5,
+        "speaker": "Customer",
+        "text": "An apartment in the South City area."
+      },
+      {
+        "time": 31,
+        "speaker": "Agent",
+        "text": "Got it. Are you looking for a two BHK, or three BHK?"
+      },
+      {
+        "time": 35,
+        "speaker": "Customer",
+        "text": "A two BHK."
+      },
+      {
+        "time": 37,
+        "speaker": "Agent",
+        "text": "That’s a popular choice. We have several two BHK apartments available in South City, priced between eighty and ninety five lakhs."
+      },
+      {
+        "time": 46,
+        "speaker": "Agent",
+        "text": "What’s your purchase timeline? Are you planning to buy soon, or just exploring options?"
+      },
+      {
+        "time": 52,
+        "speaker": "Customer",
+        "text": "Hopefully within the next three months."
+      },
+      {
+        "time": 55,
+        "speaker": "Agent",
+        "text": "That’s great to hear. Would you like to schedule an in person property tour, or a virtual tour?"
+      },
+      {
+        "time": 61,
+        "speaker": "Customer",
+        "text": "An in person visit would be better."
+      },
+      {
+        "time": 65,
+        "speaker": "Agent",
+        "text": "No problem. I see availability tomorrow at eleven a.m., or the day after tomorrow at four p.m. Which works better for you?"
+      },
+      {
+        "time": 72,
+        "speaker": "Customer",
+        "text": "Tomorrow at eleven a.m."
+      },
+      {
+        "time": 74,
+        "speaker": "Agent",
+        "text": "Perfect. I’ve scheduled your property tour for tomorrow at eleven a.m."
+      },
+      {
+        "time": 78,
+        "speaker": "Agent",
+        "text": "You’ll receive a confirmation message, property address, and agent contact details shortly."
+      },
+      {
+        "time": 83,
+        "speaker": "Agent",
+        "text": "Would you also like a callback from a property consultant to discuss pricing and financing options?"
+      },
+      {
+        "time": 89,
+        "speaker": "Customer",
+        "text": "Yes, that would be helpful."
+      },
+      {
+        "time": 92,
+        "speaker": "Agent",
+        "text": "Great. I’ll arrange that for you. Our consultant will contact you with full context of our conversation."
+      },
+      {
+        "time": 97,
+        "speaker": "Agent",
+        "text": "Is there anything else I can assist you with today?"
+      },
+      {
+        "time": 100,
+        "speaker": "Customer",
+        "text": "No, that’s all. Thank you."
+      },
+      {
+        "time": 103,
+        "speaker": "Agent",
+        "text": "You’re very welcome. Thank you for choosing PrimeNest Realty. Have a great day."
+      }
+    ]
+  }
+}

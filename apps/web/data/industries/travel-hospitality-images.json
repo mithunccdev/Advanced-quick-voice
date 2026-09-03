@@ -1,0 +1,115 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/travel-hospitality/image_for_hero_section_travel-hospitality_odmtle.jpg",
+    "alt": "Travel and Hospitality AI Dashboard showing customer service metrics and conversational AI solutions"
+  },
+  "customerSupport": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/travel-hospitality/Enhancing_Customer_Support_Travel_ake6j0.jpg",
+    "alt": "Enhancing Customer Support Travel - 24/7 multilingual support for travel and hospitality businesses"
+  },
+  "hospitality": {
+    "fileUrl": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767124501952-final-travel-hospitality-demo.mp3",
+    "transcript": [
+      {
+        "time": 0.6,
+        "speaker": "Agent",
+        "text": "Hello! Welcome to Horizon Hotels and Travel. I’m your AI concierge, here to help with reservations, itinerary details, and guest services — anytime. How can I assist you today?"
+      },
+      {
+        "time": 11,
+        "speaker": "Customer",
+        "text": "Hi, I’d like to check availability for a room next weekend."
+      },
+      {
+        "time": 15,
+        "speaker": "Agent",
+        "text": "Of course. May I know your check in and check out dates, please?"
+      },
+      {
+        "time": 19,
+        "speaker": "Customer",
+        "text": "Check in on Friday, and check out on Sunday."
+      },
+      {
+        "time": 22,
+        "speaker": "Agent",
+        "text": "Thank you. We have availability."
+      },
+      {
+        "time": 24.7,
+        "speaker": "Agent",
+        "text": "We offer a Deluxe Room, and a Premium Sea View Room. Would you like details on pricing and amenities?"
+      },
+      {
+        "time": 32,
+        "speaker": "Customer",
+        "text": "Yes, please."
+      },
+      {
+        "time": 33,
+        "speaker": "Agent",
+        "text": "The Deluxe Room starts at nine thousand five hundred rupees per night."
+      },
+      {
+        "time": 38,
+        "speaker": "Agent",
+        "text": "The Premium Sea View Room starts at twelve thousand rupees per night, including breakfast. Would you like to book now, or should I hold the room?"
+      },
+      {
+        "time": 46,
+        "speaker": "Customer",
+        "text": "I’d like to book the Deluxe Room."
+      },
+      {
+        "time": 49.5,
+        "speaker": "Agent",
+        "text": "Great choice. May I confirm — is this booking for two adults?"
+      },
+      {
+        "time": 54,
+        "speaker": "Customer",
+        "text": "Yes."
+      },
+      {
+        "time": 55,
+        "speaker": "Agent",
+        "text": "Perfect. Your Deluxe Room is now reserved."
+      },
+      {
+        "time": 58,
+        "speaker": "Agent",
+        "text": "You’ll receive a confirmation message and payment link shortly."
+      },
+      {
+        "time": 62,
+        "speaker": "Agent",
+        "text": "Would you also like help with airport transfers, local experiences, or restaurant reservations?"
+      },
+      {
+        "time": 68,
+        "speaker": "Customer",
+        "text": "Airport transfer would be helpful."
+      },
+      {
+        "time": 70,
+        "speaker": "Agent",
+        "text": "Absolutely. I’ve added an airport pickup to your booking."
+      },
+      {
+        "time": 73,
+        "speaker": "Agent",
+        "text": "You’ll receive driver details a day before arrival. Is there anything else I can assist you with today?"
+      },
+      {
+        "time": 79,
+        "speaker": "Customer",
+        "text": "No, that’s all. Thank you."
+      },
+      {
+        "time": 81,
+        "speaker": "Agent",
+        "text": "You’re very welcome. We look forward to hosting you at Horizon Hotels. Have a wonderful day."
+      }
+    ]
+  }
+}

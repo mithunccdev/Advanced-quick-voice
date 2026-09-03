@@ -1,0 +1,123 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/logistics/heroSection_Image_Logistics_gx4m4x.jpg",
+    "alt": "Logistics AI dashboard showing customer support automation, order tracking, and conversation analytics"
+  },
+  "orderManagement": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/logistics/comprehensive-order-management-support_xsjhoo.jpg",
+    "alt": "Comprehensive Order Management & Support - Instant resolution of order inquiries, modifications, tracking, and installations"
+  },
+  "peakHours": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/logistics/peak-off-hours-management_mpwcz8.jpg",
+    "alt": "Peak and Off-Hours Management - 24/7 availability to handle off-hours and high-volume spikes"
+  },
+  "escalation": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/logistics/escalation-human-handoff-coordination_in77j5.jpg",
+    "alt": "Escalation & Human Handoff Coordination - Seamless escalation to human agents with full context and real-time alerts"
+  },
+  "logistics": {
+    "fileUrl": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767121666050-final-logistics-demo.mp3",
+    "transcript": [
+      {
+        "time": 0.6,
+        "speaker": "Agent",
+        "text": "Hello! Thank you for calling SwiftMove Logistics. I’m your AI support assistant, here to help with shipment tracking, delivery updates, and issue resolution — twenty four seven. How can I assist you today?"
+      },
+      {
+        "time": 14,
+        "speaker": "Customer",
+        "text": "Hi, I want to check the status of my shipment."
+      },
+      {
+        "time": 20,
+        "speaker": "Agent",
+        "text": "Sure. Could you please share your tracking number?"
+      },
+      {
+        "time": 23,
+        "speaker": "Customer",
+        "text": "Yes, it’s S M four five eight nine two one."
+      },
+      {
+        "time": 28,
+        "speaker": "Agent",
+        "text": "Thank you. Please give me a moment while I check the details."
+      },
+      {
+        "time": 32.5,
+        "speaker": "Agent",
+        "text": "Your shipment is currently in transit and has reached the Ranchi distribution hub."
+      },
+      {
+        "time": 38,
+        "speaker": "Agent",
+        "text": "The estimated delivery is tomorrow by six p.m."
+      },
+      {
+        "time": 40.5,
+        "speaker": "Agent",
+        "text": "Would you like me to send real time updates via SMS or WhatsApp?"
+      },
+      {
+        "time": 45,
+        "speaker": "Customer",
+        "text": "Yes, WhatsApp would be good."
+      },
+      {
+        "time": 49,
+        "speaker": "Agent",
+        "text": "Done. You’ll receive automated updates on WhatsApp until the package is delivered."
+      },
+      {
+        "time": 54,
+        "speaker": "Agent",
+        "text": "Is there anything else I can assist you with — like rescheduling delivery, address changes, or reporting an issue?"
+      },
+      {
+        "time": 60,
+        "speaker": "Customer",
+        "text": "I might not be available tomorrow. Can I reschedule?"
+      },
+      {
+        "time": 64,
+        "speaker": "Agent",
+        "text": "Of course. Would you like delivery the day after tomorrow, or this weekend?"
+      },
+      {
+        "time": 69,
+        "speaker": "Customer",
+        "text": "This weekend."
+      },
+      {
+        "time": 71,
+        "speaker": "Agent",
+        "text": "Perfect. I’ve successfully rescheduled your delivery for Saturday."
+      },
+      {
+        "time": 74.7,
+        "speaker": "Agent",
+        "text": "You’ll receive a confirmation message shortly."
+      },
+      {
+        "time": 77,
+        "speaker": "Agent",
+        "text": "If any issue arises, I can instantly escalate it to a human agent with full context."
+      },
+      {
+        "time": 82,
+        "speaker": "Agent",
+        "text": "Is there anything else I can help you with today?"
+      },
+      {
+        "time": 85,
+        "speaker": "Customer",
+        "text": "No, that’s all. Thanks."
+      },
+      {
+        "time": 88,
+        "speaker": "Agent",
+        "text": "You’re very welcome. Thank you for choosing SwiftMove Logistics. Have a great day."
+      }
+    ]
+  }
+}

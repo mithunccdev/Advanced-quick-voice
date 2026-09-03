@@ -1,0 +1,187 @@
+version: "3"
+
+vars:
+  COMPOSE_FILE: docker-compose.dev.yml
+  PNPM_VERSION: 9.0.0
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  doctor:
+    desc: Check host prerequisites for local development
+    cmds:
+      - ./scripts/dev-doctor.sh
+
+  env:dev:
+    desc: Create local development env files from templates
+    cmds:
+      - ./scripts/dev-env.sh
+
+  deps:node:
+    desc: Install Node workspace dependencies with pnpm
+    env:
+      PNPM_VERSION: "{{.PNPM_VERSION}}"
+    cmds:
+      - ./scripts/dev-node-deps.sh
+
+  deps:update:
+    desc: Explicitly update the pnpm lockfile when dependency changes are intended
+    env:
+      PNPM_VERSION: "{{.PNPM_VERSION}}"
+    cmds:
+      - corepack prepare pnpm@{{.PNPM_VERSION}} --activate
+      - pnpm install --lockfile-only
+
+  deps:python:
+    desc: Create the AI Python virtualenv and install runtime and test requirements
+    dir: apps/ai
+    cmds:
+      - python3 -m venv .venv
+      - . .venv/bin/activate && python -m pip install --upgrade pip && python -m pip install -r requirements-dev.txt
+
+  deps:
+    desc: Install Node and Python dependencies
+    cmds:
+      - task: deps:node
+      - task: deps:python
+
+  docker:up:
+    desc: Start local Docker dependencies
+    deps:
+      - env:dev
+    cmds:
+      - docker compose -f {{.COMPOSE_FILE}} --env-file .env.dev up -d postgres redis
+
+  docker:down:
+    desc: Stop local Docker dependencies
+    deps:
+      - env:dev
+    cmds:
+      - docker compose -f {{.COMPOSE_FILE}} --env-file .env.dev down
+
+  docker:reset:
+    desc: Remove local Docker dependencies and volumes
+    deps:
+      - env:dev
+    prompt: This deletes the local QuickVoice Postgres, Redis, and optional service volumes. Continue?
+    cmds:
+      - docker compose -f {{.COMPOSE_FILE}} --env-file .env.dev down -v
+
+  mail:up:
+    desc: Start optional Mailpit email testing service
+    deps:
+      - env:dev
+    cmds:
+      - docker compose -f {{.COMPOSE_FILE}} --env-file .env.dev --profile mail up -d mailpit
+      - echo "Mailpit is available at http://localhost:8025"
+
+  mail:down:
+    desc: Stop optional Mailpit email testing service
+    deps:
+      - env:dev
+    cmds:
+      - docker compose -f {{.COMPOSE_FILE}} --env-file .env.dev --profile mail stop mailpit
+      - docker compose -f {{.COMPOSE_FILE}} --env-file .env.dev --profile mail rm -f mailpit
+
+  dev:clear:
+    desc: Stop stale QuickVoice local dev processes
+    cmds:
+      - ./scripts/dev-clear-processes.sh
+
+  db:migrate:
+    desc: Apply Prisma migrations to the local development database
+    deps:
+      - env:dev
+      - deps:node
+      - docker:up
+    dir: apps/server
+    env:
+      DOTENV_CONFIG_PATH: .env.dev
+    cmds:
+      - pnpm exec prisma migrate dev
+
+  db:seed:
+    desc: Seed demo data, for example task db:seed -- --email you@example.com
+    deps:
+      - env:dev
+      - deps:node
+    dir: apps/server
+    env:
+      DOTENV_CONFIG_PATH: .env.dev
+    cmds:
+      - pnpm run seed -- {{.CLI_ARGS}}
+
+  ci:
+    desc: Run the local CI suite used by pull requests
+    cmds:
+      - pnpm ci:local
+
+  up:dev:
+    desc: Prepare env, install deps, start Docker deps, migrate DB, and run local services
+    cmds:
+      - task: dev:clear
+      - task: doctor
+      - task: env:dev
+      - task: deps:node
+      - task: deps:python
+      - task: docker:up
+      - task: db:migrate
+      - ./scripts/dev-up.sh
+
+  up:
+    desc: Alias for up:dev
+    cmds:
+      - task: up:dev
+
+  dev:
+    desc: Alias for up:dev
+    cmds:
+      - task: up:dev
+
+  server:dev:
+    desc: Run only the Express API
+    deps:
+      - env:dev
+    dir: apps/server
+    env:
+      DOTENV_CONFIG_PATH: .env.dev
+    cmds:
+      - pnpm dev
+
+  console:dev:
+    desc: Run only the console app
+    deps:
+      - env:dev
+    dir: apps/console
+    cmds:
+      - pnpm dev --port ${CONSOLE_PORT:-3000}
+
+  web:dev:
+    desc: Run only the marketing app
+    deps:
+      - env:dev
+    dir: apps/web
+    cmds:
+      - pnpm dev --port ${WEB_PORT:-3001}
+
+  ai:api:
+    desc: Run only the AI FastAPI service
+    deps:
+      - env:dev
+      - deps:python
+    dir: apps/ai
+    cmds:
+      - . .env.dev && . .venv/bin/activate && python main.py api
+
+  ai:worker:
+    desc: Run only the LiveKit AI worker
+    deps:
+      - env:dev
+      - deps:python
+    dir: apps/ai
+    cmds:
+      - . .env.dev && . .venv/bin/activate && python main.py dev

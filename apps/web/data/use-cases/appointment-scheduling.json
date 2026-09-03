@@ -1,0 +1,124 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/appointments/appointment_secheduling_1.jpg",
+    "alt": "AI Appointment Scheduling Dashboard showing automated scheduling and calendar management"
+  },
+  "useCases": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/appointments/appointment_scheduling_2.jpg",
+    "alt": "Built for the Modern Enterprise - AI appointment scheduling dashboard"
+  } , 
+  "appointmentscheduling": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767123251715-final-appointment-setter-demo.mp3", 
+  "transcript": [
+    {
+      "time": -1,
+      "speaker": "Agent",
+      "text": "Hello! Thank you for calling PrimeNest Realty. I’m your AI appointment assistant, available twenty four seven to help you schedule, reschedule, or manage property visits. How can I help you today?"
+    },
+    {
+      "time": 13.5,
+      "speaker": "Customer",
+      "text": "Hi, I want to book an appointment to visit a flat I saw on your website."
+    },
+    {
+      "time": 17.5,
+      "speaker": "Agent",
+      "text": "Absolutely. I can take care of that for you. To get started, may I know if this visit is for buying or renting?"
+    },
+    {
+      "time": 26,
+      "speaker": "Customer",
+      "text": "Buying."
+    },
+    {
+      "time": 28,
+      "speaker": "Agent",
+      "text": "Great choice. Are you looking for a one BHK, two BHK, or three BHK?"
+    },
+    {
+      "time": 33.5,
+      "speaker": "Customer",
+      "text": "A two BHK."
+    },
+    {
+      "time": 34.5,
+      "speaker": "Agent",
+      "text": "Perfect. May I ask — is this for self use or for investment?"
+    },
+    {
+      "time": 39.5,
+      "speaker": "Customer",
+      "text": "Mostly for investment."
+    },
+    {
+      "time": 42.9,
+      "speaker": "Agent",
+      "text": "Understood. Based on your preference, I see a few excellent two BHK options available in your area with strong rental potential. Would you prefer an in person site visit or a virtual tour?"
+    },
+    {
+      "time": 54.9,
+      "speaker": "Customer",
+      "text": "An in person visit would be better."
+    },
+    {
+      "time": 56.7,
+      "speaker": "Agent",
+      "text": "No problem at all. I have openings tomorrow between eleven a.m. and one p.m., or the day after tomorrow between four p.m. and six p.m. Which works better for you?"
+    },
+    {
+      "time": 69.9,
+      "speaker": "Customer",
+      "text": "Tomorrow around noon would be good."
+    },
+    {
+      "time": 73.9,
+      "speaker": "Agent",
+      "text": "Great. I’m booking your site visit for tomorrow at twelve p.m. Just to confirm — two BHK, investment purpose, in person visit, tomorrow at twelve p.m. Is that correct?"
+    },
+    {
+      "time": 84,
+      "speaker": "Customer",
+      "text": "Yes, that’s correct."
+    },
+    {
+      "time": 87.5,
+      "speaker": "Agent",
+      "text": "Perfect. Your appointment is confirmed. You’ll receive a WhatsApp confirmation, a calendar invite, and property location details."
+    },
+    {
+      "time": 93.7,
+      "speaker": "Agent",
+      "text": "Would you like me to also share pricing and expected rental returns before your visit?"
+    },
+    {
+      "time": 99,
+      "speaker": "Customer",
+      "text": "Yes, that would be helpful."
+    },
+    {
+      "time": 102.9,
+      "speaker": "Agent",
+      "text": "The property is priced at eighty six lakhs, and similar units typically generate thirty two thousand to thirty five thousand rupees per month in rent. I’ll include this information in your confirmation message."
+    },
+    {
+      "time": 116.5,
+      "speaker": "Agent",
+      "text": "Is there anything else I can assist you with today?"
+    },
+    {
+      "time": 119.5,
+      "speaker": "Customer",
+      "text": "No, that’s all. Thank you."
+    },
+    {
+      "time": 122,
+      "speaker": "Agent",
+      "text": "You’re very welcome. I look forward to assisting you throughout your property journey. Have a great day."
+    }
+  ]
+
+
+
+
+
+
+}

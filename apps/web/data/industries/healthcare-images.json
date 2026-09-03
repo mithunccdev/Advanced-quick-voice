@@ -1,0 +1,96 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/healthcare/healthcare-ai-dashboard_ygm48m.jpg",
+    "alt": "Healthcare AI Dashboard showing patient call routing, scheduling analytics, and voice AI metrics"
+  },
+  "healthcare": {
+    "fileUrl": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767123516714-final-healthcare-demo.mp3",
+    "transcript": [
+      {
+        "time": 0.6,
+        "speaker": "Agent",
+        "text": "Hello! Thank you for calling CarePlus Health Network. I’m your AI assistant, here to help you schedule appointments, route your call, or answer general questions. How can I assist you today?"
+      },
+      {
+        "time": 10,
+        "speaker": "Customer",
+        "text": "Hi, I want to book an appointment with a doctor."
+      },
+      {
+        "time": 13,
+        "speaker": "Agent",
+        "text": "I’d be happy to help with that. Is this for urgent care, general consultation, or a specialist visit?"
+      },
+      {
+        "time": 18,
+        "speaker": "Customer",
+        "text": "It’s for a general consultation."
+      },
+      {
+        "time": 22,
+        "speaker": "Agent",
+        "text": "Got it. Could you please share your ZIP code so I can find the nearest clinic for you?"
+      },
+      {
+        "time": 27,
+        "speaker": "Customer",
+        "text": "Yes, it’s eight three four zero zero one."
+      },
+      {
+        "time": 32,
+        "speaker": "Agent",
+        "text": "Thank you. I’ve located the nearest CarePlus clinic based on your location. Would you like to book for today, or a future date?"
+      },
+      {
+        "time": 39,
+        "speaker": "Customer",
+        "text": "Tomorrow would be better."
+      },
+      {
+        "time": 42,
+        "speaker": "Agent",
+        "text": "Sure. I see availability tomorrow at ten thirty a.m., twelve p.m., and four p.m. Which time works best for you?"
+      },
+      {
+        "time": 49,
+        "speaker": "Customer",
+        "text": "Twelve p.m."
+      },
+      {
+        "time": 51,
+        "speaker": "Agent",
+        "text": "Perfect. Before I confirm, is this a new visit, or a follow up appointment?"
+      },
+      {
+        "time": 57,
+        "speaker": "Customer",
+        "text": "It’s a follow up."
+      },
+      {
+        "time": 59,
+        "speaker": "Agent",
+        "text": "Thank you. Your appointment has been successfully booked for tomorrow at twelve p.m."
+      },
+      {
+        "time": 63,
+        "speaker": "Agent",
+        "text": "You’ll receive a confirmation message and a reminder before your visit. Would you like help with insurance details or clinic directions?"
+      },
+      {
+        "time": 70,
+        "speaker": "Customer",
+        "text": "No, that’s okay."
+      },
+      {
+        "time": 74,
+        "speaker": "Agent",
+        "text": "Alright. If you need to reschedule, cancel, or have any questions, you can call us anytime."
+      },
+      {
+        "time": 79,
+        "speaker": "Agent",
+        "text": "Thank you for choosing CarePlus Health Network. Take care, and we’ll see you tomorrow."
+      }
+    ]
+  }
+}

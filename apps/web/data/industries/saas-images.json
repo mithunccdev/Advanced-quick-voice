@@ -1,0 +1,126 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/saas/HeroSection_2_pz9f0r.jpg",
+    "alt": "SaaS AI Dashboard showing customer engagement metrics, analytics, and conversational AI solutions"
+  },
+  "customerSupport": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/saas/saas-customer-support_j2hpsg.svg",
+    "alt": "SaaS Customer Support - AI-powered customer service solutions for SaaS businesses"
+  },
+  "industrySolutions": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/saas/saas-industry-solutions_hneoqc.svg",
+    "alt": "SaaS Industry Solutions - Comprehensive AI solutions tailored for SaaS companies"
+  },
+  "analytics": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/saas/advanced-analytics-insights_ervqbh.jpg",
+    "alt": "Advanced Analytics and Insights - Real-time metrics and actionable data for SaaS businesses"
+  },
+  "security": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/saas/enterprise-grade-security_vr7lcm.jpg",
+    "alt": "Enterprise-Grade Security - SOC 2 compliant security solutions for SaaS platforms"
+  },
+  "deployment": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/saas/lightning-fast-deployment_lyrwef.jpg",
+    "alt": "Lightning-Fast Deployment - Quick setup and integration for SaaS businesses"
+  },
+  "saas": {
+    "fileUrl": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767124189849-final-saas-demo.mp3",
+    "transcript": [
+      {
+        "time": 0.6,
+        "speaker": "Agent",
+        "text": "Hello! Thanks for calling CloudFlow. I’m your AI assistant, here to help with product questions, onboarding, and support — twenty four seven. How can I assist you today?"
+      },
+      {
+        "time": 10,
+        "speaker": "Customer",
+        "text": "Hi, I’m evaluating your product and had a few questions."
+      },
+      {
+        "time": 14,
+        "speaker": "Agent",
+        "text": "Happy to help. Are you currently using CloudFlow, or exploring it for the first time?"
+      },
+      {
+        "time": 20,
+        "speaker": "Customer",
+        "text": "I’m exploring it for the first time."
+      },
+      {
+        "time": 22,
+        "speaker": "Agent",
+        "text": "Great. Are you evaluating this for a startup, a mid size company, or an enterprise?"
+      },
+      {
+        "time": 27,
+        "speaker": "Customer",
+        "text": "For a mid size company."
+      },
+      {
+        "time": 30,
+        "speaker": "Agent",
+        "text": "Perfect. Most mid size teams use CloudFlow to automate workflows, integrate CRM and helpdesk tools, and reduce response times."
+      },
+      {
+        "time": 39,
+        "speaker": "Agent",
+        "text": "Would you like a quick overview, pricing details, or to book a live demo?"
+      },
+      {
+        "time": 42,
+        "speaker": "Customer",
+        "text": "I’d like to book a demo."
+      },
+      {
+        "time": 44,
+        "speaker": "Agent",
+        "text": "Excellent choice. I see demo availability today at five thirty p.m., or tomorrow at eleven a.m. Which works best?"
+      },
+      {
+        "time": 52,
+        "speaker": "Customer",
+        "text": "Tomorrow at eleven a.m."
+      },
+      {
+        "time": 55,
+        "speaker": "Agent",
+        "text": "Perfect. Your demo is scheduled for tomorrow at eleven a.m."
+      },
+      {
+        "time": 58,
+        "speaker": "Agent",
+        "text": "You’ll receive a calendar invite, demo link, and a pre demo checklist shortly."
+      },
+      {
+        "time": 63,
+        "speaker": "Agent",
+        "text": "Would you like me to also share pricing plans or case studies?"
+      },
+      {
+        "time": 67,
+        "speaker": "Customer",
+        "text": "Yes, pricing plans would be helpful."
+      },
+      {
+        "time": 70,
+        "speaker": "Agent",
+        "text": "Absolutely. I’ll send the pricing details to your email right away."
+      },
+      {
+        "time": 75,
+        "speaker": "Agent",
+        "text": "Is there anything else I can help you with today?"
+      },
+      {
+        "time": 77,
+        "speaker": "Customer",
+        "text": "No, that’s all. Thanks."
+      },
+      {
+        "time": 80,
+        "speaker": "Agent",
+        "text": "You’re very welcome. Thanks for considering CloudFlow. We look forward to speaking with you tomorrow. Have a great day."
+      }
+    ]
+  }
+}

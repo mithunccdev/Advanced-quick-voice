@@ -1,0 +1,104 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/automotive/Revolutionize_Your_Automotive_Business_with_AI-Powered_Voice_Assistants_odyx4x.png",
+    "alt": "Automotive AI Dashboard showing customer engagement metrics, test drive scheduling analytics, and sales process optimization"
+  },
+  "boostSales": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/automotive/Boost_Sales_and_Customer_Satisfaction_with_QuickVoice_ebzfrn.jpg",
+    "alt": "Sales performance dashboard showing increased conversions and customer satisfaction metrics"
+  },
+  "testDriveScheduling": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/Industries/automotive/Streamline_Test_Drive_Scheduling_and_Customer_Screening_with_AI_lvbri6.jpg",
+    "alt": "AI-powered test drive scheduling system showing calendar integration and automated booking process"
+  },
+  "automotive": {
+    "fileUrl": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767122911534-final-automotive-demo.mp3",
+    "transcript": [
+      {
+        "time": 0.5,
+        "speaker": "Agent",
+        "text": "Hello! Thank you for calling AutoDrive Motors. I’m your AI automotive assistant, here to help you schedule test drives, answer vehicle questions, and assist you anytime. How can I help you today?"
+      },
+      {
+        "time": 13.6,
+        "speaker": "Customer",
+        "text": "Hi, I’m interested in booking a test drive."
+      },
+      {
+        "time": 17.5,
+        "speaker": "Agent",
+        "text": "That’s great to hear. Which vehicle are you interested in — a sedan, SUV, or a specific model?"
+      },
+      {
+        "time": 23.5,
+        "speaker": "Customer",
+        "text": "I’m interested in the new XDrive SUV."
+      },
+      {
+        "time": 27,
+        "speaker": "Agent",
+        "text": "Excellent choice. Are you looking for the petrol or diesel variant?"
+      },
+      {
+        "time": 32,
+        "speaker": "Customer",
+        "text": "Petrol."
+      },
+      {
+        "time": 34,
+        "speaker": "Agent",
+        "text": "Got it. When would you like to schedule your test drive? Today, tomorrow, or a specific date?"
+      },
+      {
+        "time": 40.2,
+        "speaker": "Customer",
+        "text": "Tomorrow would be good."
+      },
+      {
+        "time": 42,
+        "speaker": "Agent",
+        "text": "Perfect. I see availability tomorrow at eleven a.m., two p.m., and five p.m. Which time works best for you?"
+      },
+      {
+        "time": 49.3,
+        "speaker": "Customer",
+        "text": "Two p.m."
+      },
+      {
+        "time": 52,
+        "speaker": "Agent",
+        "text": "Great. I’ve scheduled your test drive for tomorrow at two p.m. Before I confirm, are you planning to purchase within the next three months, or are you just exploring options?"
+      },
+      {
+        "time": 63,
+        "speaker": "Customer",
+        "text": "Probably within the next three months."
+      },
+      {
+        "time": 66,
+        "speaker": "Agent",
+        "text": "Thank you. You’ll receive a confirmation message, dealership address, and a pre-test drive checklist shortly. Would you also like pricing or financing options sent to you?"
+      },
+      {
+        "time": 77,
+        "speaker": "Customer",
+        "text": "Yes, financing options would be helpful."
+      },
+      {
+        "time": 80,
+        "speaker": "Agent",
+        "text": "Absolutely. I’ll arrange that for you, and a sales advisor will reach out with complete details. Is there anything else I can assist you with today?"
+      },
+      {
+        "time": 89,
+        "speaker": "Customer",
+        "text": "No, that’s all. Thanks."
+      },
+      {
+        "time": 92,
+        "speaker": "Agent",
+        "text": "You’re very welcome. Thank you for choosing AutoDrive Motors. We look forward to seeing you tomorrow. Have a great day."
+      }
+    ]
+  }
+}

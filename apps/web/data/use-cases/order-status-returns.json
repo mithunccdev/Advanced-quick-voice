@@ -1,0 +1,88 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/order/order-status-returns_2.jpg",
+    "alt": "Quickvoice AI-powered order status and returns dashboard showing real-time order tracking, customer analytics, and automated returns processing"
+  },
+  "useCases": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/order/order-status-returns_1.jpg",
+    "alt": "Enterprise Security"
+  },
+  "orderstatusreturns": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767123912592-final-order-status-returns-demo.mp3",
+  "transcript": [
+    {
+      "time": -2,
+      "speaker": "Agent",
+      "text": "Hello! Thanks for calling ShopEase Support... I’m your AI assistant, here to help you with order status, deliveries, and returns. How can I assist you today?"
+    },
+    {
+      "time": 9,
+      "speaker": "Customer",
+      "text": "Hi, I want to check the status of my order."
+    },
+    {
+      "time": 11,
+      "speaker": "Agent",
+      "text": "Sure, I can help with that. Could you please share your order number?"
+    },
+    {
+      "time": 15.8,
+      "speaker": "Customer",
+      "text": "Yes, it’s order number S E - 4 5 8 7 2."
+    },
+    {
+      "time": 20,
+      "speaker": "Agent",
+      "text": "Thank you. Please give me a moment while I check your order... Alright, I see your order here. Your package is out for delivery and is expected to arrive today by 7 p.m. Would you like me to send you the live tracking link?"
+    },
+    {
+      "time": 32.5 ,
+      "speaker": "Customer",
+      "text": "Yes, please."
+    },
+    {
+      "time": 33.9,
+      "speaker": "Agent",
+      "text": "Done. I’ve sent the tracking link to your WhatsApp and email. Is there anything else I can help you with today?"
+    },
+    {
+      "time": 40.7,
+      "speaker": "Customer",
+      "text": "Actually, I might want to return one item from the order."
+    },
+    {
+      "time": 44,
+      "speaker": "Agent",
+      "text": "No problem at all. I can help you initiate a return. May I know which item you’d like to return?"
+    },
+    {
+      "time": 49.8,
+      "speaker": "Customer",
+      "text": "The blue jacket."
+    },
+    {
+      "time": 52.9,
+      "speaker": "Agent",
+      "text": "Got it. The blue jacket is eligible for return until June thirtieth. Would you like a pickup from your address, or prefer to drop it off at a nearby store?"
+    },
+    {
+      "time": 61.9,
+      "speaker": "Customer",
+      "text": "Pickup would be better."
+    },
+    {
+      "time": 63.9,
+      "speaker": "Agent",
+      "text": "Sure. I’ve scheduled a pickup for tomorrow between ten a.m. and one p.m. Once the item is picked up, your refund of two thousand four hundred ninety nine rupees will be processed within five to seven business days. You’ll receive confirmation shortly. Is there anything else I can assist you with?"
+    },
+    {
+      "time": 81.5,
+      "speaker": "Customer",
+      "text": "No, that’s all. Thanks for the help."
+    },
+    {
+      "time": 84.9,
+      "speaker": "Agent",
+      "text": "You’re very welcome. Thank you for shopping with ShopEase... Have a great day."
+    }
+  ]
+}

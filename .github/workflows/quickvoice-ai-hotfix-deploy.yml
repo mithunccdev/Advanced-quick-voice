@@ -1,0 +1,58 @@
+name: QuickVoice AI Hotfix Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      ai_image:
+        description: QuickVoice AI image expected to be configured on the Coolify app before triggering deploy
+        required: true
+        default: 557690613141.dkr.ecr.us-east-1.amazonaws.com/allgpt-co/quickvoice-ai:sha-65e2778ea121f67407906f05595a05b2ab49cdb7@sha256:1be327ebbd515217949cabfcce6e5bd8b010264e72b82c303242623528c111ad
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-ai:
+    name: Deploy QuickVoice AI Image
+    runs-on: ubuntu-latest
+    environment:
+      name: production-backend
+    env:
+      COOLIFY_API_URL: ${{ vars.COOLIFY_API_URL }}
+      COOLIFY_QUICKVOICE_AI_RESOURCE_UUID: ${{ vars.COOLIFY_QUICKVOICE_AI_RESOURCE_UUID }}
+      AI_IMAGE: ${{ inputs.ai_image }}
+    steps:
+      - name: Trigger Coolify AI deployment
+        id: deploy
+        env:
+          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -z "${COOLIFY_API_URL}" ] || [ -z "${COOLIFY_QUICKVOICE_AI_RESOURCE_UUID}" ] || [ -z "${COOLIFY_API_TOKEN}" ]; then
+            echo "[fail] Missing COOLIFY_API_URL, COOLIFY_QUICKVOICE_AI_RESOURCE_UUID, or COOLIFY_API_TOKEN."
+            exit 1
+          fi
+
+          image_without_digest="${AI_IMAGE%@*}"
+          image_name="${image_without_digest%:*}"
+          tag="${image_without_digest##*:}"
+
+          curl --fail --show-error --silent \
+            --request PATCH "${COOLIFY_API_URL}/applications/${COOLIFY_QUICKVOICE_AI_RESOURCE_UUID}" \
+            --header "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
+            --header "Content-Type: application/json" \
+            --data "$(printf '{"docker_registry_image_name":"%s","docker_registry_image_tag":"%s"}' "$image_name" "$tag")"
+
+          curl --fail --show-error --silent \
+            --request POST "${COOLIFY_API_URL}/deploy?uuid=${COOLIFY_QUICKVOICE_AI_RESOURCE_UUID}&force=false" \
+            --header "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
+            --header "Content-Type: application/json"
+
+          {
+            echo "## QuickVoice AI hotfix deploy"
+            echo "- Coolify AI app UUID: ${COOLIFY_QUICKVOICE_AI_RESOURCE_UUID}"
+            echo "- Requested AI image: ${AI_IMAGE}"
+            echo "- Coolify image tag: ${tag}"
+          } >> "${GITHUB_STEP_SUMMARY}"

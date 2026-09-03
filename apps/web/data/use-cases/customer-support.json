@@ -1,0 +1,128 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/customer/customer_support_1.jpg",
+    "alt": "AI Appointment Scheduling Dashboard showing automated scheduling and calendar management"
+  },
+  "useCases": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/customer/customer_support_2.jpg",
+    "alt": "AI Customer Service Agent in action"
+  }, 
+  "customersupport": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767123093951-customer-support.mp3",
+  "transcript": [
+    {
+      "time": 0,
+      "speaker": "Agent",
+      "text": "Hello! Thank you for contacting PrimeNest Realty Support. I’m here to help you 24/7. How can I assist you today?"
+    },
+    {
+      "time": 7.5,
+      "speaker": "Customer",
+      "text": "Hi, my maintenance request hasn’t been resolved yet, and I also want some information about buying a flat in this building."
+    },
+    {
+      "time": 15.5,
+      "speaker": "Agent",
+      "text": "I’m sorry for the inconvenience. I can help with both. Let’s start with the maintenance issue. Could you please share your apartment number?"
+    },
+    {
+      "time": 23,
+      "speaker": "Customer",
+      "text": "It’s B-1204."
+    },
+    {
+      "time": 26,
+      "speaker": "Agent",
+      "text": "Thank you. Please give me a moment while I check the details."
+    },
+    {
+      "time": 30,
+      "speaker": "Agent",
+      "text": "I see a request logged for water leakage in the kitchen sink, submitted three days ago. Is the issue still ongoing?"
+    },
+    {
+      "time": 35.5,
+      "speaker": "Customer",
+      "text": "Yes, it’s still leaking, and the cabinet below the sink is getting damaged."
+    },
+    {
+      "time": 40,
+      "speaker": "Agent",
+      "text": "Thank you for letting me know. I’m marking this as a high-priority issue and escalating it now. I’ll arrange a technician visit within the next 12 hours. Would tomorrow morning work for you?"
+    },
+    {
+      "time": 51.2,
+      "speaker": "Customer",
+      "text": "Yes, tomorrow morning is fine."
+    },
+    {
+      "time": 54.5,
+      "speaker": "Agent",
+      "text": "Perfect. I’ve scheduled the technician between 9:00 and 11:00 AM tomorrow. You’ll receive a confirmation message shortly."
+    },
+    {
+      "time": 61.5,
+      "speaker": "Agent",
+      "text": "Now, regarding buying a flat—are you looking for a specific configuration?"
+    },
+    {
+      "time": 66.5,
+      "speaker": "Customer",
+      "text": "I’m interested in a 2 BHK, mainly as an investment."
+    },
+    {
+      "time": 70,
+      "speaker": "Agent",
+      "text": "That’s a great option. Currently, 2 BHK units in this building are priced between ₹82 and ₹90 lakhs, with strong rental demand. May I know if you’d like details on rental income, availability, or a property tour?"
+    },
+    {
+      "time": 84.5,
+      "speaker": "Customer",
+      "text": "I’d like to know about rental income and also arrange a virtual tour."
+    },
+    {
+      "time": 90,
+      "speaker": "Agent",
+      "text": "Certainly. A 2 BHK here typically earns between ₹32,000 and ₹36,000 per month in rent, with steady appreciation. I can schedule a virtual tour for you. Does tomorrow at 5:00 PM work?"
+    },
+    {
+      "time": 103.5,
+      "speaker": "Customer",
+      "text": "Yes, that works."
+    },
+    {
+      "time": 106,
+      "speaker": "Agent",
+      "text": "Great. Your virtual tour is scheduled for tomorrow at 5:00 PM. You’ll receive the tour link and details via WhatsApp and email."
+    },
+    {
+      "time": 115,
+      "speaker": "Agent",
+      "text": "Would you also like to speak with a senior property consultant for investment guidance and financing options?"
+    },
+    {
+      "time": 122,
+      "speaker": "Customer",
+      "text": "Yes, that would be helpful."
+    },
+    {
+      "time": 125,
+      "speaker": "Agent",
+      "text": "I’ve arranged that for you. A senior consultant will contact you within 24 hours and will already have the context of our conversation."
+    },
+    {
+      "time": 132,
+      "speaker": "Agent",
+      "text": "Is there anything else I can assist you with today?"
+    },
+    {
+      "time": 135.5,
+      "speaker": "Customer",
+      "text": "No, that’s all. Thank you for the help."
+    },
+    {
+      "time": 137.8,
+      "speaker": "Agent",
+      "text": "You’re very welcome. I’ll keep track of your maintenance request and ensure everything is handled smoothly. Have a great day!"
+    }
+  ]
+}

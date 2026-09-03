@@ -1,0 +1,107 @@
+{
+  "hero": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/operations/operations-automation_1.jpg",
+    "alt": "Quickvoice AI Operations Automation Dashboard"
+  },
+  "useCases1": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/operations/operations-automation_4.jpg",
+    "alt": "Operations automation workflow showing AI agents handling business processes, routing, and task automation"
+  },
+  "useCases2": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/operations/operations-automation_3.jpg",
+    "alt": "Operations automation benefits showing AI agents streamlining business processes and improving efficiency"
+  },
+  "useCases3": {
+    "url": "https://d35j3mps666d98.cloudfront.net/Quickvoice/use-cases/operations/operations-automation_2.jpg",
+    "alt": "Enterprise operations automation showing trusted companies using AI voice agents for business process optimization"
+  },
+  "operationsautomation": "https://d35j3mps666d98.cloudfront.net/Quickvoice/demo-voices/1767123854513-final-operations-automation-demo.mp3",
+  "transcript": [
+    {
+      "time": 0,
+      "speaker": "Agent",
+      "text": "Hello! Thanks for contacting Quickvoice Operations Support... I’m your AI assistant, here to help you resolve operational queries quickly and efficiently. How can I assist you today?"
+    },
+    {
+      "time": 10.9,
+      "speaker": "Customer",
+      "text": "Hi, I’m facing an issue with my recent order, and I’m not sure whom to contact."
+    },
+    {
+      "time": 16.7,
+      "speaker": "Agent",
+      "text": "No problem. I can help with that. Let me quickly understand your concern so I can route it correctly. Is this related to order tracking, billing, returns, or something else?"
+    },
+    {
+      "time": 26.7,
+      "speaker": "Customer",
+      "text": "It’s about a delayed order delivery."
+    },
+    {
+      "time": 30.5,
+      "speaker": "Agent",
+      "text": "Got it. I’ll take care of this right away. Could you please share your order I D?"
+    },
+    {
+      "time": 34.9,
+      "speaker": "Customer",
+      "text": "Yes, it’s Q V - 9 8 2 3 1."
+    },
+    {
+      "time": 38.7,
+      "speaker": "Agent",
+      "text": "Thank you. Please give me a moment while I check the details... Alright, I see your order here."
+    },
+    {
+      "time": 43.9,
+      "speaker": "Agent",
+      "text": "The delay is due to a temporary logistics issue, and the updated delivery time is tomorrow by six p.m. I’ve logged this issue and tagged it as medium priority."
+    },
+    {
+      "time": 53.9,
+      "speaker": "Agent",
+      "text": "Would you like me to notify you once the order is out for delivery?"
+    },
+    {
+      "time": 58.5,
+      "speaker": "Customer",
+      "text": "Yes, that would be helpful."
+    },
+    {
+      "time": 60.4,
+      "speaker": "Agent",
+      "text": "Done. You’ll receive a notification via S M S and email once the status changes."
+    },
+    {
+      "time": 64.8,
+      "speaker": "Agent",
+      "text": "Before we proceed, is there anything else I should note — like urgency or a preferred contact method?"
+    },
+    {
+      "time": 71.5,
+      "speaker": "Customer",
+      "text": "No, that’s fine."
+    },
+    {
+      "time": 74.1,
+      "speaker": "Agent",
+      "text": "Understood. I’ve captured the full context and created a support ticket with all the details. If the issue requires human intervention, it will be escalated automatically with this conversation attached."
+    },
+    {
+      "time": 86.8,
+      "speaker": "Agent",
+      "text": "Is there anything else I can assist you with?"
+    },
+    {
+      "time": 88.9,
+      "speaker": "Customer",
+      "text": "No, that’s all. Thanks."
+    },
+    {
+      "time": 91.8,
+      "speaker": "Agent",
+      "text": "You’re welcome. Thank you for contacting Quickvoice Operations Support... Have a great day."
+    }
+  ]
+
+}
