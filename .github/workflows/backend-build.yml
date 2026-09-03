@@ -397,7 +397,7 @@ jobs:
       - name: Scan server image for vulnerabilities
         id: trivy
         continue-on-error: true
-        uses: aquasecurity/trivy-action@v0.35.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ needs.build-server.outputs.image_uri }}
           severity: HIGH,CRITICAL
@@ -424,7 +424,7 @@ jobs:
       - name: Scan AI image for vulnerabilities
         id: trivy
         continue-on-error: true
-        uses: aquasecurity/trivy-action@v0.35.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ needs.build-ai.outputs.image_uri }}
           severity: HIGH,CRITICAL
