@@ -13,7 +13,7 @@ pytz>=2024.1,<2027
 loguru~=0.7
 torch>=2.5,<3
 fastapi>=0.115,<1
-uvicorn[standard]>=0.30,<1
+uvicorn[standard]>=0.52.4,<1
 # KB pipeline
 pinecone>=7.0,<8
 pymupdf>=1.24,<2
