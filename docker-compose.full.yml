@@ -1,0 +1,103 @@
+name: quickvoice-full
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: quickvoice-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: quickvoice
+      POSTGRES_PASSWORD: quickvoice
+      POSTGRES_DB: quickvoice
+    ports:
+      - "5432:5432"
+    volumes:
+      - quickvoice_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quickvoice -d quickvoice"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  redis:
+    image: redis:7
+    container_name: quickvoice-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - quickvoice_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    container_name: quickvoice-server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: "5000"
+      DATABASE_URL: "postgresql://quickvoice:quickvoice@postgres:5432/quickvoice"
+      REDIS_URL: "redis://redis:6379"
+      BETTER_AUTH_SECRET: "quickvoice-dev-secret-minimum-32-chars-length"
+      BETTER_AUTH_URL: "http://localhost:5000"
+      INTERNAL_API_KEY: "change-me-internal-key"
+      AI_API_URL: "http://ai:5555"
+      CONSOLE_URL: "http://localhost:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  console:
+    build:
+      context: .
+      dockerfile: apps/console/Dockerfile
+    container_name: quickvoice-console
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      NEXT_PUBLIC_APP_NAME: "QuickVoice"
+      NEXT_PUBLIC_API_URL: "http://localhost:5000/api/v1"
+      NEXT_PUBLIC_SERVER_URL: "http://localhost:5000"
+    depends_on:
+      - server
+
+  ai:
+    build:
+      context: apps/ai
+      dockerfile: Dockerfile
+      args:
+        PREINSTALL_CPU_TORCH: "true"
+    container_name: quickvoice-ai
+    restart: unless-stopped
+    ports:
+      - "5555:5555"
+    environment:
+      AI_API_PORT: "5555"
+      INTERNAL_API_KEY: "change-me-internal-key"
+      SERVER_URL: "http://server:5000"
+      # Fill in provider keys below when testing real voice sessions:
+      # LIVEKIT_URL: "wss://your-livekit-url"
+      # LIVEKIT_API_KEY: "your-livekit-api-key"
+      # LIVEKIT_API_SECRET: "your-livekit-api-secret"
+      # DEEPGRAM_API_KEY: "your-deepgram-key"
+      # ELEVENLABS_API_KEY: "your-elevenlabs-key"
+    depends_on:
+      - server
+
+volumes:
+  quickvoice_pg_data:
+  quickvoice_redis_data:
