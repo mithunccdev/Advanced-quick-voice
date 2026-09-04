@@ -196,6 +196,65 @@ export async function sendNumberBillingNotice(args: {
   });
 }
 
+export async function sendInvitationEmail(args: {
+  email: string;
+  inviterName?: string | null;
+  organizationName: string;
+  role: string;
+  inviteUrl: string;
+}) {
+  const safeInviter = escapeHtml(args.inviterName || "A team administrator");
+  const safeOrg = escapeHtml(args.organizationName);
+  const safeRole = escapeHtml(args.role);
+  const safeUrl = escapeHtml(args.inviteUrl);
+
+  const subject = `You've been invited to join ${args.organizationName} on QuickVoice`;
+  const text = [
+    `Hi,`,
+    "",
+    `${args.inviterName || "A team administrator"} has invited you to join ${args.organizationName} as a ${args.role} on QuickVoice.`,
+    "",
+    `Accept your invitation: ${args.inviteUrl}`,
+    "",
+    `This invitation link is valid for 7 days.`,
+  ].join("\n");
+
+  const html = `<!doctype html>
+<html>
+  <body style="margin:0;background:#f6f7f9;font-family:Arial,sans-serif;color:#111827;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border-radius:12px;padding:32px;">
+            <tr>
+              <td>
+                <h1 style="margin:0 0 16px;font-size:24px;line-height:32px;">Join ${safeOrg} on QuickVoice</h1>
+                <p style="margin:0 0 16px;font-size:16px;line-height:24px;">Hi,</p>
+                <p style="margin:0 0 24px;font-size:16px;line-height:24px;"><strong>${safeInviter}</strong> has invited you to join <strong>${safeOrg}</strong> as a <strong>${safeRole}</strong> on QuickVoice.</p>
+                <p style="margin:0 0 24px;">
+                  <a href="${safeUrl}" style="display:inline-block;background:#111827;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 18px;font-size:14px;font-weight:700;">Accept Invitation</a>
+                </p>
+                <p style="margin:0 0 8px;font-size:14px;line-height:22px;color:#4b5563;">If the button does not work, paste this link into your browser:</p>
+                <p style="margin:0;font-size:14px;line-height:22px;word-break:break-all;color:#4b5563;">${safeUrl}</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+
+  return sendComposedEmail({
+    email: args.email,
+    fullName: "",
+    subject,
+    text,
+    html,
+    failureLabel: "organization invitation",
+  });
+}
+
 async function sendComposedEmail(args: {
   email: string;
   fullName: string;

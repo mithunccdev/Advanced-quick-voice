@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 
 import prisma from "../config/prisma.js";
 import { stripeClient } from "../config/stripe.js";
-import { sendEmail } from "./mailer.js";
+import { sendEmail, sendInvitationEmail } from "./mailer.js";
 import { ac, roles } from "./permissions.js";
 
 import { plans } from "../../data/plans.js";
@@ -91,6 +91,21 @@ export const auth = betterAuth({
       roles,
       dynamicAccessControl: {
         enabled: true,
+      },
+      sendInvitationEmail: async (data) => {
+        const consoleUrl = (
+          process.env.CONSOLE_URL?.split(",")[0]?.trim() ||
+          "http://localhost:3000"
+        ).replace(/\/+$/, "");
+        const inviteUrl = `${consoleUrl}/accept-invitation/${data.id}`;
+        const inviter = (data.inviter as any).user;
+        await sendInvitationEmail({
+          email: data.email,
+          inviterName: inviter?.name || inviter?.email || "A team administrator",
+          organizationName: data.organization.name,
+          role: data.role,
+          inviteUrl,
+        });
       },
       organizationHooks: {
         afterCreateOrganization: async ({ organization: org, user }) => {
