@@ -1,0 +1,144 @@
+name: quickvoice-coolify
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: quickvoice-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-quickvoice}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-quickvoice_secure_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-quickvoice}
+    volumes:
+      - quickvoice_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-quickvoice} -d ${POSTGRES_DB:-quickvoice}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    networks:
+      - quickvoice-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: quickvoice-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - quickvoice_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    networks:
+      - quickvoice-network
+
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    container_name: quickvoice-server
+    restart: unless-stopped
+    ports:
+      - "${SERVER_PORT:-5000}:5000"
+    environment:
+      PORT: "5000"
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-quickvoice}:${POSTGRES_PASSWORD:-quickvoice_secure_pass}@postgres:5432/${POSTGRES_DB:-quickvoice}"
+      REDIS_URL: "redis://redis:6379"
+      BETTER_AUTH_SECRET: "${BETTER_AUTH_SECRET:-quickvoice_auth_secret_minimum_32_characters_long}"
+      BETTER_AUTH_URL: "${SERVER_URL:-http://localhost:5000}"
+      INTERNAL_API_KEY: "${INTERNAL_API_KEY:-quickvoice_internal_secret_key}"
+      AI_API_URL: "http://ai:5555"
+      CONSOLE_URL: "${CONSOLE_URL:-http://localhost:3000}"
+      LANDING_URL: "${LANDING_URL:-http://localhost:3001}"
+      TELNYX_API_KEY: "${TELNYX_API_KEY:-}"
+      TWILIO_ACCOUNT_SID: "${TWILIO_ACCOUNT_SID:-}"
+      TWILIO_AUTH_TOKEN: "${TWILIO_AUTH_TOKEN:-}"
+      STRIPE_SECRET_KEY: "${STRIPE_SECRET_KEY:-}"
+      STRIPE_WEBHOOK_SECRET: "${STRIPE_WEBHOOK_SECRET:-}"
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID:-}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY:-}"
+      AWS_REGION: "${AWS_REGION:-}"
+      S3_BUCKET_NAME: "${S3_BUCKET_NAME:-}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - quickvoice-network
+
+  console:
+    build:
+      context: .
+      dockerfile: apps/console/Dockerfile
+    container_name: quickvoice-console
+    restart: unless-stopped
+    ports:
+      - "${CONSOLE_PORT:-3000}:3000"
+    environment:
+      PORT: "3000"
+      NEXT_PUBLIC_APP_NAME: "QuickVoice"
+      NEXT_PUBLIC_SERVER_URL: "${SERVER_URL:-http://localhost:5000}"
+      NEXT_PUBLIC_CONSOLE_URL: "${CONSOLE_URL:-http://localhost:3000}"
+      NEXT_PUBLIC_LANDING_URL: "${LANDING_URL:-http://localhost:3001}"
+      NEXT_PUBLIC_API_VERSION: "v1"
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: "${STRIPE_PUBLISHABLE_KEY:-}"
+    depends_on:
+      - server
+    networks:
+      - quickvoice-network
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: quickvoice-web
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-3001}:3000"
+    environment:
+      PORT: "3000"
+      NEXT_PUBLIC_CONSOLE_URL: "${CONSOLE_URL:-http://localhost:3000}"
+    depends_on:
+      - server
+    networks:
+      - quickvoice-network
+
+  ai:
+    build:
+      context: apps/ai
+      dockerfile: Dockerfile
+      args:
+        PREINSTALL_CPU_TORCH: "true"
+        SKIP_MODEL_DOWNLOAD: "false"
+    container_name: quickvoice-ai
+    restart: unless-stopped
+    ports:
+      - "${AI_PORT:-5555}:5555"
+    environment:
+      AI_API_PORT: "5555"
+      INTERNAL_API_KEY: "${INTERNAL_API_KEY:-quickvoice_internal_secret_key}"
+      SERVER_URL: "http://server:5000"
+      LIVEKIT_URL: "${LIVEKIT_URL:-}"
+      LIVEKIT_API_KEY: "${LIVEKIT_API_KEY:-}"
+      LIVEKIT_API_SECRET: "${LIVEKIT_API_SECRET:-}"
+      DEEPGRAM_API_KEY: "${DEEPGRAM_API_KEY:-}"
+      ELEVENLABS_API_KEY: "${ELEVENLABS_API_KEY:-}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      GROQ_API_KEY: "${GROQ_API_KEY:-}"
+    depends_on:
+      - server
+    networks:
+      - quickvoice-network
+
+volumes:
+  quickvoice_pg_data:
+  quickvoice_redis_data:
+
+networks:
+  quickvoice-network:
+    driver: bridge
