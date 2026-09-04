@@ -51,4 +51,7 @@ yarn-error.log*
 *.pem
 __pycache__/
 testsprite_tests/
+<<<<<<< HEAD
 push-to-github.ps1
+=======
+>>>>>>> ff3b56acaf6f7aad06958d80c2638a5e41c24f3e
