@@ -572,10 +572,110 @@ LIVEKIT_SIP_OUTBOUND_TRUNK_TELNYX_ID=ST_outbound_telnyx_xxxx</code></pre>
 <div class="page-break"></div>
 
 <!-- SECTION 5 -->
-<h1>5. Creating &amp; Configuring Voice Agents End-to-End</h1>
+<h1>5. Creating &amp; Configuring Voice Agents in Console UI &amp; API</h1>
 
-<h2>5.1 Programmatic Agent Creation via REST API</h2>
-<p>Administrators can create and configure agents either through the Console UI or via the REST API.</p>
+<h2>5.1 Step-by-Step Agent Creation through the Console UI</h2>
+
+<div class="step-box">
+  <span class="step-num">STEP 1</span>
+  <span class="step-title">Create Agent Entity in Console</span>
+  <p>In the main sidebar, navigate to <strong>Agents</strong> (<code>http://localhost:3005/agents</code>) &rarr; Click the <strong>+ Create Agent</strong> button in the top right. Enter a friendly name (e.g., <em>"Apex Dental Receptionist"</em>) and click <strong>Create</strong>.</p>
+</div>
+
+<div class="step-box">
+  <span class="step-num">STEP 2</span>
+  <span class="step-title">Open the "Voice &amp; Models" Configuration Tab</span>
+  <p>From the agent overview screen, click the <strong>Voice</strong> tab in the navigation bar. This opens the dedicated model and speech engine configuration panel.</p>
+</div>
+
+<h2>5.2 Configuring LLM, STT, and TTS in the Console UI</h2>
+<p>QuickVoice provides decoupled dropdown selectors allowing you to mix-and-match any combination of intelligence, transcription, and speech synthesis:</p>
+
+<div class="step-box">
+  <span class="step-num">1</span>
+  <span class="step-title">Agent Language Selector (<code>agent_language</code>)</span>
+  <p>Select the conversational language (e.g., <strong>English (en)</strong>, <strong>Spanish (es)</strong>, <strong>French (fr)</strong>, <strong>German (de)</strong>, <strong>Hindi (hi)</strong>). Changing the language dynamically filters the available STT and TTS models below to only those supporting that locale.</p>
+</div>
+
+<div class="step-box">
+  <span class="step-num">2</span>
+  <span class="step-title">LLM Model Selector (<code>llmModel</code>)</span>
+  <p>Select the reasoning engine that generates the conversation turns:</p>
+  <ul>
+    <li><strong>Claude 3.5 Haiku (Amazon Bedrock / Anthropic):</strong> Recommended default. Delivers sub-200ms first-token latency with superior prompt adherence.</li>
+    <li><strong>Claude 3.5 Sonnet:</strong> Used for highly complex reasoning, multi-turn diagnostics, or complex objection handling.</li>
+    <li><strong>Amazon Nova Micro / Lite:</strong> Cost-effective options for straightforward deterministic IVR workflows.</li>
+    <li><strong>OpenAI GPT-4o-mini:</strong> Ultra-fast general intelligence for support intake and lead qualification.</li>
+  </ul>
+</div>
+
+<div class="step-box">
+  <span class="step-num">3</span>
+  <span class="step-title">Speech-to-Text (STT) Model Selector (<code>sttModel</code>)</span>
+  <p>Select the real-time transcription engine that listens to the caller:</p>
+  <ul>
+    <li><strong>Deepgram Nova-3 (<code>deepgram/nova-3</code>):</strong> Lowest word error rate (WER) and streaming latency (&lt;180ms). Recommended for English and Spanish.</li>
+    <li><strong>Deepgram Nova-2 (<code>deepgram/nova-2</code>):</strong> Battle-tested streaming STT with multi-lingual support.</li>
+    <li><strong>Sarvam Saaras (<code>sarvam/saaras:v3</code>):</strong> Optimized for Indian accents, vernacular dialects, and code-switching (Hinglish).</li>
+  </ul>
+</div>
+
+<div class="step-box">
+  <span class="step-num">4</span>
+  <span class="step-title">Text-to-Speech (TTS) Model &amp; Voice Selection (<code>ttsModel</code> &amp; <code>voiceId</code>)</span>
+  <p>Choose the synthesis engine and specific human persona voice:</p>
+  <ul>
+    <li><strong>Deepgram Aura-2 (<code>deepgram/aura-2</code>):</strong> Instant streaming audio. Choose from <em>Asteria</em> (energetic/clear), <em>Apollo</em> (confident), <em>Hera</em> (warm/professional), <em>Zeus</em> (deep baritone), or <em>Luna</em> (gentle).</li>
+    <li><strong>ElevenLabs Flash v2.5 (<code>elevenlabs/eleven_flash_v2_5</code>):</strong> Ultra-expressive emotional nuance for high-touch customer VIP lines.</li>
+    <li><strong>Rime (<code>rime/rime-arcana</code>):</strong> Studio-grade natural conversational inflection.</li>
+  </ul>
+</div>
+
+<div class="step-box">
+  <span class="step-num">5</span>
+  <span class="step-title">Audition Voice with the Interactive Preview Panel</span>
+  <p>The right-hand side of the <strong>Voice Tab</strong> displays the <strong>Voice Profile Panel</strong>. Click the <strong>Play Sample Audio</strong> button to audition the voice's pitch, cadence, and tone before saving. You can also view its style tags (e.g., <em>"Clear"</em>, <em>"Confident"</em>, <em>"Energetic"</em>) and recommended use cases.</p>
+</div>
+
+<div class="step-box">
+  <span class="step-num">6</span>
+  <span class="step-title">Click "Save Voice Configuration"</span>
+  <p>Click the <strong>Save Voice Configuration</strong> button in the top right. The console dispatches an authenticated <code>PUT /api/v1/agents/{agentId}/configure</code> request, updating the live agent configuration immediately.</p>
+</div>
+
+<h2>5.3 How Administrators Add Custom Models to the UI Catalog</h2>
+<p>If your organization wants to expose custom fine-tuned LLMs (e.g. self-hosted vLLM or Ollama), new ElevenLabs voice clones, or private STT models inside the Console UI dropdowns:</p>
+<ol>
+  <li><strong>Catalog File:</strong> Edit <code>apps/console/src/lib/data/voices.ts</code> (or provide a custom JSON file via <code>VOICE_CATALOG_PATH</code> in <code>apps/ai/.env</code>).</li>
+  <li><strong>Add New LLM Option:</strong>
+    <pre><code>export const LLM_MODELS: ModelOption[] = [
+  ...LLM_MODELS,
+  {
+    id: "openai/gpt-4o-mini",
+    label: "OpenAI GPT-4o Mini",
+    provider: "OpenAI"
+  }
+];</code></pre>
+  </li>
+  <li><strong>Add Custom Voice ID:</strong>
+    <pre><code>{
+  id: "my-custom-cloned-voice",
+  name: "Dr. Sarah Cloned Voice",
+  provider: "ElevenLabs",
+  gender: "feminine",
+  locale: "en-US",
+  accent: "American",
+  languages: ["en"],
+  ttsModels: ["elevenlabs/eleven_flash_v2_5"],
+  styles: ["Professional", "Medical"],
+  useCases: ["Dental Clinics", "Healthcare"]
+}</code></pre>
+  </li>
+  <li>The new model and voice will automatically populate inside the Console UI dropdowns for all users in the organization!</li>
+</ol>
+
+<h2>5.4 Programmatic Agent Creation &amp; Configuration via REST API</h2>
+<p>For automated deployments and external integrations, administrators can execute the exact same actions via API:</p>
 
 <h3>Step 1: Create the Agent Entity</h3>
 <pre><code>POST /api/v1/agents
@@ -588,7 +688,7 @@ Cookie: better-auth.session_token=YOUR_SESSION_TOKEN
   "isActive": true
 }</code></pre>
 
-<h3>Step 2: Configure Runtime Models &amp; Prompt Parameters</h3>
+<h3>Step 2: Full Agent Configuration (LLM, STT, TTS, Prompts, Webhooks)</h3>
 <pre><code>PUT /api/v1/agents/{agentId}/configure
 Content-Type: application/json
 Origin: http://localhost:3005
@@ -612,12 +712,10 @@ Cookie: better-auth.session_token=YOUR_SESSION_TOKEN
   ]
 }</code></pre>
 
-<h2>5.2 Attaching Tools &amp; Binding Phone Numbers</h2>
-
-<h3>Attach an Integration Tool (e.g. Cal.com or SMS):</h3>
+<h3>Step 3: Attach an Integration Tool (e.g. Cal.com or SMS):</h3>
 <pre><code>POST /api/v1/tools/{toolId}/attach/{agentId}</code></pre>
 
-<h3>Assign an Inbound Telephony Number:</h3>
+<h3>Step 4: Assign an Inbound Telephony Number:</h3>
 <pre><code>POST /api/v1/phone-numbers/{phoneNumberId}/assign
 Content-Type: application/json
 
