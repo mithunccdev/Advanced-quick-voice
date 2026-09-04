@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { ConversationFlowBuilder } from "@/src/components/agents/flow/ConversationFlowBuilder";
 import { ConversationFlow, DEFAULT_SAMPLE_FLOW } from "@/src/components/agents/flow/types";
 import { useAgentConfig, useSaveAgentConfig } from "@/src/hooks/queries/agents";
+import { mergeConfig } from "@/src/lib/agents/config-defaults";
 import { Skeleton } from "@/src/components/ui/skeleton";
 
 export function FlowTab({ agentId }: { agentId: string }) {
@@ -37,13 +38,17 @@ export function FlowTab({ agentId }: { agentId: string }) {
       }
 
       const updatedVariables = {
+        firstMessage: existingVars.firstMessage || [],
+        systemPrompt: existingVars.systemPrompt || [],
         ...existingVars,
         conversation_flow: flow,
       };
 
-      await save.mutateAsync({
-        variables: updatedVariables,
-      });
+      await save.mutateAsync(
+        mergeConfig(config, {
+          variables: updatedVariables,
+        }),
+      );
       toast.success("Conversation Flow saved successfully!");
     } catch (err: any) {
       toast.error(err?.message || "Failed to save flow.");
@@ -64,9 +69,11 @@ export function FlowTab({ agentId }: { agentId: string }) {
         newPrompt = `${currentPrompt.trim()}\n\n${generatedPromptText}`;
       }
 
-      await save.mutateAsync({
-        systemPrompt: newPrompt,
-      });
+      await save.mutateAsync(
+        mergeConfig(config, {
+          systemPrompt: newPrompt,
+        }),
+      );
       toast.success("Agent system prompt updated with the conversation flow state machine!");
     } catch (err: any) {
       toast.error(err?.message || "Failed to sync prompt.");

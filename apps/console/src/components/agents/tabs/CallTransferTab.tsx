@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { useAgentConfig, useSaveAgentConfig } from "@/src/hooks/queries/agents";
+import { mergeConfig } from "@/src/lib/agents/config-defaults";
 import { Skeleton } from "@/src/components/ui/skeleton";
 
 interface CallTransferConfig {
@@ -89,6 +90,8 @@ export function CallTransferTab({ agentId }: { agentId: string }) {
       }
 
       const updatedVariables = {
+        firstMessage: existingVars.firstMessage || [],
+        systemPrompt: existingVars.systemPrompt || [],
         ...existingVars,
         call_transfer: form,
       };
@@ -114,10 +117,12 @@ export function CallTransferTab({ agentId }: { agentId: string }) {
         }
       }
 
-      await save.mutateAsync({
-        variables: updatedVariables,
-        systemPrompt: newPrompt,
-      });
+      await save.mutateAsync(
+        mergeConfig(config, {
+          variables: updatedVariables,
+          systemPrompt: newPrompt,
+        }),
+      );
 
       toast.success("Call transfer and escalation settings updated successfully!");
     } catch (err: any) {

@@ -73,7 +73,7 @@ export default function ToolsPage() {
               icon={Webhook}
               title="No tools yet"
               description="Create an HTTP tool to let your agents call external APIs mid-conversation."
-              action={addButton}
+              action={actions}
             />
           ) : (
             <div className="space-y-3">

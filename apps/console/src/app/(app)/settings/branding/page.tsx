@@ -86,7 +86,7 @@ export default function BrandingSettingsPage() {
       const { error } = await authClient.organization.update({
         organizationId: activeOrg.id,
         data: {
-          metadata: JSON.stringify(meta),
+          metadata: meta,
         },
       });
 

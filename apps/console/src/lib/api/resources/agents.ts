@@ -48,6 +48,7 @@ export interface ConfigureAgentInput {
     firstMessage: string[];
     systemPrompt: string[];
     placeholders?: Record<string, string>;
+    [key: string]: any;
   };
   preemptive_generation: boolean;
   ivr_navigation_enabled: boolean;

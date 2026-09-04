@@ -66,10 +66,10 @@ const TEMPLATES: ToolTemplate[] = [
         { key: "Authorization", value: "Bearer YOUR_CAL_COM_API_KEY" },
       ],
       api_body: [
-        { name: "eventTypeId", type: "number", description: "Cal.com Event Type ID", required: true },
-        { name: "start", type: "string", description: "ISO 8601 formatted start time", required: true },
-        { name: "name", type: "string", description: "Caller full name", required: true },
-        { name: "email", type: "string", description: "Caller email address", required: true },
+        { name: "eventTypeId", type: "Number", valueType: "LLM Prompt", description: "Cal.com Event Type ID", allowedValues: [], required: true },
+        { name: "start", type: "String", valueType: "LLM Prompt", description: "ISO 8601 formatted start time", allowedValues: [], required: true },
+        { name: "name", type: "String", valueType: "LLM Prompt", description: "Caller full name", allowedValues: [], required: true },
+        { name: "email", type: "String", valueType: "LLM Prompt", description: "Caller email address", allowedValues: [], required: true },
       ],
       disable_interruptions: true,
       force_pre_tool_speech: true,
@@ -97,10 +97,10 @@ const TEMPLATES: ToolTemplate[] = [
         { key: "Version", value: "2021-07-28" },
       ],
       api_body: [
-        { name: "phone", type: "string", description: "Caller phone number", required: true },
-        { name: "name", type: "string", description: "Caller full name", required: true },
-        { name: "email", type: "string", description: "Caller email address", required: false },
-        { name: "tags", type: "array", description: "Tags e.g. ['phone-lead', 'qualified']", required: false },
+        { name: "phone", type: "String", valueType: "LLM Prompt", description: "Caller phone number", allowedValues: [], required: true },
+        { name: "name", type: "String", valueType: "LLM Prompt", description: "Caller full name", allowedValues: [], required: true },
+        { name: "email", type: "String", valueType: "LLM Prompt", description: "Caller email address", allowedValues: [], required: false },
+        { name: "tags", type: "String", valueType: "LLM Prompt", description: "Tags e.g. ['phone-lead', 'qualified']", allowedValues: [], required: false },
       ],
       disable_interruptions: true,
       force_pre_tool_speech: true,
@@ -127,7 +127,7 @@ const TEMPLATES: ToolTemplate[] = [
         { key: "Authorization", value: "Bearer YOUR_HUBSPOT_TOKEN" },
       ],
       api_body: [
-        { name: "properties", type: "object", description: "Contact properties { firstname, lastname, phone, email }", required: true },
+        { name: "properties", type: "String", valueType: "LLM Prompt", description: "Contact properties { firstname, lastname, phone, email }", allowedValues: [], required: true },
       ],
       disable_interruptions: true,
       force_pre_tool_speech: true,
@@ -154,7 +154,7 @@ const TEMPLATES: ToolTemplate[] = [
         { key: "Authorization", value: "Basic YOUR_ZENDESK_AUTH" },
       ],
       api_body: [
-        { name: "ticket", type: "object", description: "Ticket payload including subject, comment body, priority", required: true },
+        { name: "ticket", type: "String", valueType: "LLM Prompt", description: "Ticket payload including subject, comment body, priority", allowedValues: [], required: true },
       ],
       disable_interruptions: true,
       force_pre_tool_speech: true,
@@ -180,9 +180,9 @@ const TEMPLATES: ToolTemplate[] = [
         { key: "Content-Type", value: "application/x-www-form-urlencoded" },
       ],
       api_body: [
-        { name: "To", type: "string", description: "Caller mobile phone number (E.164)", required: true },
-        { name: "From", type: "string", description: "Twilio verified phone number", required: true },
-        { name: "Body", type: "string", description: "Text content of the SMS", required: true },
+        { name: "To", type: "String", valueType: "LLM Prompt", description: "Caller mobile phone number (E.164)", allowedValues: [], required: true },
+        { name: "From", type: "String", valueType: "LLM Prompt", description: "Twilio verified phone number", allowedValues: [], required: true },
+        { name: "Body", type: "String", valueType: "LLM Prompt", description: "Text content of the SMS", allowedValues: [], required: true },
       ],
       disable_interruptions: false,
       force_pre_tool_speech: true,
@@ -220,7 +220,7 @@ export function IntegrationTemplatesModal({ open, onOpenChange }: Props) {
       // If user supplied an API key, replace placeholder in headers
       if (apiKey.trim() && payload.api_headers) {
         payload.api_headers = payload.api_headers.map((h) => {
-          if (h.value.includes("YOUR_") || h.key.toLowerCase() === "authorization") {
+          if (h.value && (h.value.includes("YOUR_") || h.key.toLowerCase() === "authorization")) {
             if (h.value.startsWith("Bearer")) {
               return { ...h, value: `Bearer ${apiKey.trim()}` };
             }
