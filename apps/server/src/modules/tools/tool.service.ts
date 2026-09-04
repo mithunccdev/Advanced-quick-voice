@@ -14,7 +14,7 @@ import {
   storeKeyValueSecretReferences,
 } from "../secrets/secret-store.service.js";
 import * as toolRepository from "./tool.repository.js";
-import type { CreateToolArgs, UpdateToolInput } from "./tool.schema.js";
+import type { CreateToolArgs, UpdateToolInput, TestToolInput } from "./tool.schema.js";
 
 export const listTools = async (organizationId: string) =>
   (await toolRepository.listTools(organizationId)).map(redactToolSecrets);
@@ -232,3 +232,121 @@ function redactToolSecrets<T extends Record<string, any>>(tool: T): T {
     dynamic_variables: redactKeyValueSecrets(tool.dynamic_variables),
   };
 }
+
+export const testTool = async (
+  organizationId: string,
+  input: TestToolInput,
+) => {
+  await assertSafeRemoteUrl(input.api_url, {
+    allowedProtocols: ["http:", "https:"],
+  });
+
+  let targetUrl = input.api_url;
+
+  // Substitute path parameters: {paramName} or :paramName
+  if (input.api_path_params && typeof input.api_path_params === "object") {
+    for (const [key, val] of Object.entries(input.api_path_params)) {
+      if (val !== undefined && val !== null) {
+        targetUrl = targetUrl
+          .replace(new RegExp(`\\{${key}\\}`, "g"), encodeURIComponent(String(val)))
+          .replace(new RegExp(`:${key}\\b`, "g"), encodeURIComponent(String(val)));
+      }
+    }
+  }
+
+  const urlObj = new URL(targetUrl);
+
+  // Append query parameters
+  if (input.api_query_params && typeof input.api_query_params === "object") {
+    for (const [key, val] of Object.entries(input.api_query_params)) {
+      if (val !== undefined && val !== null && String(val).trim() !== "") {
+        urlObj.searchParams.append(key, String(val));
+      }
+    }
+  }
+
+  const headers: Record<string, string> = {
+    "User-Agent": "QuickVoice-Agent-Tool/1.0",
+    Accept: "application/json, text/plain, */*",
+  };
+
+  if (Array.isArray(input.api_headers)) {
+    for (const header of input.api_headers) {
+      if (header.key && header.value) {
+        headers[header.key] = header.value;
+      }
+    }
+  }
+
+  const timeoutMs = (input.response_timeout_secs || 15) * 1000;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  let body: string | undefined = undefined;
+  if (
+    input.api_method !== "GET" &&
+    input.api_method !== "DELETE" &&
+    input.api_body &&
+    typeof input.api_body === "object" &&
+    Object.keys(input.api_body).length > 0
+  ) {
+    body = JSON.stringify(input.api_body);
+    if (!headers["Content-Type"] && !headers["content-type"]) {
+      headers["Content-Type"] = "application/json";
+    }
+  }
+
+  const startTime = Date.now();
+  try {
+    const response = await fetch(urlObj.toString(), {
+      method: input.api_method,
+      headers,
+      body,
+      signal: controller.signal,
+    });
+
+    const latencyMs = Date.now() - startTime;
+    clearTimeout(timer);
+
+    const contentType = response.headers.get("content-type") || "";
+    let responseData: any;
+    if (contentType.includes("application/json")) {
+      try {
+        responseData = await response.json();
+      } catch {
+        responseData = await response.text();
+      }
+    } else {
+      responseData = await response.text();
+    }
+
+    const resHeaders: Record<string, string> = {};
+    response.headers.forEach((val, key) => {
+      resHeaders[key] = val;
+    });
+
+    return {
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok,
+      latencyMs,
+      requestUrl: urlObj.toString(),
+      requestMethod: input.api_method,
+      headers: resHeaders,
+      data: responseData,
+    };
+  } catch (err: any) {
+    clearTimeout(timer);
+    const latencyMs = Date.now() - startTime;
+    return {
+      status: err?.name === "AbortError" ? 408 : 500,
+      statusText: err?.name === "AbortError" ? "Request Timeout" : "Request Failed",
+      ok: false,
+      latencyMs,
+      requestUrl: urlObj.toString(),
+      requestMethod: input.api_method,
+      headers: {},
+      error: err instanceof Error ? err.message : String(err),
+    };
+  }
+};

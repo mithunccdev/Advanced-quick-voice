@@ -18,6 +18,28 @@ export interface CreateToolInput {
 
 export type UpdateToolInput = Partial<CreateToolInput>;
 
+export interface TestToolInput {
+  api_url: string;
+  api_method: string;
+  api_headers?: Array<{ key: string; value?: string | null }>;
+  api_query_params?: Record<string, any>;
+  api_path_params?: Record<string, any>;
+  api_body?: Record<string, any>;
+  response_timeout_secs?: number | null;
+}
+
+export interface TestToolResponse {
+  status: number;
+  statusText: string;
+  ok: boolean;
+  latencyMs: number;
+  requestUrl: string;
+  requestMethod: string;
+  headers: Record<string, string>;
+  data?: any;
+  error?: string;
+}
+
 export const toolsApi = {
   list: async (): Promise<Tool[]> => {
     const res = await apiClient.get<ApiEnvelope<Tool[]>>("/tools");
@@ -43,5 +65,9 @@ export const toolsApi = {
   },
   detach: async (toolId: string, agentId: string): Promise<void> => {
     await apiClient.delete(`/tools/${toolId}/detach/${agentId}`);
+  },
+  test: async (input: TestToolInput): Promise<TestToolResponse> => {
+    const res = await apiClient.post<ApiEnvelope<TestToolResponse>>("/tools/test", input);
+    return res.data.data;
   },
 };

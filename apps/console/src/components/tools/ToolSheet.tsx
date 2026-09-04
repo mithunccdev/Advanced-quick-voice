@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader2, Bot, Check, Plus } from "lucide-react";
+import { Loader2, Bot, Check, Plus, FileJson, Play } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/src/components/ui/button";
@@ -29,6 +29,8 @@ import {
 import { Separator } from "@/src/components/ui/separator";
 import { KVEditor } from "@/src/components/tools/KVEditor";
 import { ParamEditor } from "@/src/components/tools/ParamEditor";
+import { JsonApiImportDialog, type ParsedToolImport } from "@/src/components/tools/JsonApiImportDialog";
+import { ToolTestModal } from "@/src/components/tools/ToolTestModal";
 import {
   useCreateTool,
   useUpdateTool,
@@ -230,11 +232,12 @@ function cleanKvPairs(pairs: KVPair[]) {
 interface ToolSheetProps {
   mode: "create" | "edit";
   tool?: Tool;
+  initialValues?: ParsedToolImport | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function ToolSheet({ mode, tool, open, onOpenChange }: ToolSheetProps) {
+export function ToolSheet({ mode, tool, initialValues, open, onOpenChange }: ToolSheetProps) {
   const createTool = useCreateTool();
   const updateTool = useUpdateTool(tool?.toolId ?? "");
 
@@ -271,9 +274,42 @@ export function ToolSheet({ mode, tool, open, onOpenChange }: ToolSheetProps) {
 
   useEffect(() => {
     if (open) {
-      reset(mode === "edit" && tool ? toFormValues(tool) : DEFAULT_VALUES);
+      if (mode === "edit" && tool) {
+        reset(toFormValues(tool));
+      } else if (initialValues) {
+        reset({
+          name: initialValues.name,
+          description: initialValues.description,
+          api_url: initialValues.api_url,
+          api_method: initialValues.api_method,
+          api_headers: initialValues.api_headers,
+          api_query_params: initialValues.api_query_params,
+          api_path_params: initialValues.api_path_params,
+          api_body: initialValues.api_body,
+          dynamic_variables: [],
+          response_timeout_secs: "",
+          disable_interruptions: false,
+          force_pre_tool_speech: true,
+        });
+      } else {
+        reset(DEFAULT_VALUES);
+      }
     }
-  }, [open, mode, tool, reset]);
+  }, [open, mode, tool, initialValues, reset]);
+
+  const [importOpen, setImportOpen] = useState(false);
+  const [testOpen, setTestOpen] = useState(false);
+
+  const handleJsonImport = (data: ParsedToolImport) => {
+    setValue("name", data.name);
+    setValue("description", data.description);
+    setValue("api_url", data.api_url);
+    setValue("api_method", data.api_method);
+    setValue("api_headers", data.api_headers);
+    setValue("api_query_params", data.api_query_params);
+    setValue("api_path_params", data.api_path_params);
+    setValue("api_body", data.api_body);
+  };
 
   const isPending = createTool.isPending || updateTool.isPending;
 
@@ -318,9 +354,34 @@ export function ToolSheet({ mode, tool, open, onOpenChange }: ToolSheetProps) {
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="flex w-full flex-col gap-0 overflow-y-auto sm:max-w-lg">
         <SheetHeader className="border-b px-6 py-4">
-          <SheetTitle>
-            {mode === "create" ? "New tool" : "Edit tool"}
-          </SheetTitle>
+          <div className="flex items-center justify-between">
+            <SheetTitle>
+              {mode === "create" ? "New tool" : "Edit tool"}
+            </SheetTitle>
+            <div className="flex items-center gap-1.5">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setImportOpen(true)}
+                className="h-7 px-2 text-xs gap-1 border-primary/30 text-primary hover:bg-primary/10"
+              >
+                <FileJson className="size-3.5" />
+                Import JSON
+              </Button>
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                onClick={() => setTestOpen(true)}
+                className="h-7 px-2 text-xs gap-1"
+                disabled={!urlValue}
+              >
+                <Play className="size-3" />
+                Test API
+              </Button>
+            </div>
+          </div>
         </SheetHeader>
 
         <form
@@ -585,6 +646,26 @@ export function ToolSheet({ mode, tool, open, onOpenChange }: ToolSheetProps) {
         {mode === "edit" && tool && (
           <LinkedAgentsSection toolId={tool.toolId} linkedAgents={tool.agent} />
         )}
+
+        <JsonApiImportDialog
+          open={importOpen}
+          onOpenChange={setImportOpen}
+          onImport={handleJsonImport}
+        />
+
+        <ToolTestModal
+          open={testOpen}
+          onOpenChange={setTestOpen}
+          tool={{
+            name: getValues("name") || "Custom Tool",
+            api_url: getValues("api_url"),
+            api_method: getValues("api_method"),
+            api_headers: getValues("api_headers") as any,
+            api_body: getValues("api_body") as any,
+            api_query_params: getValues("api_query_params") as any,
+            api_path_params: getValues("api_path_params") as any,
+          }}
+        />
       </SheetContent>
     </Sheet>
   );

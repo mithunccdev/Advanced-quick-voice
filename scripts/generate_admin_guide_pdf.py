@@ -646,6 +646,62 @@ function verifyQuickVoiceWebhook(req, secret) {
   return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest));
 }</code></pre>
 
+<h2>4.3 Custom CRM API Tools: Customer Ticket Generation &amp; Live Querying</h2>
+<p>QuickVoice voice agents can dynamically collect caller information, invoke external REST APIs mid-conversation, push data to your CRM server, and receive real-time answers to read back to the customer.</p>
+
+<div class="callout tip">
+  <div class="callout-title">How the CRM Ticket Lifecycle Operates in Real-Time Voice:</div>
+  <ol>
+    <li><strong>Conversation &amp; Extraction:</strong> When configured with parameters marked <code>valueType: "LLM Prompt"</code> (e.g. <code>customer_name</code>, <code>email</code>, <code>issue_description</code>), the voice agent naturally asks the caller for these details during the phone call.</li>
+    <li><strong>HTTP Execution:</strong> Once the necessary fields are collected, the AI worker triggers an internal HTTP dispatch to your CRM endpoint (e.g. <code>POST https://api.mycrm.com/v1/tickets</code>) with headers and authorization tokens securely injected from organization secrets.</li>
+    <li><strong>CRM Response Parsing:</strong> Your CRM generates the ticket and responds with a JSON payload (e.g. <code>{"ticket_id": "TICK-9428", "status": "ASSIGNED", "sla_hours": 4}</code>).</li>
+    <li><strong>Spoken Confirmation:</strong> The voice agent immediately consumes the returned JSON and confirms to the caller: <em>"Thank you, Sarah! I have created ticket number TICK-9428 for your order issue. Our tier-1 support will follow up with you within 4 hours."</em></li>
+    <li><strong>Bidirectional Querying (GET):</strong> If a customer calls asking <em>"What is the status of ticket 10482?"</em>, an attached lookup tool (<code>GET /v1/tickets/{ticket_id}</code>) queries the CRM and the agent reads the current status and latest agent notes directly to the caller.</li>
+  </ol>
+</div>
+
+<h2>4.4 Uploading &amp; Importing APIs in JSON Format</h2>
+<p>Administrators do not need to manually configure parameters one-by-one. QuickVoice provides a dedicated <strong>"Import JSON API"</strong> modal in the Console UI (under <strong>Tools &rarr; Import JSON API</strong> or inside the <strong>New Tool</strong> sheet):</p>
+
+<h3>Supported JSON Specification Formats:</h3>
+<ul>
+  <li><strong>QuickVoice Native JSON Specification:</strong>
+    <pre><code>{
+  "name": "CRM Generate Ticket",
+  "description": "Creates customer support ticket in company CRM",
+  "api_url": "https://api.mycrm.com/v1/tickets",
+  "api_method": "POST",
+  "api_headers": [
+    { "key": "Authorization", "value": "Bearer YOUR_CRM_SECRET", "type": "Secret" }
+  ],
+  "api_body": [
+    { "name": "customer_name", "type": "String", "valueType": "LLM Prompt", "required": true },
+    { "name": "customer_email", "type": "String", "valueType": "LLM Prompt", "required": true },
+    { "name": "issue_description", "type": "String", "valueType": "LLM Prompt", "required": true },
+    { "name": "priority", "type": "String", "valueType": "Static Value", "value": "HIGH" }
+  ]
+}</code></pre>
+  </li>
+  <li><strong>Postman / REST Spec:</strong> Accepts standard requests with <code>url</code>, <code>method</code>, <code>headers</code>, and sample <code>body</code> payloads. Parameters are automatically converted into LLM function-calling schemas.</li>
+  <li><strong>1-Click Built-In CRM Templates:</strong> One-click load buttons for <em>"CRM Generate Ticket (POST)"</em> and <em>"CRM Ticket Status Lookup (GET)"</em>.</li>
+</ul>
+
+<h2>4.5 Interactive Tool Testing &amp; Live Response Inspector</h2>
+<p>Before attaching a tool to live agents, administrators can verify their CRM endpoint directly inside the QuickVoice Console:</p>
+<ol>
+  <li>Click the <strong>"Test"</strong> button on any tool card or inside the tool editor.</li>
+  <li>The <strong>Tool Test Modal</strong> automatically generates input fields for each caller parameter.</li>
+  <li>Click <strong>"Sample Data"</strong> to auto-fill realistic customer ticket values (name, email, phone, issue).</li>
+  <li>Click <strong>"Send Test Request"</strong>. QuickVoice executes the request from the server, enforces URL safety, and returns:
+    <ul>
+      <li><strong>HTTP Status Badge:</strong> Confirms <code>200 OK</code> or <code>201 Created</code>.</li>
+      <li><strong>Latency Monitor:</strong> Displays exact response round-trip time in milliseconds (e.g. <code>⚡ 142ms</code>).</li>
+      <li><strong>JSON Response Inspector:</strong> Formatted syntax-highlighted JSON viewer with a 1-click Copy button.</li>
+      <li><strong>Voice Agent Simulation:</strong> Previews how the LLM will parse the returned attributes and speak the confirmation to the caller.</li>
+    </ul>
+  </li>
+</ol>
+
 <div class="page-break"></div>
 
 <!-- SECTION 5 -->

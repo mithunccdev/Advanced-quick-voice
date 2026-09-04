@@ -32,8 +32,13 @@ const METHOD_COLORS: Record<string, string> = {
   DELETE: "bg-rose-500/10 text-rose-600 border-rose-500/25 dark:text-rose-300",
 };
 
+import { ToolTestModal } from "@/src/components/tools/ToolTestModal";
+import { Button } from "@/src/components/ui/button";
+import { Play } from "lucide-react";
+
 export function ToolCard({ tool }: { tool: Tool }) {
   const [editOpen, setEditOpen] = useState(false);
+  const [testOpen, setTestOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const deleteTool = useDeleteTool();
 
@@ -84,6 +89,17 @@ export function ToolCard({ tool }: { tool: Tool }) {
           )}
         </div>
 
+        {/* Test Button */}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setTestOpen(true)}
+          className="h-8 px-2.5 text-xs gap-1.5 text-primary border-primary/30 hover:bg-primary/10"
+        >
+          <Play className="size-3.5 fill-primary/20" />
+          Test
+        </Button>
+
         {/* Actions menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -95,6 +111,10 @@ export function ToolCard({ tool }: { tool: Tool }) {
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setTestOpen(true)}>
+              <Play className="size-3.5" />
+              Test API
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setEditOpen(true)}>
               <Pencil className="size-3.5" />
               Edit
@@ -111,6 +131,7 @@ export function ToolCard({ tool }: { tool: Tool }) {
       </div>
 
       <ToolSheet mode="edit" tool={tool} open={editOpen} onOpenChange={setEditOpen} />
+      <ToolTestModal open={testOpen} onOpenChange={setTestOpen} tool={tool} />
 
       <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <AlertDialogContent>

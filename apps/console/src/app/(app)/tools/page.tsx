@@ -28,20 +28,31 @@ function SkeletonRow() {
 }
 
 import { IntegrationTemplatesModal } from "@/src/components/tools/IntegrationTemplatesModal";
-import { Sparkles } from "lucide-react";
+import { JsonApiImportDialog, type ParsedToolImport } from "@/src/components/tools/JsonApiImportDialog";
+import { Sparkles, FileJson } from "lucide-react";
 
 export default function ToolsPage() {
   const [createOpen, setCreateOpen] = useState(false);
   const [templatesOpen, setTemplatesOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
+  const [importedTool, setImportedTool] = useState<ParsedToolImport | null>(null);
   const { data: tools, isLoading } = useTools();
 
   const actions = (
     <div className="flex items-center gap-2">
+      <Button
+        variant="outline"
+        onClick={() => setImportOpen(true)}
+        className="gap-1.5 text-xs border-primary/30 text-primary hover:bg-primary/10"
+      >
+        <FileJson className="size-3.5" />
+        Import JSON API
+      </Button>
       <Button variant="outline" onClick={() => setTemplatesOpen(true)} className="gap-1.5 text-xs text-primary border-primary/30">
         <Sparkles className="size-3.5 text-primary" />
         1-Click Templates
       </Button>
-      <Button onClick={() => setCreateOpen(true)} className="gap-1.5 text-xs">
+      <Button onClick={() => { setImportedTool(null); setCreateOpen(true); }} className="gap-1.5 text-xs">
         <Plus className="size-4" />
         Add Tool
       </Button>
@@ -93,8 +104,24 @@ export default function ToolsPage() {
         </TabsContent>
       </Tabs>
 
-      <ToolSheet mode="create" open={createOpen} onOpenChange={setCreateOpen} />
+      <ToolSheet
+        mode="create"
+        initialValues={importedTool}
+        open={createOpen}
+        onOpenChange={(open) => {
+          setCreateOpen(open);
+          if (!open) setImportedTool(null);
+        }}
+      />
       <IntegrationTemplatesModal open={templatesOpen} onOpenChange={setTemplatesOpen} />
+      <JsonApiImportDialog
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        onImport={(toolData) => {
+          setImportedTool(toolData);
+          setCreateOpen(true);
+        }}
+      />
     </div>
   );
 }

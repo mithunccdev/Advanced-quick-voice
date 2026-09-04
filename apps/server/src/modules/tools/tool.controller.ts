@@ -55,3 +55,8 @@ export const detachTool = authorized(async (req, res) => {
   await toolService.detachTool(req.auth.activeOrganizationId, agentId, toolId);
   res.status(StatusCodes.OK).json({ success: true, message: "Tool detached successfully", data: null });
 });
+
+export const testTool = authorized(async (req, res) => {
+  const result = await toolService.testTool(req.auth.activeOrganizationId, req.body);
+  res.status(StatusCodes.OK).json({ success: true, message: "Tool test executed", data: result });
+});

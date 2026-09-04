@@ -58,3 +58,23 @@ export type CreateToolArgs = CreateToolInput & {
   organizationId: string;
   userId: string | null;
 };
+
+export const testToolSchema = z.object({
+  api_url: z.string().url("Must be a valid URL"),
+  api_method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]).default("GET"),
+  api_headers: z
+    .array(
+      z.object({
+        key: z.string(),
+        value: z.string().nullable().optional(),
+      })
+    )
+    .optional()
+    .nullable(),
+  api_query_params: z.record(z.string(), z.any()).optional().nullable(),
+  api_path_params: z.record(z.string(), z.any()).optional().nullable(),
+  api_body: z.record(z.string(), z.any()).optional().nullable(),
+  response_timeout_secs: z.number().int().min(1).max(60).optional().nullable(),
+});
+
+export type TestToolInput = z.infer<typeof testToolSchema>;

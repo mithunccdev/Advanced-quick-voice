@@ -3,9 +3,17 @@ import authMiddleware from "../../middleware/auth.middleware.js";
 import { requirePermission } from "../../middleware/authorize.middleware.js";
 import validate from "../../middleware/validate.middleware.js";
 import * as toolController from "./tool.controller.js";
-import { createToolSchema, updateToolSchema } from "./tool.schema.js";
+import { createToolSchema, updateToolSchema, testToolSchema } from "./tool.schema.js";
 
 const router = Router();
+
+router.post(
+  "/test",
+  authMiddleware,
+  requirePermission({ tools: ["read"] }),
+  validate(testToolSchema),
+  toolController.testTool
+);
 
 router.get(
   "/",
