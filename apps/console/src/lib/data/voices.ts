@@ -287,6 +287,66 @@ export const VOICES: Voice[] = [
     styles: ["Clear", "Natural"],
     useCases: ["Voice agents", "Customer service"],
   },
+  {
+    id: "sarvam-shubh",
+    name: "Shubh",
+    provider: "Sarvam AI",
+    gender: "masculine",
+    locale: "hi-IN",
+    accent: "Indian",
+    languages: ["hi", "en-IN", "en"],
+    ttsModels: ["sarvam/bulbul:v3"],
+    styles: ["Conversational", "Friendly", "Engaging"],
+    useCases: ["Customer Service", "Sales", "Banking"],
+  },
+  {
+    id: "sarvam-meera",
+    name: "Meera",
+    provider: "Sarvam AI",
+    gender: "feminine",
+    locale: "hi-IN",
+    accent: "Indian",
+    languages: ["hi", "en-IN", "en"],
+    ttsModels: ["sarvam/bulbul:v3"],
+    styles: ["Warm", "Polite", "Clear"],
+    useCases: ["Support Desk", "Inbound Receptionist"],
+  },
+  {
+    id: "sarvam-dhruv",
+    name: "Dhruv",
+    provider: "Sarvam AI",
+    gender: "masculine",
+    locale: "hi-IN",
+    accent: "Indian",
+    languages: ["hi", "en-IN", "en"],
+    ttsModels: ["sarvam/bulbul:v3"],
+    styles: ["Confident", "Professional", "Deep"],
+    useCases: ["Verification", "Financial Services"],
+  },
+  {
+    id: "sarvam-ananya",
+    name: "Ananya",
+    provider: "Sarvam AI",
+    gender: "feminine",
+    locale: "hi-IN",
+    accent: "Indian",
+    languages: ["hi", "en-IN", "en"],
+    ttsModels: ["sarvam/bulbul:v3"],
+    styles: ["Soft", "Empathetic", "Reassuring"],
+    useCases: ["Healthcare", "Appointment Reminders"],
+  },
+  {
+    id: "sarvam-aditya",
+    name: "Aditya",
+    provider: "Sarvam AI",
+    gender: "masculine",
+    locale: "hi-IN",
+    accent: "Indian",
+    languages: ["hi", "en-IN", "en"],
+    ttsModels: ["sarvam/bulbul:v3"],
+    styles: ["Deep", "Authoritative", "Executive"],
+    useCases: ["Enterprise Dispatch", "Security"],
+  },
 ];
 
 export function normalizeLanguageCode(language: string): LanguageCode {
@@ -330,24 +390,120 @@ export function getDefaultVoiceForTtsModel(
 }
 
 export const LLM_MODELS: ModelOption[] = [
+  // OpenRouter Models
+  {
+    id: "openrouter/auto",
+    label: "OpenRouter (Auto Best Provider)",
+    provider: "OpenRouter",
+  },
+  {
+    id: "openrouter/deepseek/deepseek-r1",
+    label: "DeepSeek R1 (OpenRouter)",
+    provider: "OpenRouter",
+  },
+  {
+    id: "openrouter/deepseek/deepseek-chat",
+    label: "DeepSeek V3 (OpenRouter)",
+    provider: "OpenRouter",
+  },
+  {
+    id: "openrouter/meta-llama/llama-3.3-70b-instruct",
+    label: "Llama 3.3 70B Instruct (OpenRouter)",
+    provider: "OpenRouter",
+  },
+  {
+    id: "openrouter/qwen/qwen-2.5-72b-instruct",
+    label: "Qwen 2.5 72B (OpenRouter)",
+    provider: "OpenRouter",
+  },
+
+  // DeepSeek Direct
+  {
+    id: "deepseek/deepseek-chat",
+    label: "DeepSeek V3 (Direct API)",
+    provider: "DeepSeek",
+  },
+  {
+    id: "deepseek/deepseek-reasoner",
+    label: "DeepSeek R1 (Direct API)",
+    provider: "DeepSeek",
+  },
+
+  // OpenAI
+  {
+    id: "openai/gpt-4o",
+    label: "OpenAI GPT-4o",
+    provider: "OpenAI",
+  },
+  {
+    id: "openai/gpt-4o-mini",
+    label: "OpenAI GPT-4o Mini",
+    provider: "OpenAI",
+  },
+  {
+    id: "openai/o3-mini",
+    label: "OpenAI o3-mini",
+    provider: "OpenAI",
+  },
+  {
+    id: "openai/o1",
+    label: "OpenAI o1 Reasoning",
+    provider: "OpenAI",
+  },
+
+  // Anthropic Claude
+  {
+    id: "anthropic/claude-3-7-sonnet",
+    label: "Claude 3.7 Sonnet (Hybrid Reasoning)",
+    provider: "Anthropic",
+  },
+  {
+    id: "anthropic/claude-3-5-sonnet-20241022",
+    label: "Claude 3.5 Sonnet",
+    provider: "Anthropic",
+  },
+  {
+    id: "anthropic/claude-3-5-haiku-20241022",
+    label: "Claude 3.5 Haiku",
+    provider: "Anthropic",
+  },
+
+  // Google Gemini
+  {
+    id: "google/gemini-2.0-flash",
+    label: "Google Gemini 2.0 Flash",
+    provider: "Google",
+  },
+  {
+    id: "google/gemini-1.5-flash",
+    label: "Google Gemini 1.5 Flash",
+    provider: "Google",
+  },
+  {
+    id: "google/gemini-1.5-pro",
+    label: "Google Gemini 1.5 Pro",
+    provider: "Google",
+  },
+
+  // Amazon Bedrock
   {
     id: "bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0",
-    label: "Claude Haiku 4.5",
+    label: "Claude Haiku 4.5 (Bedrock)",
     provider: "Amazon Bedrock",
   },
   {
     id: "bedrock/us.anthropic.claude-sonnet-4-5-20250929-v1:0",
-    label: "Claude Sonnet 4.5",
+    label: "Claude Sonnet 4.5 (Bedrock)",
     provider: "Amazon Bedrock",
   },
   {
     id: "bedrock/us.amazon.nova-micro-v1:0",
-    label: "Amazon Nova Micro",
+    label: "Amazon Nova Micro (Bedrock)",
     provider: "Amazon Bedrock",
   },
   {
     id: "bedrock/us.amazon.nova-lite-v1:0",
-    label: "Amazon Nova Lite",
+    label: "Amazon Nova Lite (Bedrock)",
     provider: "Amazon Bedrock",
   },
 ];

@@ -9,7 +9,7 @@ html_content = """<!DOCTYPE html>
 <style>
   @page {
     size: A4;
-    margin: 18mm 16mm 18mm 16mm;
+    margin: 16mm 14mm 16mm 14mm;
     @bottom-right {
       content: counter(page);
     }
@@ -18,8 +18,8 @@ html_content = """<!DOCTYPE html>
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #1e293b;
-    line-height: 1.55;
-    font-size: 10pt;
+    line-height: 1.5;
+    font-size: 9.5pt;
     background-color: #ffffff;
     margin: 0;
     padding: 0;
@@ -44,18 +44,24 @@ html_content = """<!DOCTYPE html>
   .badge {
     display: inline-block;
     padding: 4px 12px;
-    font-size: 9pt;
+    font-size: 8.5pt;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     border-radius: 4px;
     background-color: #ede9fe;
     color: #6d28d9;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+  }
+  
+  .badge-admin {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
   }
   
   .cover-title {
-    font-size: 26pt;
+    font-size: 25pt;
     font-weight: 800;
     color: #0f172a;
     line-height: 1.15;
@@ -63,7 +69,7 @@ html_content = """<!DOCTYPE html>
   }
   
   .cover-subtitle {
-    font-size: 13pt;
+    font-size: 12pt;
     color: #475569;
     font-weight: 400;
     line-height: 1.4;
@@ -75,15 +81,15 @@ html_content = """<!DOCTYPE html>
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     padding: 16px 20px;
-    margin-top: 30px;
-    max-width: 480px;
+    margin-top: 25px;
+    max-width: 500px;
   }
   
   .meta-row {
     display: flex;
     justify-content: space-between;
     padding: 6px 0;
-    font-size: 9pt;
+    font-size: 8.5pt;
     border-bottom: 1px solid #edf2f7;
   }
   .meta-row:last-child {
@@ -99,7 +105,7 @@ html_content = """<!DOCTYPE html>
   }
 
   .cover-footer {
-    font-size: 9pt;
+    font-size: 8.5pt;
     color: #94a3b8;
     border-top: 1px solid #e2e8f0;
     padding-top: 15px;
@@ -108,30 +114,30 @@ html_content = """<!DOCTYPE html>
   /* Headings */
   h1 {
     color: #0f172a;
-    font-size: 15pt;
+    font-size: 14pt;
     font-weight: 800;
     border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 5px;
-    margin-top: 22px;
+    padding-bottom: 4px;
+    margin-top: 20px;
     margin-bottom: 10px;
     page-break-after: avoid;
   }
 
   h2 {
     color: #1e293b;
-    font-size: 12pt;
+    font-size: 11pt;
     font-weight: 700;
-    margin-top: 16px;
-    margin-bottom: 8px;
+    margin-top: 15px;
+    margin-bottom: 6px;
     page-break-after: avoid;
   }
 
   h3 {
     color: #334155;
-    font-size: 10pt;
+    font-size: 9.5pt;
     font-weight: 700;
-    margin-top: 12px;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 4px;
     page-break-after: avoid;
   }
 
@@ -141,7 +147,7 @@ html_content = """<!DOCTYPE html>
 
   ul, ol {
     margin: 0 0 10px 0;
-    padding-left: 20px;
+    padding-left: 18px;
   }
 
   li {
@@ -152,8 +158,8 @@ html_content = """<!DOCTYPE html>
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: 10px 0 14px 0;
-    font-size: 8.5pt;
+    margin: 8px 0 12px 0;
+    font-size: 8pt;
     page-break-inside: avoid;
   }
 
@@ -180,8 +186,8 @@ html_content = """<!DOCTYPE html>
   .callout {
     border-left: 4px solid #8b5cf6;
     background-color: #f5f3ff;
-    padding: 10px 14px;
-    margin: 10px 0;
+    padding: 9px 12px;
+    margin: 9px 0;
     border-radius: 0 6px 6px 0;
     page-break-inside: avoid;
   }
@@ -193,9 +199,13 @@ html_content = """<!DOCTYPE html>
     border-left-color: #f59e0b;
     background-color: #fffbeb;
   }
+  .callout.danger {
+    border-left-color: #ef4444;
+    background-color: #fef2f2;
+  }
   .callout-title {
     font-weight: 700;
-    font-size: 9pt;
+    font-size: 8.5pt;
     margin-bottom: 3px;
     color: #0f172a;
   }
@@ -204,22 +214,22 @@ html_content = """<!DOCTYPE html>
   pre {
     background-color: #0f172a;
     color: #f8fafc;
-    padding: 9px 12px;
-    border-radius: 6px;
+    padding: 8px 11px;
+    border-radius: 5px;
     font-family: "Courier New", Courier, monospace;
-    font-size: 8pt;
-    line-height: 1.4;
+    font-size: 7.5pt;
+    line-height: 1.35;
     overflow-x: auto;
-    margin: 8px 0 12px 0;
+    margin: 6px 0 10px 0;
     page-break-inside: avoid;
   }
 
   code {
     background-color: #f1f5f9;
-    padding: 2px 4px;
-    border-radius: 4px;
+    padding: 1px 4px;
+    border-radius: 3px;
     font-family: "Courier New", Courier, monospace;
-    font-size: 8pt;
+    font-size: 7.5pt;
     color: #0f172a;
   }
 
@@ -236,8 +246,8 @@ html_content = """<!DOCTYPE html>
   .step-box {
     border: 1px solid #e2e8f0;
     border-radius: 6px;
-    padding: 10px 12px;
-    margin: 10px 0;
+    padding: 9px 11px;
+    margin: 8px 0;
     background-color: #fafafa;
     page-break-inside: avoid;
   }
@@ -246,15 +256,29 @@ html_content = """<!DOCTYPE html>
     background-color: #8b5cf6;
     color: #ffffff;
     font-weight: 700;
-    font-size: 7.5pt;
-    padding: 2px 6px;
+    font-size: 7pt;
+    padding: 2px 5px;
     border-radius: 3px;
-    margin-right: 6px;
+    margin-right: 5px;
   }
   .step-title {
     font-weight: 700;
     color: #0f172a;
   }
+  
+  .tab-badge {
+    display: inline-block;
+    font-size: 7.5pt;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-right: 6px;
+    text-transform: uppercase;
+  }
+  .tab-telephony { background: #dbeafe; color: #1e40af; }
+  .tab-stt { background: #d1fae5; color: #065f46; }
+  .tab-tts { background: #fef3c7; color: #92400e; }
+  .tab-llm { background: #f3e8ff; color: #6b21a8; }
 </style>
 </head>
 <body>
@@ -263,8 +287,9 @@ html_content = """<!DOCTYPE html>
 <div class="cover-page">
   <div class="cover-header">
     <div class="badge">Master Administrator Manual</div>
+    <div class="badge badge-admin">Admin Account Only</div>
     <div class="cover-title">QuickVoice Master<br>Admin Configuration Guide</div>
-    <div class="cover-subtitle">Complete Administrator Walkthrough for Production Setup, LiveKit Cloud, Deepgram STT/TTS, Inbound/Outbound Webhooks, Agent API Configuration, and System Health</div>
+    <div class="cover-subtitle">Comprehensive Enterprise Handbook for Multi-Provider Telephony (Vobiz, Twilio, Telnyx), Vernacular AI (Sarvam, Deepgram), Cloud LLM Matrix (OpenRouter, DeepSeek, OpenAI, Claude 3.7, Gemini), LiveKit WebRTC, and Admin Role Security</div>
     
     <div class="meta-box">
       <div class="meta-row">
@@ -272,493 +297,456 @@ html_content = """<!DOCTYPE html>
         <span class="meta-value">QuickVoice Enterprise v2.5</span>
       </div>
       <div class="meta-row">
-        <span class="meta-label">Classification:</span>
-        <span class="meta-value">System Administration / DevOps</span>
+        <span class="meta-label">Access Restriction:</span>
+        <span class="meta-value">Admin &amp; Owner Accounts Only</span>
       </div>
       <div class="meta-row">
-        <span class="meta-label">Primary Integrations:</span>
-        <span class="meta-value">LiveKit Cloud, Deepgram, Twilio/Telnyx, LLMs</span>
+        <span class="meta-label">Telephony Providers:</span>
+        <span class="meta-value">Vobiz SIP (India 140/92), Twilio, Telnyx, LiveKit</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Speech &amp; Voice Providers:</span>
+        <span class="meta-value">Sarvam AI (Saaras/Bulbul), Deepgram, ElevenLabs</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Cloud LLM Engines:</span>
+        <span class="meta-value">OpenRouter, DeepSeek R1/V3, Claude 3.7, GPT-4o, Gemini 2.0</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Author:</span>
         <span class="meta-value">QuickVoice Core Architecture Team</span>
       </div>
       <div class="meta-row">
-        <span class="meta-label">Last Updated:</span>
+        <span class="meta-label">Published:</span>
         <span class="meta-value">September 2026</span>
       </div>
     </div>
   </div>
 
   <div class="cover-footer">
-    QuickVoice Autonomous Voice Systems &bull; System Administration &amp; Integration Guide
+    QuickVoice Autonomous Voice Systems &bull; Confidential &bull; System Administration &amp; Integration Guide
   </div>
 </div>
 
 <!-- SECTION 1 -->
-<h1>1. Environment Configuration &amp; Master Secrets</h1>
+<h1>1. Architecture Overview &amp; Master Secrets</h1>
 
-<h2>1.1 Architectural Overview of Services</h2>
-<p>The QuickVoice platform requires synchronized configuration across three distinct service domains:</p>
+<h2>1.1 System Components &amp; Environment Topography</h2>
+<p>The QuickVoice ecosystem operates across three synchronized execution planes:</p>
 <ol>
-  <li><strong>API Server (<code>apps/server/.env</code>):</strong> Manages authentication, database, billing, webhook routing, and telephony signaling.</li>
-  <li><strong>Console Dashboard (<code>apps/console/.env</code>):</strong> Client-side Next.js web application.</li>
-  <li><strong>AI Voice Worker (<code>apps/ai/.env</code>):</strong> Python 3.11 service connecting directly to WebRTC media rooms, speech models, and real-time inference.</li>
+  <li><strong>API Server (Node.js / Express / Prisma):</strong> Manages multi-tenant authentication, organization hierarchy, role-based access control, billing wallets, SIP routing metadata, and webhook dispatches. Configured via <code>apps/server/.env</code>.</li>
+  <li><strong>Console Dashboard (Next.js 14 / Tailwind / Better-Auth):</strong> The web application interface for human administrators and operators. Gated routes protect sensitive credentials. Configured via <code>apps/console/.env</code>.</li>
+  <li><strong>Voice Agent Worker (Python 3.11 / LiveKit Agents):</strong> High-performance media daemon maintaining sub-200ms WebRTC pipelines, voice activity detection (VAD), speech-to-text, LLM inference, and voice streaming. Configured via <code>apps/ai/.env</code>.</li>
 </ol>
 
-<h2>1.2 Critical Security Secrets (Must Configure First)</h2>
+<h2>1.2 Core Security Secrets (Mandatory Step 0)</h2>
 <table>
   <thead>
     <tr>
-      <th>Variable Name</th>
-      <th>Location</th>
-      <th>Requirement &amp; Purpose</th>
-      <th>Generation Command</th>
+      <th>Environment Variable</th>
+      <th>File Target</th>
+      <th>Security Specification</th>
+      <th>Key Purpose</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code>SECRET_ENCRYPTION_KEY</code></td>
       <td><code>apps/server/.env</code></td>
-      <td><strong>64 Hex Characters (32 Bytes).</strong> Used to encrypt third-party tool credentials, API tokens, and webhook secrets at rest via AES-256-GCM.</td>
-      <td><code>openssl rand -hex 32</code></td>
+      <td>64 Hex characters (32 bytes random)</td>
+      <td>AES-256-GCM encryption of third-party API keys and carrier SIP credentials at rest.</td>
     </tr>
     <tr>
       <td><code>INTERNAL_API_KEY</code></td>
       <td><code>apps/server/.env</code> &amp; <code>apps/ai/.env</code></td>
-      <td><strong>High-Entropy Shared Token.</strong> Secures internal inter-service communication between Node.js API and the Python AI worker.</td>
-      <td><code>openssl rand -base64 24</code></td>
+      <td>High-entropy base64 string (32+ chars)</td>
+      <td>Mutual authentication between Node API and Python AI worker; prevents unauthorized call injection.</td>
     </tr>
     <tr>
       <td><code>BETTER_AUTH_SECRET</code></td>
       <td><code>apps/server/.env</code></td>
-      <td><strong>32+ Character Secret.</strong> Signs JWT session tokens and user authentication cookies.</td>
-      <td><code>openssl rand -base64 32</code></td>
+      <td>High-entropy secret string</td>
+      <td>Cryptographic signing of user authentication cookies and session bearer tokens.</td>
+    </tr>
+    <tr>
+      <td><code>LIVEKIT_API_KEY</code> / <code>LIVEKIT_API_SECRET</code></td>
+      <td>Both server &amp; worker</td>
+      <td>LiveKit Cloud project credentials</td>
+      <td>Room creation, WebRTC token issuance, and SIP ingress/egress dispatch control.</td>
     </tr>
   </tbody>
 </table>
 
-<div class="callout warning">
-  <div class="callout-title">Critical Production Rule</div>
-  <code>INTERNAL_API_KEY</code> must match identically between <code>apps/server/.env</code> and <code>apps/ai/.env</code>. If mismatched, the AI worker will be rejected with HTTP 401 when verifying billing tokens or reporting call metrics.
+<div class="callout danger">
+  <div class="callout-title">Zero-Tolerance Security Rule: Admin Account Only</div>
+  <p>All AI provider keys (OpenAI, Anthropic, DeepSeek, Sarvam AI, Deepgram, ElevenLabs) and Telephony SIP credentials (Vobiz, Twilio, Telnyx) represent critical financial liabilities. In QuickVoice, the <strong>Provider &amp; API Configuration</strong> dashboard (<code>/settings/providers</code>) is cryptographically and logically restricted to <strong>Administrator</strong> and <strong>Owner</strong> roles only. Regular organization members cannot view, alter, or extract these keys.</p>
 </div>
 
 <div class="page-break"></div>
 
 <!-- SECTION 2 -->
-<h1>2. Connecting LiveKit Cloud API &amp; Telephony</h1>
+<h1>2. Dedicated Provider &amp; API Management (Admin Account Only)</h1>
 
-<h2>2.1 Why LiveKit Cloud?</h2>
-<p>LiveKit provides the carrier-grade WebRTC media plane and SIP gateway. While LiveKit can be self-hosted, <strong>LiveKit Cloud</strong> provides a globally distributed edge mesh with zero UDP port-forwarding issues and 5,000 free minutes/month.</p>
+<p>Administrators configure and manage all carrier and model credentials directly in the QuickVoice Console UI under <strong>Settings &rarr; AI &amp; Telephony APIs</strong> (<code>/settings/providers</code>). The dashboard is segregated into four dedicated operational domains:</p>
 
-<h2>2.2 Step-by-Step LiveKit Cloud Provisioning</h2>
+<h2>2.1 Tab 1: Telephony &amp; Elastic SIP Trunks <span class="tab-badge tab-telephony">Telephony &amp; SIP</span></h2>
+<p>QuickVoice supports hybrid carrier integration, enabling concurrent inbound and outbound routing across Vobiz, Twilio, Telnyx, and native LiveKit SIP dispatchers.</p>
 
-<div class="step-box">
-  <span class="step-num">STEP 1</span>
-  <span class="step-title">Create a Project in LiveKit Cloud</span>
-  <p>Sign up at <strong>https://cloud.livekit.io</strong> $\rightarrow$ Create a new project named <code>quickvoice-prod</code>.</p>
-</div>
-
-<div class="step-box">
-  <span class="step-num">STEP 2</span>
-  <span class="step-title">Generate API Credentials</span>
-  <p>In the LiveKit Cloud dashboard, go to <strong>Project Settings</strong> $\rightarrow$ <strong>Keys</strong> $\rightarrow$ Click <strong>Generate Key</strong>.<br>
-  Copy the following three values into your <code>apps/server/.env</code> and <code>apps/ai/.env</code>:</p>
-  <pre><code>LIVEKIT_URL=wss://quickvoice-prod-xxxx.livekit.cloud
-LIVEKIT_API_KEY=APIxxxxxxxxxxxxxx
-LIVEKIT_API_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-LIVEKIT_AGENT_NAME=quickvoice-voice-agent</code></pre>
-</div>
-
-<div class="step-box">
-  <span class="step-num">STEP 3</span>
-  <span class="step-title">Create LiveKit SIP Inbound Trunk</span>
-  <ol>
-    <li>In LiveKit Cloud, navigate to <strong>SIP</strong> $\rightarrow$ <strong>Inbound Trunks</strong> $\rightarrow$ Click <strong>Create Inbound Trunk</strong>.</li>
-    <li>Set Name to: <code>quickvoice-inbound</code>.</li>
-    <li>Set Allowed Numbers or leave open to accept all incoming carrier calls.</li>
-    <li>Copy the resulting Trunk ID (e.g. <code>ST_inbound_xxxxxx</code>) into <code>apps/server/.env</code>:
-      <pre><code>LIVEKIT_SIP_INBOUND_TRUNK_ID=ST_inbound_xxxxxx</code></pre>
-    </li>
-  </ol>
-</div>
-
-<div class="step-box">
-  <span class="step-num">STEP 4</span>
-  <span class="step-title">Create LiveKit SIP Outbound Trunk (Twilio / Telnyx)</span>
-  <ol>
-    <li>Navigate to <strong>SIP</strong> $\rightarrow$ <strong>Outbound Trunks</strong> $\rightarrow$ Click <strong>Create Outbound Trunk</strong>.</li>
-    <li>Address: <code>your-carrier-trunk.pstn.twilio.com</code> (or Telnyx SIP endpoint).</li>
-    <li>Auth Username &amp; Password: Set from your Twilio Elastic SIP Trunk credentials.</li>
-    <li>Copy the Trunk ID into <code>apps/server/.env</code>:
-      <pre><code>LIVEKIT_SIP_OUTBOUND_TRUNK_TWILIO_ID=ST_outbound_twilio_xxxx
-LIVEKIT_SIP_OUTBOUND_TRUNK_TELNYX_ID=ST_outbound_telnyx_xxxx</code></pre>
-    </li>
-  </ol>
-</div>
-
-<h2>2.3 LiveKit Dispatch Rule (Connecting Phone to AI Worker)</h2>
-<p>In LiveKit Cloud SIP settings, create a <strong>Dispatch Rule</strong>:</p>
+<h3>Vobiz Cloud Telephony &amp; Elastic SIP Trunking</h3>
+<p><strong>Vobiz</strong> is an AI-first cloud telephony provider specifically tailored for modern real-time voice applications and India regulatory compliance (TRAI 140/92 series). Key technical parameters:</p>
 <ul>
-  <li><strong>Trigger:</strong> Any incoming SIP call on <code>quickvoice-inbound</code>.</li>
-  <li><strong>Action:</strong> Create Room with prefix <code>voice-</code> and dispatch the registered agent <code>quickvoice-voice-agent</code>.</li>
+  <li><strong>SIP Domain Proxy:</strong> <code>sip.vobiz.ai</code> (Port 5060 UDP/TCP, Port 5061 TLS)</li>
+  <li><strong>Authentication Mode:</strong> SIP Digest Authentication (Username + Auth Token) or IP Access Control List (ACL) whitelisting.</li>
+  <li><strong>Codec Negotiation:</strong> G.711u (PCMU), G.711a (PCMA), and Opus (48kHz full-band for pristine AI audio).</li>
+  <li><strong>Indian DID Number Allocations:</strong>
+    <ul>
+      <li><strong>140 Series:</strong> Dedicated transactional telemarketing numbers for India financial &amp; enterprise outbound calling.</li>
+      <li><strong>92 Series:</strong> Commercial business customer service and verified conversational calling.</li>
+      <li><strong>1800 Series:</strong> National toll-free customer support lines.</li>
+      <li><strong>Standard E.164:</strong> Full international routing (e.g., <code>+91XXXXXXXXXX</code> for India, <code>+1XXXXXXXXXX</code> for North America).</li>
+    </ul>
+  </li>
+  <li><strong>LiveKit Cloud SIP Inbound Dispatch Setup:</strong>
+    <pre><code># In LiveKit Cloud Console -> SIP Inbound Trunks:
+Name: Vobiz-India-Inbound
+SIP URI: sip:inbound.livekit.cloud
+Numbers Accepted: +91140XXXXXXX, +9192XXXXXXXX
+Auth: IP Whitelist -> Add Vobiz Signaling IP Blocks
+Dispatch Rule: Direct to Agent Room ("quickvoice-inbound-{call_id}")</code></pre>
+  </li>
+  <li><strong>LiveKit Cloud SIP Outbound Trunk Setup:</strong>
+    <pre><code># In LiveKit Cloud Console -> SIP Outbound Trunks:
+Name: Vobiz-Outbound-Trunk
+Address: sip.vobiz.ai:5060
+Transport: TLS (Recommended) or UDP
+Credentials: Vobiz Account Username &amp; Auth Token
+Caller ID: +91140XXXXXXX (Verified Vobiz DID)</code></pre>
+  </li>
 </ul>
+
+<h3>Twilio &amp; Telnyx SIP Credentials</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>Required Settings in Console</th>
+      <th>Use Case &amp; Geography</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Vobiz</strong></td>
+      <td>API Key, Auth Token, SIP Domain (<code>sip.vobiz.ai</code>), Outbound Trunk ID</td>
+      <td>India domestic (140/92/1800), Asia-Pacific high-throughput low-latency SIP.</td>
+    </tr>
+    <tr>
+      <td><strong>Twilio</strong></td>
+      <td>Account SID, Auth Token, Elastic SIP Trunk SID (<code>TKxxxxxxxx</code>)</td>
+      <td>North America &amp; European toll-free, global local number inventory.</td>
+    </tr>
+    <tr>
+      <td><strong>Telnyx</strong></td>
+      <td>API v2 Token, SIP Connection ID</td>
+      <td>Ultra-low per-minute carrier pricing, multi-region private IP termination.</td>
+    </tr>
+    <tr>
+      <td><strong>LiveKit SIP</strong></td>
+      <td>Inbound SIP Trunk ID, Outbound SIP Trunk ID</td>
+      <td>Native WebRTC-to-PSTN bridging with automated room dispatching.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<h2>2.2 Tab 2: Speech-to-Text (STT) Engines <span class="tab-badge tab-stt">Speech-to-Text</span></h2>
+<p>QuickVoice provisions industry-leading streaming STT providers to transcribe customer audio in under 300 milliseconds.</p>
+
+<h3>Sarvam AI — Vernacular Speech Recognition (Saaras v3)</h3>
+<ul>
+  <li><strong>Model Identifier:</strong> <code>sarvam/saaras:v3</code></li>
+  <li><strong>Specialization:</strong> State-of-the-art acoustic modeling for Indian languages with code-mixed vernacular understanding (Hinglish, Tanglish, etc.).</li>
+  <li><strong>Supported Languages:</strong> Hindi, Tamil, Telugu, Kannada, Bengali, Marathi, Gujarati, Malayalam, Punjabi, Odia, and Indian English (<code>en-IN</code>).</li>
+  <li><strong>Configuration in Console:</strong> Enter <code>Sarvam AI API Key</code> under <strong>Settings &rarr; AI &amp; Telephony APIs &rarr; Speech-to-Text</strong>.</li>
+</ul>
+
+<h3>Deepgram Nova-3 &amp; Nova-2</h3>
+<ul>
+  <li><strong>Model Identifiers:</strong> <code>deepgram/nova-3</code> (Default) and <code>deepgram/nova-2</code></li>
+  <li><strong>Performance:</strong> Sub-250ms streaming transcription with smart formatting, automatic numeral conversion, profanity filtering, and keyword boosting.</li>
+</ul>
+
+<h2>2.3 Tab 3: Voice Synthesis &amp; TTS Engines <span class="tab-badge tab-tts">Voice &amp; TTS</span></h2>
+<p>Deliver life-like, expressive voice responses matching your brand's regional and stylistic persona.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>TTS Provider</th>
+      <th>Engine Model</th>
+      <th>Key Personas &amp; Accents</th>
+      <th>Latency Profile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Sarvam AI</strong></td>
+      <td><code>sarvam/bulbul:v3</code></td>
+      <td><strong>Indian Voices:</strong> <em>Shubh</em> (Professional Male), <em>Meera</em> (Warm Female), <em>Dhruv</em> (Energetic Male), <em>Ananya</em> (Conversational Female), <em>Aditya</em> (Executive Male).</td>
+      <td>~280ms streaming TTFB. Native Hindi, Tamil, Telugu, English (IN).</td>
+    </tr>
+    <tr>
+      <td><strong>Deepgram</strong></td>
+      <td><code>deepgram/aura-2</code></td>
+      <td><strong>English &amp; Global:</strong> <em>Asteria</em> (Energetic), <em>Apollo</em> (Confident), <em>Hera</em> (Warm), <em>Zeus</em> (Deep Baritone), <em>Luna</em> (Gentle).</td>
+      <td>~180ms instant streaming.</td>
+    </tr>
+    <tr>
+      <td><strong>ElevenLabs</strong></td>
+      <td><code>elevenlabs/eleven_flash_v2_5</code></td>
+      <td>Studio-grade emotional expressiveness, custom voice cloning, multi-dialect support.</td>
+      <td>~300ms. Premium VIP queues.</td>
+    </tr>
+    <tr>
+      <td><strong>Cartesia</strong></td>
+      <td><code>cartesia/sonic</code></td>
+      <td>High-speed conversational synthesis with realistic breathing and turn-taking.</td>
+      <td>&lt;150ms ultra-low latency.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>2.4 Tab 4: Cloud LLM Intelligence Matrix <span class="tab-badge tab-llm">Cloud LLMs</span></h2>
+<p>QuickVoice provides unified support for all premier foundation models. Administrators enter API keys once, and all models become instantly selectable across every conversational agent in the organization.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Provider Category</th>
+      <th>Models Available in QuickVoice</th>
+      <th>Best Fit / Recommended Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>OpenRouter (Aggregator)</strong></td>
+      <td><code>openrouter/deepseek/deepseek-r1</code><br><code>openrouter/deepseek/deepseek-chat</code><br><code>openrouter/meta-llama/llama-3.3-70b-instruct</code><br><code>openrouter/qwen/qwen-2.5-72b-instruct</code></td>
+      <td>Cost-effective open weights, high rate limits, complex conversational reasoning with DeepSeek R1.</td>
+    </tr>
+    <tr>
+      <td><strong>DeepSeek Direct</strong></td>
+      <td><code>deepseek/deepseek-chat</code> (V3)<br><code>deepseek/deepseek-reasoner</code> (R1)</td>
+      <td>Direct high-speed API access, enterprise prompt caching, ultra-low token pricing.</td>
+    </tr>
+    <tr>
+      <td><strong>OpenAI</strong></td>
+      <td><code>openai/gpt-4o</code><br><code>openai/gpt-4o-mini</code><br><code>openai/o3-mini</code><br><code>openai/o1</code></td>
+      <td>High conversational fidelity, complex function calling, multi-step structured data extraction.</td>
+    </tr>
+    <tr>
+      <td><strong>Anthropic Claude</strong></td>
+      <td><code>anthropic/claude-3-7-sonnet</code><br><code>anthropic/claude-3-5-sonnet</code><br><code>anthropic/claude-3-5-haiku</code></td>
+      <td>Industry benchmark for conversational naturalness, zero-shot nuance, and human empathy.</td>
+    </tr>
+    <tr>
+      <td><strong>Google Gemini</strong></td>
+      <td><code>google/gemini-2.0-flash</code><br><code>google/gemini-1.5-flash</code><br><code>google/gemini-1.5-pro</code></td>
+      <td>Blazing fast real-time TTFT (&lt;200ms), 1M+ token context windows, audio multimodal integration.</td>
+    </tr>
+    <tr>
+      <td><strong>Amazon Bedrock</strong></td>
+      <td><code>bedrock/us.anthropic.claude-3-5-sonnet</code><br><code>bedrock/us.anthropic.claude-haiku-4-5</code></td>
+      <td>Enterprise AWS VPC isolation, HIPAA/SOC2 compliance, IAM role-based authentication.</td>
+    </tr>
+  </tbody>
+</table>
 
 <div class="page-break"></div>
 
 <!-- SECTION 3 -->
-<h1>3. Connecting Deepgram STT &amp; TTS Pipeline</h1>
+<h1>3. Connecting LiveKit Cloud &amp; Media Infrastructure</h1>
 
-<h2>3.1 Generating Deepgram API Credentials</h2>
+<h2>3.1 LiveKit Cloud Signaling &amp; Room Orchestration</h2>
+<p>LiveKit Cloud powers the real-time WebRTC media mesh connecting callers, carriers, and the QuickVoice AI worker.</p>
 <ol>
-  <li>Register at <strong>https://deepgram.com</strong>.</li>
-  <li>Navigate to <strong>API Keys</strong> $\rightarrow$ Click <strong>Create Key</strong>. Select permissions: <em>Member</em> or <em>Admin</em>.</li>
-  <li>Add the API key to <code>apps/ai/.env</code>:
-    <pre><code>DEEPGRAM_API_KEY=dg_sec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></pre>
+  <li>Navigate to <a href="https://cloud.livekit.io">https://cloud.livekit.io</a> and create a production project.</li>
+  <li>Under <strong>Project Settings &rarr; Keys</strong>, generate an API Key and Secret.</li>
+  <li>Insert the credentials into <code>apps/server/.env</code> and <code>apps/ai/.env</code>:
+    <pre><code>LIVEKIT_URL=wss://your-project.livekit.cloud
+LIVEKIT_API_KEY=APIxxxxxxxxxxxx
+LIVEKIT_API_SECRET=secretxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></pre>
   </li>
+  <li>Deploy the QuickVoice AI worker: <code>python -m apps.ai.main start</code> (or via Docker Compose: <code>docker-compose up -d ai-worker</code>). The worker immediately registers itself as an active participant dispatcher on LiveKit Cloud.</li>
 </ol>
 
-<h2>3.2 Deepgram Speech-to-Text (STT) Options &amp; Latency Tuning</h2>
-<p>In QuickVoice, STT operates via WebSocket streaming using interim chunked results:</p>
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Config Value</th>
-      <th>Recommendation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>model</code></td>
-      <td><code>nova-3</code> (Recommended) or <code>nova-2</code></td>
-      <td>Nova-3 delivers lowest word error rate (WER) and sub-180ms streaming latency.</td>
-    </tr>
-    <tr>
-      <td><code>language</code></td>
-      <td><code>en</code> (or <code>es</code>, <code>fr</code>, <code>de</code>, <code>hi</code>)</td>
-      <td>Select primary agent language or pass multi-language tag.</td>
-    </tr>
-    <tr>
-      <td><code>smart_format</code></td>
-      <td><code>true</code></td>
-      <td>Automatically formats dates, currencies, phone numbers, and punctuation.</td>
-    </tr>
-    <tr>
-      <td><code>interim_results</code></td>
-      <td><code>true</code></td>
-      <td>Streams interim transcripts to Silero VAD for instant user interruption detection.</td>
-    </tr>
-    <tr>
-      <td><code>endpointing</code></td>
-      <td><code>250</code> ms</td>
-      <td>Silence duration required before committing the caller turn to the LLM.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2>3.3 Deepgram Aura Text-to-Speech (TTS) Voice Catalog</h2>
-<p>QuickVoice natively supports Deepgram Aura-2 high-speed streaming voices:</p>
-<table>
-  <thead>
-    <tr>
-      <th>Voice ID</th>
-      <th>Gender</th>
-      <th>Persona Tone</th>
-      <th>Ideal Use Case</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>aura-2-asteria-en</code></td>
-      <td>Female</td>
-      <td>Warm, confident, conversational</td>
-      <td>Inbound Receptionist &amp; Customer Support</td>
-    </tr>
-    <tr>
-      <td><code>aura-2-hera-en</code></td>
-      <td>Female</td>
-      <td>Authoritative, professional</td>
-      <td>Medical, Legal &amp; Financial Intake</td>
-    </tr>
-    <tr>
-      <td><code>aura-2-zeus-en</code></td>
-      <td>Male</td>
-      <td>Deep, friendly, trustworthy</td>
-      <td>B2B Sales Qualification &amp; Outbound Dialing</td>
-    </tr>
-    <tr>
-      <td><code>aura-2-luna-en</code></td>
-      <td>Female</td>
-      <td>Gentle, empathetic</td>
-      <td>Healthcare Appointment Reminders</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="callout tip">
-  <div class="callout-title">Alternative TTS Providers</div>
-  QuickVoice also supports <strong>ElevenLabs</strong> (<code>ELEVENLABS_API_KEY</code>, model: <code>eleven_flash_v2_5</code>) and <strong>Cartesia</strong> for ultra-expressive emotional voices.
-</div>
-
-<div class="page-break"></div>
+<h2>3.2 LiveKit SIP Dispatch Rule Configuration</h2>
+<p>When an inbound PSTN call arrives from Vobiz, Twilio, or Telnyx, LiveKit dispatches it into an isolated WebRTC audio room. Configure the SIP dispatch rule via LiveKit CLI or Console:</p>
+<pre><code># livekit-cli sip dispatch-rule create rule.json
+{
+  "name": "QuickVoice-Auto-Agent-Dispatch",
+  "rule": {
+    "dispatchRuleIndividual": {
+      "roomPrefix": "call-"
+    }
+  },
+  "metadata": "{\\"source\\": \\"vobiz_twilio_gateway\\"}"
+}</code></pre>
 
 <!-- SECTION 4 -->
-<h1>4. Configuring Inbound &amp; Outbound Webhooks</h1>
+<h1>4. Inbound &amp; Outbound Webhook Architecture</h1>
 
-<h2>4.1 Agent Initiation Webhook (Pre-Call Context Injection)</h2>
-<p>Before an inbound or outbound call begins, QuickVoice can query your CRM or database to fetch dynamic variables (caller name, past order history, balance, account tier) to personalize the conversation.</p>
+<h2>4.1 Webhook Lifecycle Events</h2>
+<p>QuickVoice dispatches cryptographic webhooks to third-party CRMs (HubSpot, Salesforce, Zoho, Zapier) at key lifecycle transitions:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Event Name</th>
+      <th>Trigger Moment</th>
+      <th>Payload Key Attributes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>call.started</code></td>
+      <td>SIP INVITE answered; WebRTC room joined.</td>
+      <td><code>callId</code>, <code>callerNumber</code>, <code>agentId</code>, <code>direction</code>, <code>timestamp</code></td>
+    </tr>
+    <tr>
+      <td><code>call.transcript.chunk</code></td>
+      <td>Real-time streaming speech chunk committed.</td>
+      <td><code>callId</code>, <code>speaker</code> (agent/user), <code>text</code>, <code>confidence</code></td>
+    </tr>
+    <tr>
+      <td><code>tool.invoked</code></td>
+      <td>LLM triggers external tool (e.g. Cal.com booking).</td>
+      <td><code>toolName</code>, <code>inputArguments</code>, <code>executionStatus</code></td>
+    </tr>
+    <tr>
+      <td><code>call.ended</code></td>
+      <td>SIP BYE received; room closed.</td>
+      <td><code>durationSeconds</code>, <code>disposition</code>, <code>recordingUrl</code></td>
+    </tr>
+    <tr>
+      <td><code>call.analyzed</code></td>
+      <td>Post-call AI summary &amp; sentiment completed.</td>
+      <td><code>summary</code>, <code>sentiment</code>, <code>extractedData</code>, <code>costUsd</code></td>
+    </tr>
+  </tbody>
+</table>
 
-<h3>Configuration in Agent Settings:</h3>
-<pre><code>{
-  "initiation_webhook": {
-    "url": "https://api.yourcompany.com/crm/caller-lookup",
-    "method": "POST",
-    "headers": {
-      "Authorization": "Bearer YOUR_CRM_WEBHOOK_SECRET",
-      "Content-Type": "application/json"
-    },
-    "timeout_secs": 4
-  }
-}</code></pre>
+<h2>4.2 HMAC-SHA256 Signature Verification</h2>
+<p>Every webhook request includes an <code>X-QuickVoice-Signature</code> header. Verify signatures in Node.js/Python to prevent forgery:</p>
+<pre><code>// Example Node.js Webhook Receiver
+const crypto = require("crypto");
 
-<h3>Payload Sent to Your Endpoint:</h3>
-<pre><code>{
-  "event": "call.initiation",
-  "callId": "call_987654321",
-  "callerNumber": "+14155550199",
-  "agentId": "e1687102-91d1-47bb-a7d9-d43e89a55298",
-  "direction": "inbound",
-  "timestamp": "2026-09-04T06:00:00.000Z"
-}</code></pre>
-
-<h3>Expected Return Payload (Injected into Agent Variables):</h3>
-<pre><code>{
-  "variables": {
-    "caller_name": "Alexander Vance",
-    "account_tier": "VIP Gold",
-    "last_order_status": "Out for delivery"
-  }
-}</code></pre>
-<p>The agent can immediately speak: <em>"Hi Alexander, welcome back to QuickVoice VIP support! Are you calling about your order that is out for delivery today?"</em></p>
-
-<h2>4.2 Post-Call Webhook (CRM Sync, Summary &amp; Analytics)</h2>
-<p>Triggered immediately after a call terminates. Sends full conversation metadata, structured data slots, and audio recording URLs.</p>
-
-<h3>Payload Dispatched by QuickVoice:</h3>
-<pre><code>{
-  "event": "call.completed",
-  "callId": "call_987654321",
-  "agentId": "e1687102-91d1-47bb-a7d9-d43e89a55298",
-  "durationSeconds": 142,
-  "status": "COMPLETED",
-  "callerNumber": "+14155550199",
-  "recordingUrl": "https://s3.amazonaws.com/quickvoice-recordings/call_987654321.mp3",
-  "transcript": [
-    { "role": "agent", "message": "Hi, thanks for calling! How can I assist you today?" },
-    { "role": "caller", "message": "I'd like to book an appointment for tomorrow at 2 PM." },
-    { "role": "agent", "message": "You're booked for tomorrow at 2 PM with Dr. Vance!" }
-  ],
-  "extractedData": {
-    "appointment_date": "2026-09-05",
-    "appointment_time": "14:00",
-    "user_email": "alex@example.com"
-  },
-  "sentiment": "POSITIVE",
-  "escalatedToHuman": false,
-  "telephonyCostMicros": 124000
+function verifyQuickVoiceWebhook(req, secret) {
+  const signature = req.headers["x-quickvoice-signature"];
+  const hmac = crypto.createHmac("sha256", secret);
+  const digest = hmac.update(JSON.stringify(req.body)).digest("hex");
+  return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest));
 }</code></pre>
 
 <div class="page-break"></div>
 
 <!-- SECTION 5 -->
-<h1>5. Creating &amp; Configuring Voice Agents in Console UI &amp; API</h1>
+<h1>5. Step-by-Step Agent Creation &amp; Model Selection via Console UI</h1>
 
-<h2>5.1 Step-by-Step Agent Creation through the Console UI</h2>
-
-<div class="step-box">
-  <span class="step-num">STEP 1</span>
-  <span class="step-title">Create Agent Entity in Console</span>
-  <p>In the main sidebar, navigate to <strong>Agents</strong> (<code>http://localhost:3005/agents</code>) &rarr; Click the <strong>+ Create Agent</strong> button in the top right. Enter a friendly name (e.g., <em>"Apex Dental Receptionist"</em>) and click <strong>Create</strong>.</p>
-</div>
-
-<div class="step-box">
-  <span class="step-num">STEP 2</span>
-  <span class="step-title">Open the "Voice &amp; Models" Configuration Tab</span>
-  <p>From the agent overview screen, click the <strong>Voice</strong> tab in the navigation bar. This opens the dedicated model and speech engine configuration panel.</p>
-</div>
-
-<h2>5.2 Configuring LLM, STT, and TTS in the Console UI</h2>
-<p>QuickVoice provides decoupled dropdown selectors allowing you to mix-and-match any combination of intelligence, transcription, and speech synthesis:</p>
+<p>All agent creation, prompt engineering, speech engine configuration, and carrier number binding can be performed entirely within the QuickVoice Console UI by administrators.</p>
 
 <div class="step-box">
   <span class="step-num">1</span>
-  <span class="step-title">Agent Language Selector (<code>agent_language</code>)</span>
-  <p>Select the conversational language (e.g., <strong>English (en)</strong>, <strong>Spanish (es)</strong>, <strong>French (fr)</strong>, <strong>German (de)</strong>, <strong>Hindi (hi)</strong>). Changing the language dynamically filters the available STT and TTS models below to only those supporting that locale.</p>
+  <span class="step-title">Log in with Administrator Privileges</span>
+  <p>Navigate to <code>http://localhost:3005/login</code> and sign in using your Admin account (e.g., <code>admin@quickvoice.ai</code>). Non-admin accounts will not see provider API tabs or permission matrices.</p>
 </div>
 
 <div class="step-box">
   <span class="step-num">2</span>
-  <span class="step-title">LLM Model Selector (<code>llmModel</code>)</span>
-  <p>Select the reasoning engine that generates the conversation turns:</p>
+  <span class="step-title">Update Provider API Keys (Settings &rarr; AI &amp; Telephony APIs)</span>
+  <p>Before launching agents, verify your provider credentials under <strong>Settings &rarr; AI &amp; Telephony APIs</strong>:</p>
   <ul>
-    <li><strong>Claude 3.5 Haiku (Amazon Bedrock / Anthropic):</strong> Recommended default. Delivers sub-200ms first-token latency with superior prompt adherence.</li>
-    <li><strong>Claude 3.5 Sonnet:</strong> Used for highly complex reasoning, multi-turn diagnostics, or complex objection handling.</li>
-    <li><strong>Amazon Nova Micro / Lite:</strong> Cost-effective options for straightforward deterministic IVR workflows.</li>
-    <li><strong>OpenAI GPT-4o-mini:</strong> Ultra-fast general intelligence for support intake and lead qualification.</li>
+    <li><strong>Telephony:</strong> Enter your Vobiz API Key, Auth Token, and SIP Domain (<code>sip.vobiz.ai</code>).</li>
+    <li><strong>STT:</strong> Enter Sarvam AI API Key (for Indian regional languages) and Deepgram API Key.</li>
+    <li><strong>TTS:</strong> Select Sarvam Bulbul voice or Deepgram Aura.</li>
+    <li><strong>LLM:</strong> Enter keys for OpenRouter (DeepSeek R1/V3), OpenAI, Anthropic, or Google Gemini.</li>
+    <li>Click <strong>Save All Provider APIs</strong>. Settings are securely encrypted with AES-256 and persisted in organization metadata.</li>
   </ul>
 </div>
 
 <div class="step-box">
   <span class="step-num">3</span>
-  <span class="step-title">Speech-to-Text (STT) Model Selector (<code>sttModel</code>)</span>
-  <p>Select the real-time transcription engine that listens to the caller:</p>
-  <ul>
-    <li><strong>Deepgram Nova-3 (<code>deepgram/nova-3</code>):</strong> Lowest word error rate (WER) and streaming latency (&lt;180ms). Recommended for English and Spanish.</li>
-    <li><strong>Deepgram Nova-2 (<code>deepgram/nova-2</code>):</strong> Battle-tested streaming STT with multi-lingual support.</li>
-    <li><strong>Sarvam Saaras (<code>sarvam/saaras:v3</code>):</strong> Optimized for Indian accents, vernacular dialects, and code-switching (Hinglish).</li>
-  </ul>
+  <span class="step-title">Create a New Agent Entity</span>
+  <p>In the main navigation, click <strong>Agents</strong> and press the <strong>+ New Agent</strong> button. Enter the agent's display name (e.g., <em>"Support Concierge - India"</em>) and choose a starter template or blank canvas.</p>
 </div>
 
 <div class="step-box">
   <span class="step-num">4</span>
-  <span class="step-title">Text-to-Speech (TTS) Model &amp; Voice Selection (<code>ttsModel</code> &amp; <code>voiceId</code>)</span>
-  <p>Choose the synthesis engine and specific human persona voice:</p>
+  <span class="step-title">Configure Agent Behavior &amp; LLM (Behavior Tab)</span>
+  <p>In the Agent Detail view, open the <strong>Behavior</strong> tab:</p>
   <ul>
-    <li><strong>Deepgram Aura-2 (<code>deepgram/aura-2</code>):</strong> Instant streaming audio. Choose from <em>Asteria</em> (energetic/clear), <em>Apollo</em> (confident), <em>Hera</em> (warm/professional), <em>Zeus</em> (deep baritone), or <em>Luna</em> (gentle).</li>
-    <li><strong>ElevenLabs Flash v2.5 (<code>elevenlabs/eleven_flash_v2_5</code>):</strong> Ultra-expressive emotional nuance for high-touch customer VIP lines.</li>
-    <li><strong>Rime (<code>rime/rime-arcana</code>):</strong> Studio-grade natural conversational inflection.</li>
+    <li><strong>Greeting / First Message:</strong> Set the initial spoken greeting (e.g. <em>"Namaste! Thank you for calling QuickVoice support. How may I assist you today?"</em>).</li>
+    <li><strong>System Prompt:</strong> Define instructions, rules, boundary conditions, and conversational persona.</li>
+    <li><strong>LLM Model Selection:</strong> Choose from the newly expanded catalog: <code>openrouter/deepseek/deepseek-r1</code>, <code>anthropic/claude-3-7-sonnet</code>, <code>openai/gpt-4o</code>, or <code>google/gemini-2.0-flash</code>.</li>
+    <li><strong>Temperature:</strong> Adjust between 0.1 (strict procedural adherence) and 0.7 (creative, conversational).</li>
   </ul>
 </div>
 
 <div class="step-box">
   <span class="step-num">5</span>
-  <span class="step-title">Audition Voice with the Interactive Preview Panel</span>
-  <p>The right-hand side of the <strong>Voice Tab</strong> displays the <strong>Voice Profile Panel</strong>. Click the <strong>Play Sample Audio</strong> button to audition the voice's pitch, cadence, and tone before saving. You can also view its style tags (e.g., <em>"Clear"</em>, <em>"Confident"</em>, <em>"Energetic"</em>) and recommended use cases.</p>
+  <span class="step-title">Configure Speech &amp; Regional Persona (Voice Tab)</span>
+  <p>Open the <strong>Voice</strong> tab to select STT and TTS models:</p>
+  <ul>
+    <li><strong>Speech-to-Text:</strong> Choose <code>sarvam/saaras:v3</code> for Hindi/Indian vernacular or <code>deepgram/nova-3</code> for global English/multilingual.</li>
+    <li><strong>Voice (TTS) Selection:</strong>
+      <ul>
+        <li>For Indian regional accents: Select <strong>Sarvam Shubh</strong> (Male) or <strong>Sarvam Meera</strong> (Female).</li>
+        <li>For global personas: Select <strong>Deepgram Asteria</strong>, <strong>Hera</strong>, or <strong>ElevenLabs Flash</strong>.</li>
+      </ul>
+    </li>
+    <li><strong>Audition Audio:</strong> Click <strong>Play Sample Audio</strong> in the Voice Profile Panel to test cadence, pitch, and inflection.</li>
+  </ul>
 </div>
 
 <div class="step-box">
   <span class="step-num">6</span>
-  <span class="step-title">Click "Save Voice Configuration"</span>
-  <p>Click the <strong>Save Voice Configuration</strong> button in the top right. The console dispatches an authenticated <code>PUT /api/v1/agents/{agentId}/configure</code> request, updating the live agent configuration immediately.</p>
+  <span class="step-title">Assign Telephony Number (Numbers Tab)</span>
+  <p>Navigate to <strong>Phone Numbers</strong> in the console. Select a purchased or imported number (e.g. Vobiz 140/92 DID) and click <strong>Assign Agent</strong>. Inbound calls to this number will immediately spin up the configured agent voice pipeline.</p>
 </div>
-
-<h2>5.3 How Administrators Add Custom Models to the UI Catalog</h2>
-<p>If your organization wants to expose custom fine-tuned LLMs (e.g. self-hosted vLLM or Ollama), new ElevenLabs voice clones, or private STT models inside the Console UI dropdowns:</p>
-<ol>
-  <li><strong>Catalog File:</strong> Edit <code>apps/console/src/lib/data/voices.ts</code> (or provide a custom JSON file via <code>VOICE_CATALOG_PATH</code> in <code>apps/ai/.env</code>).</li>
-  <li><strong>Add New LLM Option:</strong>
-    <pre><code>export const LLM_MODELS: ModelOption[] = [
-  ...LLM_MODELS,
-  {
-    id: "openai/gpt-4o-mini",
-    label: "OpenAI GPT-4o Mini",
-    provider: "OpenAI"
-  }
-];</code></pre>
-  </li>
-  <li><strong>Add Custom Voice ID:</strong>
-    <pre><code>{
-  id: "my-custom-cloned-voice",
-  name: "Dr. Sarah Cloned Voice",
-  provider: "ElevenLabs",
-  gender: "feminine",
-  locale: "en-US",
-  accent: "American",
-  languages: ["en"],
-  ttsModels: ["elevenlabs/eleven_flash_v2_5"],
-  styles: ["Professional", "Medical"],
-  useCases: ["Dental Clinics", "Healthcare"]
-}</code></pre>
-  </li>
-  <li>The new model and voice will automatically populate inside the Console UI dropdowns for all users in the organization!</li>
-</ol>
-
-<h2>5.4 Programmatic Agent Creation &amp; Configuration via REST API</h2>
-<p>For automated deployments and external integrations, administrators can execute the exact same actions via API:</p>
-
-<h3>Step 1: Create the Agent Entity</h3>
-<pre><code>POST /api/v1/agents
-Content-Type: application/json
-Origin: http://localhost:3005
-Cookie: better-auth.session_token=YOUR_SESSION_TOKEN
-
-{
-  "name": "Concierge Receptionist",
-  "isActive": true
-}</code></pre>
-
-<h3>Step 2: Full Agent Configuration (LLM, STT, TTS, Prompts, Webhooks)</h3>
-<pre><code>PUT /api/v1/agents/{agentId}/configure
-Content-Type: application/json
-Origin: http://localhost:3005
-Cookie: better-auth.session_token=YOUR_SESSION_TOKEN
-
-{
-  "agent_language": "en",
-  "firstMessage": "Hi, thanks for calling! How can I help you today?",
-  "systemPrompt": "You are a concise concierge voice receptionist. Keep responses under 20 words. Verify details before taking action.",
-  "llmModel": "bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0",
-  "sttModel": "deepgram/nova-3",
-  "ttsModel": "deepgram/aura-2",
-  "voiceId": "aura-2-asteria-en",
-  "store_call_audio": true,
-  "zero_pii_retention": false,
-  "conversation_retention_days": 30,
-  "ivr_navigation_enabled": true,
-  "timezone": "America/New_York",
-  "data_needed": [
-    { "id": "email", "type": "string", "name": "Email", "description": "Caller email address" }
-  ]
-}</code></pre>
-
-<h3>Step 3: Attach an Integration Tool (e.g. Cal.com or SMS):</h3>
-<pre><code>POST /api/v1/tools/{toolId}/attach/{agentId}</code></pre>
-
-<h3>Step 4: Assign an Inbound Telephony Number:</h3>
-<pre><code>POST /api/v1/phone-numbers/{phoneNumberId}/assign
-Content-Type: application/json
-
-{
-  "agentId": "{agentId}"
-}</code></pre>
 
 <div class="page-break"></div>
 
 <!-- SECTION 6 -->
-<h1>6. Verification, Health Checks &amp; Troubleshooting</h1>
+<h1>6. Verification, System Health &amp; Diagnostics</h1>
 
-<h2>6.1 System Health &amp; Readiness Checks</h2>
-<p>Before launching live campaigns, run the following automated diagnostics from your terminal:</p>
-
+<h2>6.1 Automated Health Check Suite</h2>
+<p>Execute the following diagnostic commands from any authorized administrative workstation:</p>
 <table>
   <thead>
     <tr>
-      <th>Diagnostic Check</th>
-      <th>Command</th>
-      <th>Expected Output</th>
+      <th>Service Component</th>
+      <th>Diagnostic Command</th>
+      <th>Expected Response</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><strong>API Readiness Check</strong></td>
+      <td><strong>API Server Health</strong></td>
       <td><code>curl http://localhost:5000/api/v1/system/readiness</code></td>
       <td><code>{"status":"ready","database":true,"redis":true}</code></td>
     </tr>
     <tr>
-      <td><strong>Swagger Documentation</strong></td>
+      <td><strong>Console Web Interface</strong></td>
+      <td><code>curl -I http://localhost:3005/settings/providers</code></td>
+      <td><code>HTTP/1.1 200 OK</code> (or 307 redirect if unauthenticated)</td>
+    </tr>
+    <tr>
+      <td><strong>Swagger API Documentation</strong></td>
       <td><code>curl -I http://localhost:5000/api/v1/docs</code></td>
       <td><code>HTTP/1.1 200 OK</code></td>
     </tr>
     <tr>
-      <td><strong>Console Web UI</strong></td>
-      <td><code>curl -I http://localhost:3005/login</code></td>
-      <td><code>HTTP/1.1 200 OK</code></td>
-    </tr>
-    <tr>
-      <td><strong>AI Worker Port</strong></td>
+      <td><strong>Python Voice Worker</strong></td>
       <td><code>curl http://localhost:5555/health</code></td>
-      <td><code>{"status":"healthy","livekit":true}</code></td>
+      <td><code>{"status":"healthy","livekit":true,"stt":"ready","tts":"ready"}</code></td>
     </tr>
   </tbody>
 </table>
@@ -767,43 +755,48 @@ Content-Type: application/json
 <table>
   <thead>
     <tr>
-      <th>Error / Symptom</th>
-      <th>Root Cause</th>
-      <th>Remediation Action</th>
+      <th>Symptom / Error Code</th>
+      <th>Underlying Root Cause</th>
+      <th>Mandatory Administrative Remediation</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code>MISSING_OR_NULL_ORIGIN</code></td>
-      <td>Client API call missing <code>Origin</code> header in Better Auth requests.</td>
-      <td>Include <code>Origin: http://localhost:3005</code> in curl requests or configure <code>CORS_ORIGINS</code> in <code>apps/server/.env</code>.</td>
+      <td><code>403 Forbidden on /settings/providers</code></td>
+      <td>User account possesses standard <code>member</code> role instead of <code>admin</code> or <code>owner</code>.</td>
+      <td>Promote user role via <code>Settings &rarr; Roles</code> or update membership directly in PostgreSQL.</td>
+    </tr>
+    <tr>
+      <td><code>Vobiz SIP 401 Unauthorized</code></td>
+      <td>Mismatched SIP Auth Token or IP address not whitelisted in Vobiz Portal.</td>
+      <td>Verify credentials in <code>/settings/providers</code>; add LiveKit egress IP to Vobiz ACL.</td>
+    </tr>
+    <tr>
+      <td><code>Sarvam AI 400 Bad Request</code></td>
+      <td>Unsupported language code supplied to <code>bulbul:v3</code>.</td>
+      <td>Ensure language is set to supported Indian ISO code (<code>hi</code>, <code>ta</code>, <code>te</code>, <code>kn</code>, <code>bn</code>, <code>en-IN</code>).</td>
+    </tr>
+    <tr>
+      <td><code>OpenRouter 402 Payment Required</code></td>
+      <td>Depleted credits on OpenRouter account for DeepSeek R1 / V3.</td>
+      <td>Top up OpenRouter balance at <a href="https://openrouter.ai/credits">openrouter.ai/credits</a>.</td>
+    </tr>
+    <tr>
+      <td><code>STT Latency Spike (&gt;1000ms)</code></td>
+      <td>AI worker container CPU throttling or network jitter to STT endpoints.</td>
+      <td>Allocate minimum 2 vCPU per 10 concurrent streams; verify low-latency DNS resolution.</td>
     </tr>
     <tr>
       <td><code>listen EADDRINUSE :3000</code></td>
-      <td>Port 3000 occupied by local container (e.g. Open WebUI / Grafana).</td>
-      <td>Console has been configured to use <strong>Port 3005</strong> (<code>next dev -p 3005</code>).</td>
-    </tr>
-    <tr>
-      <td><code>LiveKit Room Not Joining</code></td>
-      <td>Mismatched <code>LIVEKIT_URL</code> or expired <code>LIVEKIT_API_SECRET</code>.</td>
-      <td>Regenerate key in LiveKit Cloud dashboard; update both <code>apps/server/.env</code> and <code>apps/ai/.env</code>.</td>
-    </tr>
-    <tr>
-      <td><code>STT Not Transcribing Audio</code></td>
-      <td>Invalid or depleted Deepgram API balance.</td>
-      <td>Check Deepgram console credit balance; ensure <code>DEEPGRAM_API_KEY</code> is active.</td>
-    </tr>
-    <tr>
-      <td><code>Negative Balance / Call Blocked</code></td>
-      <td>Wallet reservation failed due to empty balance.</td>
-      <td>Credit organization wallet via Stripe or seed balance using <code>prisma.billingAccount.update()</code>.</td>
+      <td>Port 3000 occupied by existing container or service.</td>
+      <td>QuickVoice Console is pre-configured on <strong>Port 3005</strong> (<code>next dev -p 3005</code>).</td>
     </tr>
   </tbody>
 </table>
 
 <div class="callout tip">
-  <div class="callout-title">Need Production Assistance?</div>
-  For enterprise support, custom telephony SIP gateway integrations, and managed cloud deployments, consult your repository:
+  <div class="callout-title">Enterprise Support &amp; Production Repository</div>
+  <p>Source code, automated migration scripts, and architecture blueprints are maintained at:</p>
   <strong>https://github.com/mithunccdev/Advanced-quick-voice.git</strong>
 </div>
 
