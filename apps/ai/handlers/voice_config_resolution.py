@@ -49,6 +49,39 @@ def resolve_voice_config(client_config: dict[str, Any], catalog: dict[str, Any])
         language=language,
     )
 
+    providers = client_config.get("providers") or {}
+    stt_keys = providers.get("stt") or {}
+    tts_keys = providers.get("tts") or {}
+    llm_keys = providers.get("llm") or {}
+
+    stt_api_key = None
+    if stt_model["provider"] == "deepgram":
+        stt_api_key = stt_keys.get("deepgramApiKey")
+    elif stt_model["provider"] == "sarvam":
+        stt_api_key = stt_keys.get("sarvamApiKey")
+
+    tts_api_key = None
+    if tts_model["provider"] == "elevenlabs":
+        tts_api_key = tts_keys.get("elevenlabsApiKey")
+    elif tts_model["provider"] == "deepgram":
+        tts_api_key = tts_keys.get("deepgramApiKey")
+    elif tts_model["provider"] == "sarvam":
+        tts_api_key = tts_keys.get("sarvamApiKey")
+    elif tts_model["provider"] == "cartesia":
+        tts_api_key = tts_keys.get("cartesiaApiKey")
+
+    llm_api_key = None
+    if llm_model["provider"] == "openai":
+        llm_api_key = llm_keys.get("openaiApiKey")
+    elif llm_model["provider"] == "openrouter":
+        llm_api_key = llm_keys.get("openrouterApiKey")
+    elif llm_model["provider"] == "deepseek":
+        llm_api_key = llm_keys.get("deepseekApiKey")
+    elif llm_model["provider"] == "anthropic":
+        llm_api_key = llm_keys.get("anthropicApiKey")
+    elif llm_model["provider"] == "google":
+        llm_api_key = llm_keys.get("geminiApiKey")
+
     return {
         "language": language,
         "timezone": timezone,
@@ -60,6 +93,7 @@ def resolve_voice_config(client_config: dict[str, Any], catalog: dict[str, Any])
                 "billing_model",
                 f"{stt_model['provider']}/{stt_model['id']}",
             ),
+            "api_key": stt_api_key,
         },
         "llm": {
             "provider": llm_model["provider"],
@@ -69,6 +103,9 @@ def resolve_voice_config(client_config: dict[str, Any], catalog: dict[str, Any])
                 "billing_model",
                 f"{llm_model['provider']}/{llm_model['id']}",
             ),
+            "api_key": llm_api_key,
+            "aws_access_key_id": llm_keys.get("awsAccessKeyId"),
+            "aws_secret_access_key": llm_keys.get("awsSecretAccessKey"),
         },
         "tts": {
             "provider": tts_model["provider"],
@@ -78,6 +115,7 @@ def resolve_voice_config(client_config: dict[str, Any], catalog: dict[str, Any])
                 "billing_model",
                 f"{tts_model['provider']}/{tts_model['id']}",
             ),
+            "api_key": tts_api_key,
         },
     }
 

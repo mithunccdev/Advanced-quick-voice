@@ -16,6 +16,7 @@ import {
   Sparkles,
   Layers,
   Lock,
+  Building2,
 } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -133,7 +134,7 @@ export default function AdminProvidersSettingsPage() {
       }
 
       await refetch();
-      toast.success("Admin API and Provider settings saved successfully!");
+      toast.success(`Provider APIs saved for organization "${activeOrg.name}"!`);
     } catch (err: any) {
       toast.error(err?.message || "Failed to save provider settings.");
     } finally {
@@ -196,8 +197,33 @@ export default function AdminProvidersSettingsPage() {
           className="gap-2 text-xs"
         >
           <Save className="size-3.5" />
-          {saving ? "Saving APIs..." : "Save All Provider APIs"}
+          {saving ? "Saving APIs..." : `Save APIs for ${activeOrg.name}`}
         </Button>
+      </div>
+
+      {/* Organization Scope Banner */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-lg border bg-muted/40 text-xs">
+        <div className="flex items-center gap-2.5">
+          <div className="p-2 rounded-md bg-primary/10 text-primary font-semibold">
+            <Building2 className="size-4" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">Configuring credentials for:</span>
+              <span className="font-semibold text-foreground">{activeOrg.name}</span>
+              <Badge variant="outline" className="text-[10px] py-0 px-1.5 font-mono">
+                @{activeOrg.slug || activeOrg.id.slice(0, 8)}
+              </Badge>
+            </div>
+            <p className="text-[11px] text-muted-foreground mt-0.5">
+              Each organization maintains isolated API keys and provider combinations. Switch organizations in the sidebar to configure a different workspace.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 text-[11px] text-muted-foreground bg-background/80 px-2.5 py-1 rounded border shrink-0">
+          <ShieldCheck className="size-3.5 text-emerald-500" />
+          <span>Role: <strong className="text-foreground capitalize">{activeMemberRole?.role || "Main Admin"}</strong></span>
+        </div>
       </div>
 
       {/* Segregated Provider Tabs */}

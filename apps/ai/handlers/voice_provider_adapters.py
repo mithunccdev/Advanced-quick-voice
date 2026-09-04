@@ -44,31 +44,33 @@ def build_voice_provider_adapters(config: dict[str, Any]) -> VoiceProviderAdapte
 def _build_stt(config: dict[str, Any], language: str):
     provider = config["provider"]
     model = config["model"]
+    api_key = config.get("api_key")
     if provider == "deepgram":
         return deepgram.STT(
             model=model,
             language=_deepgram_language(language),
-            api_key=_required_env("DEEPGRAM_API_KEY"),
+            api_key=api_key or _required_env("DEEPGRAM_API_KEY"),
         )
     if provider == "sarvam":
         return sarvam.STT(
             model=model,
             language=_sarvam_language(language),
-            api_key=_required_env("SARVAM_API_KEY"),
+            api_key=api_key or _required_env("SARVAM_API_KEY"),
         )
     raise ProviderAdapterError(f"unsupported STT provider: {provider}")
 
 
 def _build_llm(config: dict[str, Any]):
     provider = config["provider"]
+    model = config.get("model")
     if provider == "bedrock":
         aws = _aws_plugin()
         kwargs = {
-            "model": config["model"],
+            "model": model,
             "region": os.getenv("AWS_REGION", "us-east-1"),
         }
-        access_key = os.getenv("AWS_ACCESS_KEY_ID")
-        secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+        access_key = config.get("aws_access_key_id") or os.getenv("AWS_ACCESS_KEY_ID")
+        secret_key = config.get("aws_secret_access_key") or os.getenv("AWS_SECRET_ACCESS_KEY")
         if access_key or secret_key:
             if not access_key:
                 raise ProviderAdapterError("AWS_ACCESS_KEY_ID is required when AWS_SECRET_ACCESS_KEY is set")
@@ -84,24 +86,25 @@ def _build_tts(config: dict[str, Any], language: str):
     provider = config["provider"]
     model = config["model"]
     voice = config["voice"]
+    api_key = config.get("api_key")
     if provider == "elevenlabs":
         return elevenlabs.TTS(
             model=model,
             voice_id=voice,
             language=_elevenlabs_language(language),
-            api_key=_required_env("ELEVENLABS_API_KEY"),
+            api_key=api_key or _required_env("ELEVENLABS_API_KEY"),
         )
     if provider == "deepgram":
         return deepgram.TTS(
             model=voice or model,
-            api_key=_required_env("DEEPGRAM_API_KEY"),
+            api_key=api_key or _required_env("DEEPGRAM_API_KEY"),
         )
     if provider == "sarvam":
         return sarvam.TTS(
             model=model,
             speaker=voice,
             target_language_code=_sarvam_language(language),
-            api_key=_required_env("SARVAM_API_KEY"),
+            api_key=api_key or _required_env("SARVAM_API_KEY"),
         )
     raise ProviderAdapterError(f"unsupported TTS provider: {provider}")
 

@@ -39,6 +39,7 @@ DEFAULT_CONFIG = {
     "zero_pii_retention": False,
     "retention_days": None,
     "mcp_connections": [],
+    "providers": {},
 }
 
 
@@ -131,6 +132,7 @@ def normalize_config(raw: dict[str, Any]) -> dict[str, Any]:
             "store_call_audio": _pick_bool(raw, "storeCallAudio", "store_call_audio", default=True),
             "zero_pii_retention": _pick_bool(raw, "zeroPiiRetention", "zero_pii_retention", default=False),
             "retention_days": _pick(raw, "retentionDays", "retention_days"),
+            "providers": raw.get("providers") or {},
         }
     )
     return config

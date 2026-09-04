@@ -256,6 +256,21 @@ export const getAgentConfigByNumber= async (
     return null;
   }
 
+  let phoneOrgMeta: Record<string, any> | null = null;
+  if (phone.organizationId) {
+    const org = await prisma.organization.findUnique({
+      where: { id: phone.organizationId },
+      select: { metadata: true },
+    });
+    if (org?.metadata) {
+      try {
+        phoneOrgMeta = typeof org.metadata === "string" ? JSON.parse(org.metadata) : org.metadata;
+      } catch {
+        phoneOrgMeta = null;
+      }
+    }
+  }
+
   return {
     ...phone.agent.configuration,
     organizationId: phone.organizationId,
@@ -264,6 +279,7 @@ export const getAgentConfigByNumber= async (
     provider: phone.provider,
     tools: phone.agent.tools,
     mcpConnections: phone.agent.mcpConnections.map((item) => item.mcpConnection),
+    providers: phoneOrgMeta?.providers ?? null,
   };
 }
 
@@ -297,6 +313,21 @@ export const getAgentConfigByIdForRuntime = async (agentId: string) => {
 
   const phone = agent.phoneNumbers[0] ?? null;
 
+  let agentOrgMeta: Record<string, any> | null = null;
+  if (agent.organizationId) {
+    const org = await prisma.organization.findUnique({
+      where: { id: agent.organizationId },
+      select: { metadata: true },
+    });
+    if (org?.metadata) {
+      try {
+        agentOrgMeta = typeof org.metadata === "string" ? JSON.parse(org.metadata) : org.metadata;
+      } catch {
+        agentOrgMeta = null;
+      }
+    }
+  }
+
   return {
     ...agent.configuration,
     organizationId: agent.organizationId,
@@ -305,5 +336,6 @@ export const getAgentConfigByIdForRuntime = async (agentId: string) => {
     provider: phone?.provider ?? null,
     tools: agent.tools,
     mcpConnections: agent.mcpConnections.map((item) => item.mcpConnection),
+    providers: agentOrgMeta?.providers ?? null,
   };
 };
