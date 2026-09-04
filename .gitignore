@@ -50,3 +50,5 @@ yarn-error.log*
 .DS_Store
 *.pem
 __pycache__/
+testsprite_tests/
+push-to-github.ps1
