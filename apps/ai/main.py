@@ -238,6 +238,7 @@ def attach_resolved_voice_config(config: dict) -> dict:
                 "stt": provider_section(config.get("stt_model")),
                 "llm": provider_section(config.get("llm_model")),
                 "tts": tts_section,
+                "providers": config.get("providers") or {},
             },
             load_voice_catalog(),
         )
