@@ -36,6 +36,22 @@ services:
     networks:
       - quickvoice-network
 
+  minio:
+    image: minio/minio:latest
+    container_name: quickvoice-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin_secure_pass}
+    volumes:
+      - quickvoice_minio_data:/data
+    ports:
+      - "${MINIO_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    networks:
+      - quickvoice-network
+
   server:
     build:
       context: .
@@ -57,12 +73,25 @@ services:
       TELNYX_API_KEY: "${TELNYX_API_KEY:-}"
       TWILIO_ACCOUNT_SID: "${TWILIO_ACCOUNT_SID:-}"
       TWILIO_AUTH_TOKEN: "${TWILIO_AUTH_TOKEN:-}"
+      # Vobiz SIP Telephony
+      VOBIZ_AUTH_ID: "${VOBIZ_AUTH_ID:-}"
+      VOBIZ_AUTH_TOKEN: "${VOBIZ_AUTH_TOKEN:-}"
+      # LiveKit Realtime & SIP
+      LIVEKIT_URL: "${LIVEKIT_URL:-}"
+      LIVEKIT_API_KEY: "${LIVEKIT_API_KEY:-}"
+      LIVEKIT_API_SECRET: "${LIVEKIT_API_SECRET:-}"
+      LIVEKIT_SIP_INBOUND_TRUNK_ID: "${LIVEKIT_SIP_INBOUND_TRUNK_ID:-}"
+      LIVEKIT_SIP_OUTBOUND_TRUNK_TWILIO_ID: "${LIVEKIT_SIP_OUTBOUND_TRUNK_TWILIO_ID:-}"
+      LIVEKIT_SIP_OUTBOUND_TRUNK_TELNYX_ID: "${LIVEKIT_SIP_OUTBOUND_TRUNK_TELNYX_ID:-}"
+      LIVEKIT_SIP_OUTBOUND_TRUNK_VOBIZ_ID: "${LIVEKIT_SIP_OUTBOUND_TRUNK_VOBIZ_ID:-}"
       STRIPE_SECRET_KEY: "${STRIPE_SECRET_KEY:-}"
       STRIPE_WEBHOOK_SECRET: "${STRIPE_WEBHOOK_SECRET:-}"
       AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID:-}"
       AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY:-}"
       AWS_REGION: "${AWS_REGION:-}"
       S3_BUCKET_NAME: "${S3_BUCKET_NAME:-}"
+      S3_ENDPOINT: "${S3_ENDPOINT:-}"
+      S3_FORCE_PATH_STYLE: "${S3_FORCE_PATH_STYLE:-}"
     depends_on:
       postgres:
         condition: service_healthy
@@ -126,10 +155,23 @@ services:
       LIVEKIT_URL: "${LIVEKIT_URL:-}"
       LIVEKIT_API_KEY: "${LIVEKIT_API_KEY:-}"
       LIVEKIT_API_SECRET: "${LIVEKIT_API_SECRET:-}"
+      # STT Providers
       DEEPGRAM_API_KEY: "${DEEPGRAM_API_KEY:-}"
-      ELEVENLABS_API_KEY: "${ELEVENLABS_API_KEY:-}"
+      SARVAM_API_KEY: "${SARVAM_API_KEY:-}"
       OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      # TTS Providers
+      ELEVENLABS_API_KEY: "${ELEVENLABS_API_KEY:-}"
+      CARTESIA_API_KEY: "${CARTESIA_API_KEY:-}"
+      # LLM Providers (all pure API — no local model downloads)
       GROQ_API_KEY: "${GROQ_API_KEY:-}"
+      DEEPSEEK_API_KEY: "${DEEPSEEK_API_KEY:-}"
+      # AWS Bedrock (Claude / Nova via AWS) — same IAM key as S3 if desired
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID:-}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY:-}"
+      AWS_REGION: "${AWS_REGION:-us-east-1}"
+      S3_BUCKET_NAME: "${S3_BUCKET_NAME:-}"
+      S3_ENDPOINT: "${S3_ENDPOINT:-}"
+      S3_FORCE_PATH_STYLE: "${S3_FORCE_PATH_STYLE:-}"
     depends_on:
       - server
     networks:
@@ -138,6 +180,7 @@ services:
 volumes:
   quickvoice_pg_data:
   quickvoice_redis_data:
+  quickvoice_minio_data:
 
 networks:
   quickvoice-network:

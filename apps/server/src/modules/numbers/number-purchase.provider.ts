@@ -3,6 +3,11 @@ import { TelephonyProvider } from "../../../prisma/generated/prisma/client.js";
 import formatPhoneNumber from "../../common/utils/formatPhoneNumber.js";
 import { telnyxClient } from "../../config/telnyx.js";
 import { twilioClient } from "../../config/twilio.js";
+import {
+  VOBIZ_AUTH_ID,
+  vobizAccountPath,
+  vobizFetch,
+} from "../../config/vobiz.js";
 import { isProviderNotFoundError } from "./provider-error.js";
 
 export type ProviderPurchaseResult =
@@ -188,12 +193,98 @@ async function recoverTelnyx(
   return order ? telnyxOrderResult(order, purchase.phoneNumber) : null;
 }
 
+// ── Vobiz ────────────────────────────────────────────────────────────────────
+
+type VobizNumber = {
+  number?: string;
+  did?: string;
+  alias?: string;
+  status?: string;
+};
+
+async function recoverVobiz(
+  purchase: PhoneNumberPurchase,
+): Promise<ProviderPurchaseResult | null> {
+  if (!VOBIZ_AUTH_ID) return null;
+  try {
+    const base = vobizAccountPath();
+    const owned = await vobizFetch<{ objects?: VobizNumber[] }>(
+      `${base}/numbers?number=${encodeURIComponent(purchase.phoneNumber)}&limit=2`,
+    );
+    const exact = owned.objects?.find(
+      (n) =>
+        (n.number ?? n.did ?? "") === purchase.phoneNumber,
+    );
+    if (exact) {
+      return {
+        state: "acquired",
+        resourceId: purchase.phoneNumber,
+        friendlyName:
+          exact.alias ?? formatPhoneNumber(purchase.phoneNumber),
+      };
+    }
+  } catch {
+    // Number not found — fall through to null so the saga retries purchase
+  }
+  return null;
+}
+
+async function purchaseVobiz(
+  purchaseRecord: PhoneNumberPurchase,
+): Promise<ProviderPurchaseResult> {
+  if (!VOBIZ_AUTH_ID) {
+    return {
+      state: "failed",
+      errorCode: "VOBIZ_NOT_CONFIGURED",
+      errorMessage:
+        "VOBIZ_AUTH_ID / VOBIZ_AUTH_TOKEN environment variables are not set",
+    };
+  }
+
+  const base = vobizAccountPath();
+
+  // First verify the number is in Vobiz inventory
+  const inventory = await vobizFetch<{ objects?: VobizNumber[] }>(
+    `${base}/inventory/numbers?number=${encodeURIComponent(purchaseRecord.phoneNumber)}&limit=2`,
+  );
+  const inventoryMatch = inventory.objects?.find(
+    (n) => (n.number ?? n.did ?? "") === purchaseRecord.phoneNumber,
+  );
+  if (!inventoryMatch) {
+    return {
+      state: "failed",
+      errorCode: "VOBIZ_NUMBER_NOT_IN_INVENTORY",
+      errorMessage: `Phone number ${purchaseRecord.phoneNumber} not found in Vobiz inventory`,
+    };
+  }
+
+  // Purchase the number
+  await vobizFetch<unknown>(`${base}/numbers/purchase-from-inventory`, {
+    method: "POST",
+    body: JSON.stringify({
+      numbers: [{ number: purchaseRecord.phoneNumber }],
+    }),
+  });
+
+  return {
+    state: "acquired",
+    resourceId: purchaseRecord.phoneNumber,
+    friendlyName: formatPhoneNumber(purchaseRecord.phoneNumber),
+  };
+}
+
+// ── Provider switch ───────────────────────────────────────────────────────────
+
 async function recover(
   purchase: PhoneNumberPurchase,
 ): Promise<ProviderPurchaseResult | null> {
-  return purchase.provider === TelephonyProvider.TWILIO
-    ? recoverTwilio(purchase)
-    : recoverTelnyx(purchase);
+  if (purchase.provider === TelephonyProvider.TWILIO) {
+    return recoverTwilio(purchase);
+  }
+  if (purchase.provider === TelephonyProvider.VOBIZ) {
+    return recoverVobiz(purchase);
+  }
+  return recoverTelnyx(purchase);
 }
 
 async function purchase(
@@ -209,6 +300,10 @@ async function purchase(
       resourceId: purchased.sid,
       friendlyName: formatPhoneNumber(purchaseRecord.phoneNumber),
     };
+  }
+
+  if (purchaseRecord.provider === TelephonyProvider.VOBIZ) {
+    return purchaseVobiz(purchaseRecord);
   }
 
   const reference = customerReference(purchaseRecord.quoteNonce);

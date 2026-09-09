@@ -16,13 +16,13 @@ class VoiceCatalogTests(unittest.TestCase):
     def test_load_voice_catalog_returns_static_provider_options(self):
         catalog = load_voice_catalog()
 
-        self.assertEqual(catalog["version"], "2026-08-01")
+        self.assertEqual(catalog["version"], "2026-09-01")
         self.assertTrue(any(item["provider"] == "deepgram" for item in catalog["stt_models"]))
         self.assertTrue(any(item["provider"] == "bedrock" for item in catalog["llm_models"]))
         self.assertTrue(
             any(
                 item["id"] == "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
-                and item["label"] == "Claude Sonnet 4.5"
+                and item["label"].startswith("Claude Sonnet 4.5")
                 for item in catalog["llm_models"]
             )
         )

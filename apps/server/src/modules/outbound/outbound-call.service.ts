@@ -8,6 +8,7 @@ import {
   LIVEKIT_AGENT_NAME,
   LIVEKIT_SIP_OUTBOUND_TRUNK_TELNYX_ID,
   LIVEKIT_SIP_OUTBOUND_TRUNK_TWILIO_ID,
+  LIVEKIT_SIP_OUTBOUND_TRUNK_VOBIZ_ID,
   livekitAgentDispatchClient,
   livekitSipClient,
 } from "../../config/livekit.js";
@@ -81,6 +82,7 @@ type RetryOutboundWorkflowDeps = OutboundWorkflowDeps & {
 const defaultOutboundTrunks: OutboundTrunks = {
   [TelephonyProvider.TWILIO]: LIVEKIT_SIP_OUTBOUND_TRUNK_TWILIO_ID,
   [TelephonyProvider.TELNYX]: LIVEKIT_SIP_OUTBOUND_TRUNK_TELNYX_ID,
+  [TelephonyProvider.VOBIZ]: LIVEKIT_SIP_OUTBOUND_TRUNK_VOBIZ_ID,
 };
 
 export async function createQuickOutboundCall(

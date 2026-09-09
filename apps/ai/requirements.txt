@@ -7,6 +7,11 @@ aws-sdk-transcribe-streaming~=0.7.0
 livekit-plugins-deepgram~=1.6
 livekit-plugins-elevenlabs~=1.6
 livekit-plugins-sarvam~=1.6
+# OpenAI plugin: GPT-4o/4.1 LLM, Whisper STT (API-only, no local models)
+# Also used as the base for Groq and DeepSeek (OpenAI-compatible base_url)
+livekit-plugins-openai~=1.6
+# Cartesia TTS plugin: Sonic-2 / Sonic-2 Multilingual
+livekit-plugins-cartesia~=1.6
 livekit-plugins-noise-cancellation~=0.2
 python-dotenv~=1.0
 pytz>=2024.1,<2027

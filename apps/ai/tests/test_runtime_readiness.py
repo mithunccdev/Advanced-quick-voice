@@ -86,7 +86,10 @@ class RuntimeHandshakeTests(unittest.IsolatedAsyncioTestCase):
             get_json=get_json,
             queue_probe=lambda path: (
                 None
-                if path == Path("/var/lib/quickvoice/billing-queue")
+                if path in (
+                    Path("/var/lib/quickvoice/billing-queue"),
+                    Path("/var/lib/quickvoice/billing-queue").resolve(strict=False),
+                )
                 else "unexpected path"
             ),
         )

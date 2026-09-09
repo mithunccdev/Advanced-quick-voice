@@ -61,6 +61,7 @@ enum PlanId {
 enum TelephonyProvider {
   TWILIO @map("twilio")
   TELNYX @map("telnyx")
+  VOBIZ  @map("vobiz")
 }
 
 enum McpConnectionStatus {

@@ -13,6 +13,11 @@ export interface CreateAgentInput {
   name: string;
   isActive: boolean;
   templateId?: string | null;
+  voiceId?: string;
+  sttModel?: string;
+  ttsModel?: string;
+  llmModel?: string;
+  agent_language?: string;
 }
 
 export interface UpdateAgentInput {

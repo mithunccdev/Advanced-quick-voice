@@ -59,6 +59,8 @@ def resolve_voice_config(client_config: dict[str, Any], catalog: dict[str, Any])
         stt_api_key = stt_keys.get("deepgramApiKey")
     elif stt_model["provider"] == "sarvam":
         stt_api_key = stt_keys.get("sarvamApiKey")
+    elif stt_model["provider"] == "openai":
+        stt_api_key = stt_keys.get("openaiApiKey")
 
     tts_api_key = None
     if tts_model["provider"] == "elevenlabs":
@@ -73,50 +75,63 @@ def resolve_voice_config(client_config: dict[str, Any], catalog: dict[str, Any])
     llm_api_key = None
     if llm_model["provider"] == "openai":
         llm_api_key = llm_keys.get("openaiApiKey")
-    elif llm_model["provider"] == "openrouter":
-        llm_api_key = llm_keys.get("openrouterApiKey")
+    elif llm_model["provider"] == "groq":
+        llm_api_key = llm_keys.get("groqApiKey")
     elif llm_model["provider"] == "deepseek":
         llm_api_key = llm_keys.get("deepseekApiKey")
+    elif llm_model["provider"] == "openrouter":
+        llm_api_key = llm_keys.get("openrouterApiKey")
     elif llm_model["provider"] == "anthropic":
         llm_api_key = llm_keys.get("anthropicApiKey")
     elif llm_model["provider"] == "google":
         llm_api_key = llm_keys.get("geminiApiKey")
 
+    stt_res = {
+        "provider": stt_model["provider"],
+        "model": stt_model["runtime_model"],
+        "language": stt_model.get("runtime_language", language),
+        "billing_model": stt_model.get(
+            "billing_model",
+            f"{stt_model['provider']}/{stt_model['id']}",
+        ),
+    }
+    if stt_api_key is not None:
+        stt_res["api_key"] = stt_api_key
+
+    llm_res = {
+        "provider": llm_model["provider"],
+        "model": llm_model["runtime_model"],
+        "streaming": bool(llm_model.get("streaming", False)),
+        "billing_model": llm_model.get(
+            "billing_model",
+            f"{llm_model['provider']}/{llm_model['id']}",
+        ),
+    }
+    if llm_api_key is not None:
+        llm_res["api_key"] = llm_api_key
+    if llm_keys.get("awsAccessKeyId"):
+        llm_res["aws_access_key_id"] = llm_keys.get("awsAccessKeyId")
+    if llm_keys.get("awsSecretAccessKey"):
+        llm_res["aws_secret_access_key"] = llm_keys.get("awsSecretAccessKey")
+
+    tts_res = {
+        "provider": tts_model["provider"],
+        "model": tts_model["runtime_model"],
+        "voice": voice["runtime_voice"],
+        "billing_model": tts_model.get(
+            "billing_model",
+            f"{tts_model['provider']}/{tts_model['id']}",
+        ),
+    }
+    if tts_api_key is not None:
+        tts_res["api_key"] = tts_api_key
+
     return {
         "language": language,
         "timezone": timezone,
-        "stt": {
-            "provider": stt_model["provider"],
-            "model": stt_model["runtime_model"],
-            "language": stt_model.get("runtime_language", language),
-            "billing_model": stt_model.get(
-                "billing_model",
-                f"{stt_model['provider']}/{stt_model['id']}",
-            ),
-            "api_key": stt_api_key,
-        },
-        "llm": {
-            "provider": llm_model["provider"],
-            "model": llm_model["runtime_model"],
-            "streaming": bool(llm_model.get("streaming", False)),
-            "billing_model": llm_model.get(
-                "billing_model",
-                f"{llm_model['provider']}/{llm_model['id']}",
-            ),
-            "api_key": llm_api_key,
-            "aws_access_key_id": llm_keys.get("awsAccessKeyId"),
-            "aws_secret_access_key": llm_keys.get("awsSecretAccessKey"),
-        },
-        "tts": {
-            "provider": tts_model["provider"],
-            "model": tts_model["runtime_model"],
-            "voice": voice["runtime_voice"],
-            "billing_model": tts_model.get(
-                "billing_model",
-                f"{tts_model['provider']}/{tts_model['id']}",
-            ),
-            "api_key": tts_api_key,
-        },
+        "stt": stt_res,
+        "llm": llm_res,
+        "tts": tts_res,
     }
 
 

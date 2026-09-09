@@ -91,7 +91,7 @@ def _queue_check(
         )
 
     directory = Path(raw_queue_dir)
-    if not directory.is_absolute():
+    if not (directory.is_absolute() or raw_queue_dir.startswith(("/", "\\"))):
         return _check(
             "error",
             required=required,
@@ -100,7 +100,7 @@ def _queue_check(
 
     resolved = directory.resolve(strict=False)
     if any(
-        resolved == root or resolved.is_relative_to(root)
+        resolved == root.resolve(strict=False) or resolved.is_relative_to(root.resolve(strict=False))
         for root in EPHEMERAL_QUEUE_ROOTS
     ):
         return _check(

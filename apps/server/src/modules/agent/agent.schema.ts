@@ -29,6 +29,11 @@ export const createAgentSchema = z.object({
     .max(100, "Agent name must be at most 100 characters"),
   isActive: z.boolean(),
   templateId: agentTemplateIdSchema,
+  voiceId: z.string().min(1).optional(),
+  sttModel: z.string().min(1).optional(),
+  ttsModel: z.string().min(1).optional(),
+  llmModel: z.string().min(1).optional(),
+  agent_language: z.string().min(1).optional(),
 });
 export type CreateAgentInput = z.infer<typeof createAgentSchema>;
 

@@ -10,6 +10,11 @@ sys.path.insert(0, ROOT)
 
 from handlers.livekit_handler import get_recording_storage_config, recording_path, start_recording
 
+try:
+    import livekit.api
+except Exception:
+    pass
+
 
 class LiveKitHandlerTests(unittest.TestCase):
     def test_recording_path_uses_shared_s3_recording_prefix(self):

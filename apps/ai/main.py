@@ -89,6 +89,14 @@ IVR_TOOL_INSTRUCTIONS = (
     "not clear yet, keep listening until it is clear. Never send tones when you "
     "are unsure which menu option applies."
 )
+HANGUP_TOOL_INSTRUCTIONS = (
+    "\n\nCall termination is available through end_call. "
+    "CRITICAL: When the caller says goodbye, thanks you, says that is all or nothing else, "
+    "or indicates they want to hang up, or when all necessary information is collected and the call goal is reached, "
+    "you MUST say a warm, brief closing farewell (e.g., 'Thank you for your time, have a wonderful day! Goodbye.') "
+    "and call the end_call tool to disconnect the phone call. "
+    "Never keep the caller waiting on the line in silence after concluding."
+)
 
 
 def _config_bool(value) -> bool:
@@ -145,6 +153,7 @@ def build_agent_instructions(config: dict) -> str:
         instructions += RAG_TOOL_INSTRUCTIONS
     if ivr_navigation_enabled(config):
         instructions += IVR_TOOL_INSTRUCTIONS
+    instructions += HANGUP_TOOL_INSTRUCTIONS
     metadata_instructions = build_metadata_collection_instructions(config)
     if metadata_instructions:
         instructions += f"\n\n{metadata_instructions}"
@@ -188,7 +197,7 @@ def provider_section(value: str | None):
     if not value or "/" not in value:
         return None
     provider, model = value.split("/", 1)
-    if provider in {"deepgram", "sarvam", "bedrock", "elevenlabs"}:
+    if provider in {"deepgram", "sarvam", "bedrock", "elevenlabs", "deepseek", "openai", "groq", "cartesia"}:
         return {"provider": provider, "model": model}
     return None
 
@@ -362,6 +371,7 @@ class Assistant(Agent):
         config: dict,
         call_context: dict,
         transcript_collector: TranscriptCollector | None = None,
+        disconnect_callback=None,
     ):
         super().__init__(
             instructions=system_prompt,
@@ -371,6 +381,7 @@ class Assistant(Agent):
         self._call_context = call_context
         self._metadata_collector = CallMetadataCollector(config)
         self._transcript_collector = transcript_collector
+        self._disconnect_callback = disconnect_callback
 
     def _rag_enabled(self) -> bool:
         return bool(self._config.get("use_rag"))
@@ -528,6 +539,19 @@ class Assistant(Agent):
         )
         return json.dumps(result.get("data", result), ensure_ascii=False)
 
+    @function_tool
+    async def end_call(self) -> str:
+        """
+        Hang up and disconnect the phone call when the conversation is finished,
+        the user says goodbye, thanks you, or is ready to wrap up.
+        Always say a polite goodbye before calling this tool.
+        """
+        logger.info("[HANGUP] end_call function tool invoked by AI agent")
+        if self._disconnect_callback:
+            asyncio.create_task(self._disconnect_callback())
+            return "Call disconnect initiated."
+        return "Call ended."
+
 
 async def entrypoint(ctx: JobContext):
     logger.info("Entrypoint called with room: {}", redact_sensitive(ctx.room.name))
@@ -628,7 +652,7 @@ async def entrypoint(ctx: JobContext):
 
     try:
         provider_kwargs = build_session_provider_kwargs(config)
-    except ProviderAdapterError as error:
+    except Exception as error:
         logger.error("Voice provider adapter error: {}", redact_sensitive(str(error)))
         ctx.shutdown(reason=f"provider adapter error: {error}")
         return
@@ -753,12 +777,49 @@ async def entrypoint(ctx: JobContext):
     transcript_collector = TranscriptCollector(
         on_item=live_transcript_publisher.publish_transcript
     ).attach(session)
+    disconnecting = False
+
+    async def disconnect_call():
+        nonlocal disconnecting, shutdown_started, shutdown_reason
+        if disconnecting:
+            return
+        disconnecting = True
+        shutdown_reason = "agent_ended_call"
+        logger.info("[HANGUP] Disconnect requested by agent. Waiting for goodbye speech to finish playing...")
+        try:
+            # Give speech generation a short moment to begin
+            await asyncio.sleep(1.0)
+            # Wait until speech generation and playback finish
+            await asyncio.wait_for(session.wait_for_idle(), timeout=12.0)
+        except Exception as err:
+            logger.info(f"[HANGUP] wait_for_idle completed or timed out: {err}")
+        # Brief pause to ensure last audio buffer plays through to caller
+        await asyncio.sleep(0.8)
+        logger.info(f"[HANGUP] Deleting room {ctx.room.name} to send SIP BYE and disconnect caller phone...")
+        try:
+            await ctx.delete_room(room_name=ctx.room.name)
+        except Exception as error:
+            logger.warning(f"[HANGUP] Room deletion error: {error}")
+        try:
+            session.shutdown(drain=False)
+        except Exception as error:
+            logger.warning(f"[HANGUP] Session shutdown error: {error}")
+        try:
+            await ctx.room.disconnect()
+        except Exception as error:
+            logger.warning(f"[HANGUP] Room disconnect error: {error}")
+        try:
+            ctx.shutdown(reason="agent_ended_call")
+        except Exception as error:
+            logger.warning(f"[HANGUP] Context shutdown error: {error}")
+
     system_prompt = build_agent_instructions(config)
     agent = Assistant(
         system_prompt=system_prompt,
         config=config,
         call_context=call_context,
         transcript_collector=transcript_collector,
+        disconnect_callback=disconnect_call,
     )
 
     @ctx.room.on("data_received")
@@ -846,6 +907,25 @@ async def entrypoint(ctx: JobContext):
     if hasattr(ctx, "add_shutdown_callback"):
         ctx.add_shutdown_callback(unified_shutdown_hook)
 
+    @session.on("conversation_item_added")
+    def on_conversation_item_added(event):
+        try:
+            item = getattr(event, "item", None)
+            if not item:
+                return
+            role = getattr(item, "role", "")
+            text = str(getattr(item, "text", "") or getattr(item, "content", "") or "").lower()
+            if role == "assistant":
+                farewell_phrases = [
+                    "goodbye", "have a great day", "have a wonderful day",
+                    "have a nice day", "bye now", "bye bye", "take care! goodbye"
+                ]
+                if any(phrase in text for phrase in farewell_phrases):
+                    logger.info("[HANGUP] Detected assistant farewell in conversation; scheduling disconnect")
+                    asyncio.create_task(disconnect_call())
+        except Exception as error:
+            logger.warning(f"[HANGUP] Error checking conversation item: {error}")
+
     @ctx.room.on("participant_disconnected")
     def on_participant_disconnected(participant):
         nonlocal shutdown_started, shutdown_reason
@@ -854,7 +934,19 @@ async def entrypoint(ctx: JobContext):
             return
         shutdown_started = True
         shutdown_reason = "participant_disconnected"
-        asyncio.create_task(unified_shutdown_hook())
+        async def _cleanup():
+            try:
+                await unified_shutdown_hook()
+            finally:
+                try:
+                    await ctx.delete_room(room_name=ctx.room.name)
+                except Exception:
+                    pass
+                try:
+                    ctx.shutdown(reason="participant_disconnected")
+                except Exception:
+                    pass
+        asyncio.create_task(_cleanup())
 
 
 if __name__ == "__main__":

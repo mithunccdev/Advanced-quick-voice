@@ -23,6 +23,7 @@ import * as agentRepository from "./agent.repository.js";
 import { templateConfigFor } from "./agent.templates.js";
 import type {
   ConfigureAgentArgs,
+  ConfigureAgentInput,
   CreateAgentArgs,
   UpdateAgentInput,
 } from "./agent.schema.js";
@@ -120,17 +121,73 @@ export const createAgent = async (args: CreateAgentArgs) => {
     );
   }
 
+  const {
+    voiceId,
+    sttModel,
+    ttsModel,
+    llmModel,
+    agent_language,
+    ...repoFields
+  } = args;
+
   const createInput = {
-    ...args,
+    ...repoFields,
     agentSlug,
   };
   const templateConfig = templateConfigFor(args.templateId);
 
+  const hasCustomVoice = Boolean(
+    voiceId || sttModel || ttsModel || llmModel || agent_language,
+  );
+
+  const customConfig = hasCustomVoice
+    ? {
+        ...(agent_language ? { agent_language } : {}),
+        ...(voiceId ? { voiceId } : {}),
+        ...(sttModel ? { sttModel } : {}),
+        ...(ttsModel ? { ttsModel } : {}),
+        ...(llmModel ? { llmModel } : {}),
+      }
+    : null;
+
+  const finalConfig: ConfigureAgentInput | null = templateConfig
+    ? {
+        ...templateConfig,
+        ...(customConfig ?? {}),
+      }
+    : customConfig
+      ? {
+          agent_language: agent_language ?? "en",
+          firstMessage:
+            "Hi, thanks for calling. I can help answer questions, capture details, or route the next step. How can I help?",
+          systemPrompt:
+            "You are a professional phone assistant. Keep responses concise and clear. Identify why the caller is calling, answer using known business information when available, and confirm the next step before ending the call.",
+          llmModel:
+            llmModel ?? "bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0",
+          sttModel: sttModel ?? "deepgram/nova-3",
+          ttsModel: ttsModel ?? "deepgram/aura-2",
+          use_rag: false,
+          voiceId: voiceId ?? "aura-2-asteria-en",
+          data_needed: [],
+          data_evaluation: [],
+          initiation_webhook: null,
+          post_call_webhook: null,
+          variables: {
+            firstMessage: [],
+            systemPrompt: [],
+            placeholders: {},
+          },
+          preemptive_generation: false,
+          ivr_navigation_enabled: true,
+          timezone: "UTC",
+        }
+      : null;
+
   try {
-    return templateConfig
+    return finalConfig
       ? await agentRepository.createAgentWithConfiguration(
           createInput,
-          templateConfig,
+          finalConfig,
         )
       : await agentRepository.createAgent(createInput);
   } catch (error) {

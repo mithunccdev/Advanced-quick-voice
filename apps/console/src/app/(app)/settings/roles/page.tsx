@@ -20,6 +20,7 @@ import {
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Badge } from "@/src/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card";
 import {
  Dialog,
  DialogContent,
@@ -89,6 +90,7 @@ function toRoleList(data: unknown): Role[] {
 export default function RolesPage() {
  const { data: session } = authClient.useSession();
  const orgId = session?.session?.activeOrganizationId ?? null;
+ const isMasterAdmin = (session?.user as { role?: string })?.role === "admin";
 
  const [createOpen, setCreateOpen] = useState(false);
  const [permissions, setPermissions] = useState<Permissions>({});
@@ -220,6 +222,30 @@ export default function RolesPage() {
  setSaving(false);
  }
  }
+
+  if (!isMasterAdmin) {
+    return (
+      <Card className="border-destructive/30 bg-destructive/5 max-w-2xl">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Shield className="size-5 text-destructive" />
+            <CardTitle className="text-destructive">Master Administrator Only</CardTitle>
+          </div>
+          <CardDescription>
+            Custom role management and organization permission matrix editing are strictly restricted to the platform Master Administrator.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Role definitions and custom permissions are managed centrally by the Master Administrator. Contact your system administrator if your organization requires specialized role assignments.
+          </p>
+          <Button variant="outline" size="sm" asChild>
+            <a href="/settings/profile">Return to Profile Settings</a>
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
 
  return (
  <div className="space-y-6">

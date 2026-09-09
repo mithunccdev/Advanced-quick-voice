@@ -29,6 +29,11 @@ def get_recording_storage_config():
         session_token = os.getenv("AWS_SESSION_TOKEN")
         if session_token:
             config["session_token"] = session_token
+    endpoint = os.getenv("S3_ENDPOINT") or os.getenv("AWS_ENDPOINT_URL_S3")
+    if endpoint:
+        config["endpoint"] = endpoint
+    if os.getenv("S3_FORCE_PATH_STYLE") == "true":
+        config["force_path_style"] = True
     return config
 
 
@@ -64,7 +69,7 @@ async def start_recording(ctx: Any):
             "bucket": storage["bucket"],
             "region": storage["region"],
         }
-        for key in ("access_key", "secret", "session_token"):
+        for key in ("access_key", "secret", "session_token", "endpoint", "force_path_style"):
             if storage.get(key):
                 s3_upload_kwargs[key] = storage[key]
         rec_api = api.LiveKitAPI(

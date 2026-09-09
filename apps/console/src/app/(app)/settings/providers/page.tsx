@@ -34,7 +34,7 @@ export default function AdminProvidersSettingsPage() {
   const { data: activeOrg, isPending: isOrgPending, refetch } = authClient.useActiveOrganization();
   const [saving, setSaving] = useState(false);
 
-  const isAdmin = isBuiltInNumberManager(activeMemberRole?.role) || (session?.user as { role?: string })?.role === "admin";
+  const isMasterAdmin = (session?.user as { role?: string })?.role === "admin";
 
   // State for all 4 segregated provider domains
   const [telephony, setTelephony] = useState({
@@ -151,21 +151,21 @@ export default function AdminProvidersSettingsPage() {
     );
   }
 
-  if (!isAdmin) {
+  if (!isMasterAdmin) {
     return (
       <Card className="border-destructive/30 bg-destructive/5 max-w-2xl">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Lock className="size-5 text-destructive" />
-            <CardTitle className="text-destructive">Admin Account Only</CardTitle>
+            <CardTitle className="text-destructive">Master Administrator Only</CardTitle>
           </div>
           <CardDescription>
-            Access to AI & Telephony Provider settings (Vobiz SIP, Sarvam AI, Deepgram, ElevenLabs, OpenRouter, and Cloud LLMs) is strictly restricted to Organization Administrators and Owners.
+            Access to AI & Telephony Provider configuration (Vobiz SIP, Sarvam AI, Deepgram, ElevenLabs, Cartesia, and LLM API keys) is strictly restricted to the platform Master Administrator.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-xs text-muted-foreground">
-            To view or update external API credentials, carrier SIP trunks, or speech engine settings, please log in with an administrator account (e.g. <code>admin@quickvoice.ai</code>) or contact your organization owner.
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            API keys and speech synthesis engines are allocated centrally by the Master Administrator for each organization. Organization members and administrators create and configure agents using the providers allocated to this organization.
           </p>
           <Button variant="outline" size="sm" asChild>
             <a href="/settings/profile">Return to Profile Settings</a>

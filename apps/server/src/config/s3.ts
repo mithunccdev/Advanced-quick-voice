@@ -9,10 +9,14 @@ type S3Credentials = {
 
 const REGION = readEnv("AWS_REGION", "REGION", "AWS_DEFAULT_REGION") ?? "us-east-1";
 const BUCKET = readEnv("S3_BUCKET_NAME", "BUCKET_NAME", "BUCKET");
+const ENDPOINT = readEnv("S3_ENDPOINT", "AWS_ENDPOINT_URL_S3", "AWS_ENDPOINT_URL");
+const FORCE_PATH_STYLE = readEnv("S3_FORCE_PATH_STYLE") === "true";
 const CREDENTIALS = resolveCredentials();
 
 const s3 = new S3Client({
   region: REGION,
+  ...(ENDPOINT ? { endpoint: ENDPOINT } : {}),
+  ...(FORCE_PATH_STYLE ? { forcePathStyle: true } : {}),
   ...(CREDENTIALS ? { credentials: CREDENTIALS } : {}),
 });
 

@@ -17,7 +17,7 @@ class VoiceConfigResolutionTests(unittest.TestCase):
         self.assertEqual(config["stt"]["provider"], "deepgram")
         self.assertEqual(config["stt"]["model"], "nova-3")
         self.assertEqual(config["stt"]["billing_model"], "deepgram/nova-3")
-        self.assertEqual(config["llm"]["provider"], "bedrock")
+        self.assertEqual(config["llm"]["provider"], "deepseek")
         self.assertTrue(config["llm"]["streaming"])
         self.assertEqual(config["tts"]["provider"], "deepgram")
 

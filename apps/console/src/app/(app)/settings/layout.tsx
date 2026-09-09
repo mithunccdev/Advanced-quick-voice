@@ -22,16 +22,17 @@ interface NavItem {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   adminOnly?: boolean;
+  masterOnly?: boolean;
 }
 
 const NAV: NavItem[] = [
   { href: "/settings/profile", label: "Profile", icon: User },
   { href: "/settings/organization", label: "Organization", icon: Building2 },
   { href: "/settings/branding", label: "Branding", icon: Palette },
-  { href: "/settings/providers", label: "AI & Telephony APIs", icon: Cpu, adminOnly: true },
+  { href: "/settings/providers", label: "AI & Telephony APIs", icon: Cpu, masterOnly: true },
   { href: "/settings/billing", label: "Billing", icon: CreditCard },
   { href: "/settings/api-keys", label: "API keys", icon: KeyRound },
-  { href: "/settings/roles", label: "Roles", icon: Shield, adminOnly: true },
+  { href: "/settings/roles", label: "Roles", icon: Shield, masterOnly: true },
   { href: "/settings/danger", label: "Danger zone", icon: AlertTriangle },
 ];
 
@@ -44,9 +45,14 @@ export default function SettingsLayout({
   const { data: session } = authClient.useSession();
   const { data: activeMemberRole } = authClient.useActiveMemberRole();
 
-  const isAdmin = isBuiltInNumberManager(activeMemberRole?.role) || (session?.user as { role?: string })?.role === "admin";
+  const isMasterAdmin = (session?.user as { role?: string })?.role === "admin";
+  const isOrgAdmin = isBuiltInNumberManager(activeMemberRole?.role) || isMasterAdmin;
 
-  const visibleNav = NAV.filter((item) => !item.adminOnly || isAdmin);
+  const visibleNav = NAV.filter((item) => {
+    if (item.masterOnly) return isMasterAdmin;
+    if (item.adminOnly) return isOrgAdmin;
+    return true;
+  });
 
   return (
     <div className="flex flex-col gap-6">
@@ -73,11 +79,15 @@ export default function SettingsLayout({
               >
                 <item.icon className="size-4" />
                 <span className="flex-1">{item.label}</span>
-                {item.adminOnly && (
+                {item.masterOnly ? (
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded">
+                    Master
+                  </span>
+                ) : item.adminOnly ? (
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded">
                     Admin
                   </span>
-                )}
+                ) : null}
               </Link>
             );
           })}

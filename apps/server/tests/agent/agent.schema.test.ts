@@ -19,6 +19,23 @@ test("createAgentSchema accepts console template slugs", () => {
   }
 });
 
+test("createAgentSchema accepts optional voice, stt, and tts model configurations", () => {
+  const parsed = createAgentSchema.parse({
+    name: "Custom Voice Agent",
+    isActive: true,
+    templateId: "blank",
+    agent_language: "en-IN",
+    sttModel: "sarvam/saaras:v3",
+    ttsModel: "elevenlabs/eleven_flash_v2_5",
+    voiceId: "elevenlabs-rachel",
+  });
+
+  assert.equal(parsed.agent_language, "en-IN");
+  assert.equal(parsed.sttModel, "sarvam/saaras:v3");
+  assert.equal(parsed.ttsModel, "elevenlabs/eleven_flash_v2_5");
+  assert.equal(parsed.voiceId, "elevenlabs-rachel");
+});
+
 test("createAgentSchema still accepts null and UUID template ids", () => {
   const uuidTemplate = createAgentSchema.parse({
     name: "Support Agent",

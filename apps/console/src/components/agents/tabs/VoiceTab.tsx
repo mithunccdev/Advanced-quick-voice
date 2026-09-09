@@ -4,9 +4,18 @@ import { useEffect, useMemo } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader2, Save } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2, Save } from "lucide-react";
+import { Badge } from "@/src/components/ui/badge";
+import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
 import { VoiceProfilePanel } from "@/src/components/agents/VoiceProfilePanel";
+import {
+    useConfiguredProviders,
+    isSttModelConfigured,
+    isTtsModelConfigured,
+    isVoiceConfigured,
+} from "@/src/lib/providers/configured-providers";
+import { authClient } from "@/src/lib/auth-client";
 import {
     Form,
     FormControl,
@@ -146,8 +155,11 @@ function ensureSelectedVoiceOption(options: Voice[], value: string | undefined) 
 }
 
 export function VoiceTab({ agentId }: { agentId: string }) {
+    const { data: session } = authClient.useSession();
+    const isMasterAdmin = (session?.user as { role?: string })?.role === "admin";
     const { data: config, isLoading } = useAgentConfig(agentId);
     const { data: voiceCatalog } = useVoiceCatalog();
+    const configured = useConfiguredProviders();
     const save = useSaveAgentConfig(agentId);
     const voiceOptions = useMemo(
         () => (voiceCatalog ? buildVoiceOptionsFromCatalog(voiceCatalog) : null),
@@ -202,18 +214,29 @@ export function VoiceTab({ agentId }: { agentId: string }) {
         name: "voiceId",
     });
 
-    const availableSttModels = useMemo(
-        () => getSttModelsForLanguage(selectedLanguage, voiceOptions ?? undefined),
-        [selectedLanguage, voiceOptions]
-    );
-    const availableTtsModels = useMemo(
-        () => getTtsModelsForLanguage(selectedLanguage, voiceOptions ?? undefined),
-        [selectedLanguage, voiceOptions]
-    );
-    const availableVoices = useMemo(
-        () => getVoicesForTtsModel(selectedTtsModel, selectedLanguage, voiceOptions ?? undefined),
-        [selectedLanguage, selectedTtsModel, voiceOptions]
-    );
+    const availableSttModels = useMemo(() => {
+        const forLang = getSttModelsForLanguage(selectedLanguage, voiceOptions ?? undefined);
+        if (!isMasterAdmin && configured.hasAnySttConfigured) {
+            return forLang.filter((m) => isSttModelConfigured(m, configured));
+        }
+        return forLang;
+    }, [selectedLanguage, voiceOptions, configured, isMasterAdmin]);
+
+    const availableTtsModels = useMemo(() => {
+        const forLang = getTtsModelsForLanguage(selectedLanguage, voiceOptions ?? undefined);
+        if (!isMasterAdmin && configured.hasAnyTtsConfigured) {
+            return forLang.filter((m) => isTtsModelConfigured(m, configured));
+        }
+        return forLang;
+    }, [selectedLanguage, voiceOptions, configured, isMasterAdmin]);
+
+    const availableVoices = useMemo(() => {
+        const forTts = getVoicesForTtsModel(selectedTtsModel, selectedLanguage, voiceOptions ?? undefined);
+        if (!isMasterAdmin && configured.hasAnyTtsConfigured) {
+            return forTts.filter((v) => isVoiceConfigured(v, configured));
+        }
+        return forTts;
+    }, [selectedLanguage, selectedTtsModel, voiceOptions, configured, isMasterAdmin]);
     const sttModelsWithConfiguredValue = useMemo(
         () => ensureSelectedLanguageModelOption(availableSttModels, selectedSttModel, "STT"),
         [availableSttModels, selectedSttModel]
@@ -248,6 +271,15 @@ export function VoiceTab({ agentId }: { agentId: string }) {
         config.sttModel === selectedSttModel &&
         config.llmModel === selectedLlmModel &&
         config.ttsModel === selectedTtsModel
+    );
+
+    const isSelectedSttConfigured = isSttModelConfigured(
+        { id: selectedSttModel, provider: selectedSttModel.split("/")[0], label: "", languages: [] },
+        configured
+    );
+    const isSelectedTtsConfigured = isTtsModelConfigured(
+        { id: selectedTtsModel, provider: selectedTtsModel.split("/")[0], label: "", languages: [] },
+        configured
     );
 
     async function onSubmit(values: FormValues) {
@@ -317,11 +349,18 @@ export function VoiceTab({ agentId }: { agentId: string }) {
                 </section>
 
                 <section className="border bg-card p-6">
-                    <div className="mb-5 space-y-1">
-                        <h2 className="text-base font-semibold">Conversation models</h2>
-                        <p className="text-sm text-muted-foreground">
-                            Pick transcription and reasoning models for the selected language.
-                        </p>
+                    <div className="mb-5 flex items-center justify-between">
+                        <div className="space-y-1">
+                            <h2 className="text-base font-semibold">Conversation models</h2>
+                            <p className="text-sm text-muted-foreground">
+                                Pick transcription and reasoning models for the selected language.
+                            </p>
+                        </div>
+                        {configured.hasAnySttConfigured && (
+                            <Badge variant="outline" className="gap-1 border-primary/40 text-primary bg-primary/5 text-[11px]">
+                                <CheckCircle2 className="size-3" /> {isMasterAdmin ? "Configured STT Active" : "Allocated STT Active"}
+                            </Badge>
+                        )}
                     </div>
                     <div className="grid min-w-0 gap-5 sm:grid-cols-2">
                         <FormField
@@ -337,13 +376,32 @@ export function VoiceTab({ agentId }: { agentId: string }) {
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            {sttModelsWithConfiguredValue.map((model) => (
-                                                <SelectItem key={model.id} value={model.id}>
-                                                    {model.label}
-                                                </SelectItem>
-                                            ))}
+                                            {sttModelsWithConfiguredValue.map((model) => {
+                                                const isConf = isSttModelConfigured(model, configured);
+                                                return (
+                                                    <SelectItem key={model.id} value={model.id}>
+                                                        <div className="flex items-center justify-between gap-3 w-full">
+                                                            <span>{model.label}</span>
+                                                            {configured.hasAnySttConfigured && (
+                                                                <span className={cn(
+                                                                    "text-[10px] px-1.5 py-0.5 rounded font-normal",
+                                                                    isConf ? "bg-primary/10 text-primary" : "text-muted-foreground/60"
+                                                                )}>
+                                                                    {isConf ? "Configured" : "No API key"}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </SelectItem>
+                                                );
+                                            })}
                                         </SelectContent>
                                     </Select>
+                                    {!isSelectedSttConfigured && configured.hasAnySttConfigured && (
+                                        <p className="text-xs text-amber-500 flex items-center gap-1 mt-1.5">
+                                            <AlertCircle className="size-3 shrink-0" />
+                                            No API key configured for this provider in Settings &gt; Providers.
+                                        </p>
+                                    )}
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -392,11 +450,18 @@ export function VoiceTab({ agentId }: { agentId: string }) {
                 </section>
 
                 <section className="border bg-card p-6">
-                    <div className="mb-5 space-y-1">
-                        <h2 className="text-base font-semibold">Speech output</h2>
-                        <p className="text-sm text-muted-foreground">
-                            Select a text-to-speech model and a compatible voice.
-                        </p>
+                    <div className="mb-5 flex items-center justify-between">
+                        <div className="space-y-1">
+                            <h2 className="text-base font-semibold">Speech output</h2>
+                            <p className="text-sm text-muted-foreground">
+                                Select a text-to-speech model and a compatible voice.
+                            </p>
+                        </div>
+                        {configured.hasAnyTtsConfigured && (
+                            <Badge variant="outline" className="gap-1 border-primary/40 text-primary bg-primary/5 text-[11px]">
+                                <CheckCircle2 className="size-3" /> {isMasterAdmin ? "Configured TTS Active" : "Allocated TTS Active"}
+                            </Badge>
+                        )}
                     </div>
                     <div className="grid min-w-0 gap-5 sm:grid-cols-2">
                         <FormField
@@ -412,13 +477,32 @@ export function VoiceTab({ agentId }: { agentId: string }) {
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            {ttsModelsWithConfiguredValue.map((model) => (
-                                                <SelectItem key={model.id} value={model.id}>
-                                                    {model.label}
-                                                </SelectItem>
-                                            ))}
+                                            {ttsModelsWithConfiguredValue.map((model) => {
+                                                const isConf = isTtsModelConfigured(model, configured);
+                                                return (
+                                                    <SelectItem key={model.id} value={model.id}>
+                                                        <div className="flex items-center justify-between gap-3 w-full">
+                                                            <span>{model.label}</span>
+                                                            {configured.hasAnyTtsConfigured && (
+                                                                <span className={cn(
+                                                                    "text-[10px] px-1.5 py-0.5 rounded font-normal",
+                                                                    isConf ? "bg-primary/10 text-primary" : "text-muted-foreground/60"
+                                                                )}>
+                                                                    {isConf ? "Configured" : "No API key"}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </SelectItem>
+                                                );
+                                            })}
                                         </SelectContent>
                                     </Select>
+                                    {!isSelectedTtsConfigured && configured.hasAnyTtsConfigured && (
+                                        <p className="text-xs text-amber-500 flex items-center gap-1 mt-1.5">
+                                            <AlertCircle className="size-3 shrink-0" />
+                                            No API key configured for this provider in Settings &gt; Providers.
+                                        </p>
+                                    )}
                                     <FormMessage />
                                 </FormItem>
                             )}

@@ -124,7 +124,8 @@ class BillingUsageReporter:
         )
         self._queue_dir = raw_queue_dir.strip() if raw_queue_dir else None
         self._durable_queue_configured = bool(
-            self._queue_dir and Path(self._queue_dir).is_absolute()
+            self._queue_dir
+            and (Path(self._queue_dir).is_absolute() or self._queue_dir.startswith(("/", "\\")))
         )
 
         self._cached_model_usage: list[dict[str, Any]] = []
