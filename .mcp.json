@@ -13,6 +13,15 @@
         "-y",
         "@upstash/context7-mcp"
       ]
+    },
+    "TestSprite": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\Mithun\\AppData\\Roaming\\npm\\node_modules\\@testsprite\\testsprite-mcp\\dist\\index.js"
+      ],
+      "env": {
+        "API_KEY": "sk-member-WD2Cm-gKyPX1eToJleQBwQBaoNUtIZcRgAykPXzFb2Q"
+      }
     }
   }
 }

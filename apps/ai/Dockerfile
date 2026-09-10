@@ -34,7 +34,6 @@ RUN adduser \
 # python3-dev: Python development headers needed for compilation
 # We clean up the apt cache after installation to keep the image size down
 RUN apt-get update \
-  && apt-get upgrade -y \
   && apt-get install -y --no-install-recommends \
     gcc \
     g++ \
@@ -53,11 +52,11 @@ COPY requirements.txt ./
 # wheels that exceed the hosted runner's disk budget.
 ARG PREINSTALL_CPU_TORCH=false
 RUN if [ "$PREINSTALL_CPU_TORCH" = "true" ]; then \
-      pip install --no-cache-dir "torch>=2.5,<3" --index-url https://download.pytorch.org/whl/cpu; \
-      pip install --no-cache-dir "setuptools>=78.1.1,<82"; \
+      pip install --no-cache-dir --prefer-binary "torch>=2.5,<3" --index-url https://download.pytorch.org/whl/cpu; \
+      pip install --no-cache-dir --prefer-binary "setuptools>=78.1.1,<82"; \
     fi \
-  && pip install --no-cache-dir "numpy>=1.26.0,<2" \
-  && pip install --no-cache-dir -r requirements.txt
+  && pip install --no-cache-dir --prefer-binary "numpy>=1.26.0,<2" \
+  && pip install --no-cache-dir --prefer-binary -r requirements.txt
 
 # Copy all remaining application files into the container
 # This includes source code, configuration files, and dependency specifications

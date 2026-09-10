@@ -104,6 +104,12 @@ services:
     build:
       context: .
       dockerfile: apps/console/Dockerfile
+      args:
+        NEXT_PUBLIC_APP_NAME: "QuickVoice"
+        NEXT_PUBLIC_SERVER_URL: "${SERVER_URL:-http://localhost:5000}"
+        NEXT_PUBLIC_CONSOLE_URL: "${CONSOLE_URL:-http://localhost:3000}"
+        NEXT_PUBLIC_LANDING_URL: "${LANDING_URL:-http://localhost:3001}"
+        NEXT_PUBLIC_API_VERSION: "v1"
     container_name: quickvoice-console
     restart: unless-stopped
     ports:
@@ -125,6 +131,8 @@ services:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
+      args:
+        FAST_BUILD: "true"
     container_name: quickvoice-web
     restart: unless-stopped
     ports:
@@ -143,7 +151,7 @@ services:
       dockerfile: Dockerfile
       args:
         PREINSTALL_CPU_TORCH: "true"
-        SKIP_MODEL_DOWNLOAD: "false"
+        SKIP_MODEL_DOWNLOAD: "true"
     container_name: quickvoice-ai
     restart: unless-stopped
     ports:

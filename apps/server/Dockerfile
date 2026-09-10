@@ -61,7 +61,7 @@ RUN rm -rf \
     /usr/local/bin/yarnpkg \
     /usr/local/lib/node_modules/corepack \
     /usr/local/lib/node_modules/npm
-RUN chown -R server:nodejs /app/node_modules
+RUN chown -R server:nodejs /app/node_modules && chown -R server:nodejs /app
 
 WORKDIR /app/apps/server
 COPY --from=build --chown=server:nodejs /app/apps/server/dist ./dist
@@ -73,5 +73,5 @@ RUN test -f /app/apps/server/dist/src/index.js
 RUN test -f /app/apps/widget/dist/quickvoice-widget.js
 
 USER server
-EXPOSE 8000
-CMD ["sh", "-c", "../../node_modules/.bin/prisma migrate deploy && node dist/src/index.js"]
+EXPOSE 5000
+CMD ["sh", "-c", "until ../../node_modules/.bin/prisma migrate deploy; do echo 'Waiting for database to be ready for migrations...'; sleep 2; done && node dist/src/index.js"]

@@ -53,6 +53,9 @@ const evaluationAreas = [
 ] as const;
 
 export async function generateStaticParams() {
+  if (process.env.FAST_BUILD === "true" || process.env.DOCKER_BUILD === "true") {
+    return [];
+  }
   return getAllSlugs().map((slug) => ({ slug }));
 }
 

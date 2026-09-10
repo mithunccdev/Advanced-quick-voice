@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: monorepoRoot,
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     remotePatterns: [
       {

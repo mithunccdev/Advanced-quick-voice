@@ -1,7 +1,7 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
-  "globalEnv": ["CONTACT_WEBHOOK_URL", "NODE_ENV"],
+  "globalEnv": ["CONTACT_WEBHOOK_URL", "NODE_ENV", "FAST_BUILD", "DOCKER_BUILD"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

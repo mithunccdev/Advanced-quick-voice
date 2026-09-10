@@ -24,6 +24,9 @@ interface Props {
 }
 
 export async function generateStaticParams() {
+  if (process.env.FAST_BUILD === "true" || process.env.DOCKER_BUILD === "true") {
+    return [];
+  }
   const slugs = getAllSlugs();
   return slugs.map((slug) => ({ slug }));
 }

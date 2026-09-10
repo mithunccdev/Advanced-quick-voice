@@ -22,6 +22,7 @@ RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
 FROM deps AS build
 COPY apps/web apps/web
 WORKDIR /app/apps/web
+ENV FAST_BUILD=true
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 RUN pnpm run build
@@ -35,12 +36,12 @@ ENV PORT=3000
 RUN groupadd --system --gid 1001 nodejs \
     && useradd --system --uid 1001 --gid nodejs nextjs
 
-COPY --from=build /app/package.json /app/pnpm-lock.yaml /app/pnpm-workspace.yaml ./
-COPY --from=build /app/apps/web/package.json /app/apps/web/package.json
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/apps/web/node_modules ./apps/web/node_modules
-COPY --from=build /app/apps/web/public ./apps/web/public
-COPY --from=build /app/apps/web/.next ./apps/web/.next
+COPY --from=build --chown=nextjs:nodejs /app/package.json /app/pnpm-lock.yaml /app/pnpm-workspace.yaml ./
+COPY --from=build --chown=nextjs:nodejs /app/apps/web/package.json /app/apps/web/package.json
+COPY --from=build --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --from=build --chown=nextjs:nodejs /app/apps/web/node_modules ./apps/web/node_modules
+COPY --from=build --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
+COPY --from=build --chown=nextjs:nodejs /app/apps/web/.next ./apps/web/.next
 
 USER nextjs
 EXPOSE 3000
