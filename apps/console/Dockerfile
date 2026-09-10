@@ -21,6 +21,7 @@ RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
 
 FROM deps AS build
 COPY apps/console apps/console
+RUN mkdir -p /app/apps/console/public
 WORKDIR /app/apps/console
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
