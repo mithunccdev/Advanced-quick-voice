@@ -56,6 +56,7 @@ RUN if [ "$PREINSTALL_CPU_TORCH" = "true" ]; then \
       pip install --no-cache-dir "torch>=2.5,<3" --index-url https://download.pytorch.org/whl/cpu; \
       pip install --no-cache-dir "setuptools>=78.1.1,<82"; \
     fi \
+  && pip install --no-cache-dir "numpy>=1.26.0,<2" \
   && pip install --no-cache-dir -r requirements.txt
 
 # Copy all remaining application files into the container
