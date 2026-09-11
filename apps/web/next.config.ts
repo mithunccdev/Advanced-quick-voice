@@ -8,6 +8,7 @@ const consoleUrl =
   DEFAULT_CONSOLE_URL;
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   reactCompiler: true,
   outputFileTracingRoot: monorepoRoot,
   turbopack: {
