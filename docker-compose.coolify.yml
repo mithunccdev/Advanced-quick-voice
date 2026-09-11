@@ -17,11 +17,11 @@ services:
       DATABASE_URL: "${DATABASE_URL}"
       REDIS_URL: "${REDIS_URL}"
       BETTER_AUTH_SECRET: "${BETTER_AUTH_SECRET:-quickvoice_auth_secret_minimum_32_characters_long}"
-      BETTER_AUTH_URL: "${SERVER_URL:-https://web.cochindigitalsystem.com}"
+      BETTER_AUTH_URL: "${SERVER_URL:-https://api.cochindigitalsystem.com}"
       INTERNAL_API_KEY: "${INTERNAL_API_KEY:-quickvoice_internal_secret_key}"
       AI_API_URL: "http://ai:5555"
       CONSOLE_URL: "${CONSOLE_URL:-https://app.cochindigitalsystem.com}"
-      LANDING_URL: "${LANDING_URL:-https://cochindigitalsystem.com}"
+      LANDING_URL: "${LANDING_URL:-https://web.cochindigitalsystem.com}"
       REQUIRE_EMAIL_VERIFICATION: "${REQUIRE_EMAIL_VERIFICATION:-false}"
       # LiveKit Realtime & SIP
       LIVEKIT_URL: "${LIVEKIT_URL:-}"
@@ -56,9 +56,9 @@ services:
       dockerfile: apps/console/Dockerfile
       args:
         NEXT_PUBLIC_APP_NAME: "QuickVoice"
-        NEXT_PUBLIC_SERVER_URL: "${SERVER_URL:-https://web.cochindigitalsystem.com}"
+        NEXT_PUBLIC_SERVER_URL: "${SERVER_URL:-https://api.cochindigitalsystem.com}"
         NEXT_PUBLIC_CONSOLE_URL: "${CONSOLE_URL:-https://app.cochindigitalsystem.com}"
-        NEXT_PUBLIC_LANDING_URL: "${LANDING_URL:-https://cochindigitalsystem.com}"
+        NEXT_PUBLIC_LANDING_URL: "${LANDING_URL:-https://web.cochindigitalsystem.com}"
         NEXT_PUBLIC_API_VERSION: "v1"
     container_name: quickvoice-console
     restart: unless-stopped
@@ -68,9 +68,9 @@ services:
       PORT: "3000"
       NODE_ENV: "production"
       NEXT_PUBLIC_APP_NAME: "QuickVoice"
-      NEXT_PUBLIC_SERVER_URL: "${SERVER_URL:-https://web.cochindigitalsystem.com}"
+      NEXT_PUBLIC_SERVER_URL: "${SERVER_URL:-https://api.cochindigitalsystem.com}"
       NEXT_PUBLIC_CONSOLE_URL: "${CONSOLE_URL:-https://app.cochindigitalsystem.com}"
-      NEXT_PUBLIC_LANDING_URL: "${LANDING_URL:-https://cochindigitalsystem.com}"
+      NEXT_PUBLIC_LANDING_URL: "${LANDING_URL:-https://web.cochindigitalsystem.com}"
       NEXT_PUBLIC_API_VERSION: "v1"
       NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: "${STRIPE_PUBLISHABLE_KEY:-}"
     depends_on:

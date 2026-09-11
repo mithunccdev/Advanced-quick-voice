@@ -8,9 +8,9 @@ This guide explains how to deploy the **QuickVoice** production stack to [Coolif
 
 The deployment runs 4 application services in Docker Compose and connects directly to your existing PostgreSQL and Redis:
 
-1. **`server`**: Core Node.js API backend (port `5000` ➜ `web.cochindigitalsystem.com`)
+1. **`server`**: Core Node.js API backend (port `5000` ➜ `api.cochindigitalsystem.com`)
 2. **`console`**: Next.js Customer Console dashboard (port `3000` ➜ `app.cochindigitalsystem.com`)
-3. **`web`**: Next.js Marketing landing page (port `3001` ➜ `cochindigitalsystem.com`)
+3. **`web`**: Next.js Marketing landing page (port `3001` ➜ `web.cochindigitalsystem.com`)
 4. **`ai`**: Python LiveKit Agent runtime worker (internal port `5555`)
 - **PostgreSQL**: Connected via `DATABASE_URL` (your existing Postgres)
 - **Redis**: Connected via `REDIS_URL` (your existing Redis)
@@ -39,9 +39,9 @@ In the Coolify resource, go to the **Environment Variables** tab and paste the f
 # ------------------------------------------------------------------------------
 # 1. Public Domains & URLs
 # ------------------------------------------------------------------------------
-SERVER_URL=https://web.cochindigitalsystem.com
+SERVER_URL=https://api.cochindigitalsystem.com
 CONSOLE_URL=https://app.cochindigitalsystem.com
-LANDING_URL=https://cochindigitalsystem.com
+LANDING_URL=https://web.cochindigitalsystem.com
 
 # ------------------------------------------------------------------------------
 # 2. Existing Database & Redis Connections
@@ -105,9 +105,9 @@ In Coolify's service configuration, assign your public domains to the ports:
 
 | Service | Port | Domain |
 |:---|:---:|:---|
-| **`server`** | `5000` | `https://web.cochindigitalsystem.com` |
+| **`server`** | `5000` | `https://api.cochindigitalsystem.com` |
 | **`console`** | `3000` | `https://app.cochindigitalsystem.com` |
-| **`web`** | `3001` | `https://cochindigitalsystem.com` |
+| **`web`** | `3001` | `https://web.cochindigitalsystem.com` |
 
 Coolify will automatically handle SSL certificates for all 3 domains.
 
@@ -123,4 +123,5 @@ Coolify will automatically handle SSL certificates for all 3 domains.
    - `ai` (optimized build with CPU Torch and skipped model downloads)
 3. Once finished:
    - Visit `https://app.cochindigitalsystem.com` to register your admin account.
-   - Visit `https://web.cochindigitalsystem.com/health` to confirm server readiness.
+   - Visit `https://api.cochindigitalsystem.com/health` to confirm server readiness.
+   - Visit `https://web.cochindigitalsystem.com` to view your marketing site.

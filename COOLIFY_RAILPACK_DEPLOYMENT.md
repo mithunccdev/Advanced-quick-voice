@@ -93,7 +93,7 @@ The deployment consists of **7 separate Coolify resources** within a single proj
      cd apps/server && npx prisma migrate deploy && node dist/src/index.js
      ```
    - **Port**: `5000`
-   - **Domain**: `web.cochindigitalsystem.com` *(or `api.cochindigitalsystem.com`)*
+   - **Domain**: `api.cochindigitalsystem.com`
 
 4. **Environment Variables** (set in Coolify's Environment Variables tab):
 
@@ -104,11 +104,11 @@ The deployment consists of **7 separate Coolify resources** within a single proj
    DATABASE_URL=postgresql://quickvoice:<POSTGRES_PASSWORD>@<postgres-hostname>:5432/quickvoice
    REDIS_URL=redis://<redis-hostname>:6379
    BETTER_AUTH_SECRET=<openssl rand -base64 32>
-   BETTER_AUTH_URL=https://web.cochindigitalsystem.com
+   BETTER_AUTH_URL=https://api.cochindigitalsystem.com
    INTERNAL_API_KEY=<openssl rand -hex 24>
    AI_API_URL=http://<ai-hostname>:5555
    CONSOLE_URL=https://app.cochindigitalsystem.com
-   LANDING_URL=https://cochindigitalsystem.com
+   LANDING_URL=https://web.cochindigitalsystem.com
 
    # LiveKit (Required)
    LIVEKIT_URL=wss://your-livekit-server.livekit.cloud
@@ -168,9 +168,9 @@ The deployment consists of **7 separate Coolify resources** within a single proj
    PORT=3000
    NODE_ENV=production
    NEXT_PUBLIC_APP_NAME=QuickVoice
-   NEXT_PUBLIC_SERVER_URL=https://web.cochindigitalsystem.com
+   NEXT_PUBLIC_SERVER_URL=https://api.cochindigitalsystem.com
    NEXT_PUBLIC_CONSOLE_URL=https://app.cochindigitalsystem.com
-   NEXT_PUBLIC_LANDING_URL=https://cochindigitalsystem.com
+   NEXT_PUBLIC_LANDING_URL=https://web.cochindigitalsystem.com
    NEXT_PUBLIC_API_VERSION=v1
    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
    ```
@@ -196,7 +196,7 @@ The deployment consists of **7 separate Coolify resources** within a single proj
      cd apps/web && node .next/standalone/apps/web/server.js
      ```
    - **Port**: `3000`
-   - **Domain**: `cochindigitalsystem.com`
+   - **Domain**: `web.cochindigitalsystem.com`
 
 4. **Environment Variables**:
 
@@ -295,9 +295,9 @@ Coolify assigns internal hostnames to each resource. You need to reference these
 
 | Check | URL / Command |
 |:------|:-------------|
-| Server API | `curl https://web.cochindigitalsystem.com/health` (or `/api/health`) |
+| Server API | `curl https://api.cochindigitalsystem.com/health` (or `/api/health`) |
 | Console Login | Visit `https://app.cochindigitalsystem.com/login` |
-| Marketing Site | Visit `https://cochindigitalsystem.com` |
+| Marketing Site | Visit `https://web.cochindigitalsystem.com` |
 | AI Worker | Check container logs in Coolify dashboard |
 | Database | Server health endpoint confirms DB connection |
 | MinIO | `http://YOUR_VPS_IP:9001` (MinIO Console) |
