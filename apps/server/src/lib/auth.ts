@@ -50,7 +50,10 @@ export const auth = betterAuth({
   },
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: process.env.NODE_ENV === "production",
+    requireEmailVerification:
+      process.env.REQUIRE_EMAIL_VERIFICATION === "true" ||
+      (process.env.NODE_ENV === "production" &&
+        process.env.REQUIRE_EMAIL_VERIFICATION !== "false"),
     password: {
       hash: async (password) => {
         return await bcrypt.hash(password, 10);

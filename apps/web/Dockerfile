@@ -22,6 +22,8 @@ RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
 FROM deps AS build
 COPY apps/web apps/web
 WORKDIR /app/apps/web
+ARG NEXT_PUBLIC_CONSOLE_URL
+ENV NEXT_PUBLIC_CONSOLE_URL=$NEXT_PUBLIC_CONSOLE_URL
 ENV FAST_BUILD=true
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
